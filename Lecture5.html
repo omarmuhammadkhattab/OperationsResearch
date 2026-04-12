@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lecture 5 — Project Management (CPM/PERT)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #06101f;
+  --bg2: #0b1828;
+  --bg3: #0f2035;
+  --accent: #a855f7;
+  --accent2: #7c3aed;
+  --accent3: #c084fc;
+  --cyan: #00c8ff;
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --border: rgba(168,85,247,0.18);
+  --card: rgba(168,85,247,0.06);
+  --gold: #f0b429;
+  --green: #39d97b;
+  --orange: #ff6b35;
+  --red: #f87171;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'IBM Plex Sans',sans-serif;
+  line-height:1.7;
+  min-height:100vh;
+  background-image:
+    linear-gradient(rgba(168,85,247,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(168,85,247,0.03) 1px,transparent 1px);
+  background-size:44px 44px;
+}
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(6,16,31,0.95);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  padding:0 1.5rem;
+  display:flex;align-items:center;gap:1.5rem;min-height:52px;flex-wrap:wrap;row-gap:0;
+}
+nav a{color:var(--text2);text-decoration:none;font-size:.82rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.05em;padding:.25rem .5rem;border-radius:4px;transition:color .2s,background .2s;white-space:nowrap}
+nav a:hover,nav a.active{color:var(--accent);background:rgba(168,85,247,0.1)}
+nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;margin-right:auto;font-size:.95rem;letter-spacing:0;padding:0;background:none;}
+/* ── HERO ── */
+.hero{
+  padding:5rem 2rem 3.5rem;
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem;
+}
+.lec-badge{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.75rem;letter-spacing:.15em;
+  color:var(--accent);
+  border:1px solid var(--border);
+  border-radius:4px;padding:.3rem .7rem;
+  display:inline-block;margin-bottom:1rem;
+  background:rgba(168,85,247,0.08);
+}
+.hero h1{
+  font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:800;line-height:1.1;
+  background:linear-gradient(135deg,#fff 0%,var(--accent3) 60%,var(--accent) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:1rem;
+}
+.hero p{color:var(--text2);max-width:600px;font-size:1.05rem}
+.hero-stats{
+  display:flex;flex-direction:column;gap:.75rem;
+  border:1px solid var(--border);border-radius:12px;
+  padding:1.5rem;background:var(--card);
+  min-width:180px;
+}
+.hero-stat{text-align:center}
+.hero-stat .n{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--accent)}
+.hero-stat .l{font-size:.75rem;color:var(--text3);font-family:'IBM Plex Mono',monospace;letter-spacing:.08em}
+/* ── SECTION ── */
+.section{max-width:1100px;margin:0 auto;padding:2rem 2rem 3rem}
+.sec-title{
+  font-family:'Syne',sans-serif;font-size:1.55rem;font-weight:700;
+  color:var(--accent3);margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:.75rem;
+}
+.sec-title::before{content:'';display:block;width:4px;height:1.4em;background:var(--accent);border-radius:2px}
+/* ── CARDS ── */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;padding:1.5rem;
+  margin-bottom:1.25rem;
+}
+.card h3{font-family:'Syne',sans-serif;color:var(--accent3);margin-bottom:.7rem;font-size:1.05rem}
+/* ── DEF GRID ── */
+.def-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:2rem}
+.def-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:10px;padding:1.25rem;
+  border-top:3px solid var(--accent);
+}
+.def-card .term{font-family:'Syne',sans-serif;font-weight:700;color:var(--accent3);margin-bottom:.4rem;font-size:.95rem}
+.def-card p{color:var(--text2);font-size:.9rem;line-height:1.55}
+/* ── FORMULA BOX ── */
+.formula-box{
+  background:rgba(168,85,247,0.08);
+  border:1px solid rgba(168,85,247,0.3);
+  border-radius:10px;padding:1.25rem 1.5rem;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.95rem;color:var(--accent3);
+  margin:.75rem 0;line-height:2.2;
+}
+.formula-box .label{color:var(--text3);font-size:.8rem;display:block;margin-bottom:.3rem;font-family:'IBM Plex Sans',sans-serif}
+/* ── TWO-COL ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
+/* ── MOBILE ── */
+@media(max-width:640px){
+  .section{padding:1.5rem 1rem 2rem}
+  .hero{padding:2.5rem 1rem 2rem;grid-template-columns:1fr}
+  .hero-stats{display:none}
+  .hero h1{font-size:2rem}
+  .hero p{font-size:.9rem}
+  .two-col{grid-template-columns:1fr}
+  .def-grid{grid-template-columns:1fr}
+  .formula-box{font-size:.82rem;padding:1rem;line-height:2}
+  .tab-bar{gap:.35rem}
+  .tab-btn{font-size:.74rem;padding:.38rem .75rem}
+  .network-wrap{padding:.5rem}
+  .network-wrap svg{max-width:100%;height:auto}
+  .pass-table{font-size:.76rem}
+  .pass-table th,.pass-table td{padding:.4rem .45rem}
+  .cond-table{font-size:.78rem}
+  .cond-table th,.cond-table td{padding:.4rem .5rem}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .calc-grid{grid-template-columns:1fr 1fr}
+  .pert-calc{padding:1rem}
+  .step-list .step-body{font-size:.85rem}
+  nav{gap:.75rem;padding:0 1rem}
+  nav .brand{font-size:.85rem}
+  nav a{font-size:.75rem;padding:.2rem .3rem}
+  .foot-nav{flex-direction:column;gap:.75rem;text-align:center}
+  .foot-link{justify-content:center}
+  .hero-stat .n{font-size:1.4rem}
+  .sec-title{font-size:1.25rem}
+  .badge-row{gap:.35rem}
+  .badge{font-size:.7rem}
+  .card{padding:1rem}
+  .slack-info{font-size:.83rem}
+  .prob-wrap{grid-template-columns:1fr}
+}
+@media(max-width:400px){
+  .tab-btn{font-size:.68rem;padding:.32rem .55rem}
+  .calc-grid{grid-template-columns:1fr}
+}
+/* ── TABS ── */
+.tab-bar{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+.tab-btn{
+  font-family:'IBM Plex Mono',monospace;font-size:.8rem;
+  padding:.45rem 1.1rem;border-radius:6px;cursor:pointer;
+  background:transparent;border:1px solid var(--border);
+  color:var(--text2);transition:all .2s;letter-spacing:.06em;
+}
+.tab-btn.active,.tab-btn:hover{
+  background:rgba(168,85,247,0.15);border-color:var(--accent);color:var(--accent3);
+}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+/* ── NETWORK SVG ── */
+.network-wrap{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:12px;padding:1rem;overflow-x:auto;
+  margin-bottom:1.25rem;
+}
+.network-wrap svg{display:block;margin:0 auto}
+/* ── PASS TABLE ── */
+.pass-table{width:100%;border-collapse:collapse;font-size:.88rem;margin:.75rem 0}
+.pass-table th{
+  background:rgba(168,85,247,0.15);color:var(--accent3);
+  font-family:'IBM Plex Mono',monospace;font-size:.78rem;
+  padding:.6rem .8rem;text-align:center;letter-spacing:.06em;
+  border-bottom:1px solid var(--border);
+}
+.pass-table td{padding:.55rem .8rem;text-align:center;border-bottom:1px solid rgba(168,85,247,0.08);color:var(--text2)}
+.pass-table tr:hover td{background:rgba(168,85,247,0.05)}
+.pass-table .cp-row td{color:var(--accent3);font-weight:600;background:rgba(168,85,247,0.1)}
+/* ── STEP BOX ── */
+.step-list{display:flex;flex-direction:column;gap:.75rem;margin:1rem 0}
+.step{display:flex;gap:1rem;align-items:flex-start}
+.step-num{
+  min-width:32px;height:32px;border-radius:50%;
+  background:var(--accent2);color:#fff;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.step-body{color:var(--text2);font-size:.92rem;padding-top:.3rem}
+.step-body strong{color:var(--accent3)}
+/* ── HIGHLIGHT ── */
+.hl-green{color:var(--green);font-weight:600}
+.hl-orange{color:var(--orange);font-weight:600}
+.hl-red{color:var(--red);font-weight:600}
+.hl-cyan{color:var(--cyan);font-weight:600}
+.hl-accent{color:var(--accent3);font-weight:600}
+/* ── PERT CALCULATOR ── */
+.pert-calc{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;
+}
+.pert-calc h3{font-family:'Syne',sans-serif;color:var(--accent3);margin-bottom:1rem}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;margin-bottom:1rem}
+.input-group label{
+  display:block;font-family:'IBM Plex Mono',monospace;
+  font-size:.75rem;color:var(--text3);margin-bottom:.4rem;letter-spacing:.08em;
+}
+.input-group input{
+  width:100%;background:rgba(168,85,247,0.08);
+  border:1px solid var(--border);border-radius:6px;
+  padding:.55rem .75rem;color:var(--text);
+  font-family:'IBM Plex Mono',monospace;font-size:.95rem;
+  outline:none;transition:border-color .2s;
+}
+.input-group input:focus{border-color:var(--accent)}
+.calc-btn{
+  background:var(--accent2);color:#fff;
+  border:none;border-radius:8px;padding:.65rem 1.5rem;
+  font-family:'Syne',sans-serif;font-weight:600;font-size:.9rem;
+  cursor:pointer;transition:background .2s;margin-top:.5rem;
+}
+.calc-btn:hover{background:var(--accent)}
+.calc-result{
+  background:rgba(168,85,247,0.1);border:1px solid var(--border);
+  border-radius:8px;padding:1rem 1.25rem;margin-top:1rem;
+  font-family:'IBM Plex Mono',monospace;font-size:.9rem;
+  display:none;line-height:2.2;
+}
+.calc-result.show{display:block}
+.calc-result .res-line{color:var(--text2)}
+.calc-result .res-line span{color:var(--accent3);font-weight:600}
+/* ── PROB CALC ── */
+.prob-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1rem}
+
+/* ── CONDITION TABLE ── */
+.cond-table{width:100%;border-collapse:collapse;font-size:.88rem;margin:.75rem 0}
+.cond-table th{background:rgba(168,85,247,0.12);color:var(--accent3);font-family:'IBM Plex Mono',monospace;font-size:.78rem;padding:.55rem .9rem;border-bottom:1px solid var(--border);letter-spacing:.06em}
+.cond-table td{padding:.5rem .9rem;border-bottom:1px solid rgba(168,85,247,0.07);color:var(--text2);font-size:.87rem}
+/* ── ACCORDION ── */
+.accordion-item{border:1px solid var(--border);border-radius:10px;margin-bottom:.75rem;overflow:hidden}
+.accordion-hdr{
+  padding:1rem 1.25rem;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--card);
+  font-family:'Syne',sans-serif;color:var(--accent3);font-weight:600;
+  transition:background .2s;
+}
+.accordion-hdr:hover{background:rgba(168,85,247,0.1)}
+.accordion-hdr .chevron{transition:transform .3s;font-size:.8rem;color:var(--text3)}
+.accordion-item.open .chevron{transform:rotate(180deg)}
+.accordion-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.accordion-item.open .accordion-body{max-height:2000px}
+.accordion-inner{padding:1.25rem;border-top:1px solid var(--border)}
+/* ── SLACK TABLE ── */
+.slack-info{
+  background:rgba(168,85,247,0.06);
+  border:1px solid rgba(168,85,247,0.2);
+  border-radius:8px;padding:1rem 1.25rem;
+  margin:.75rem 0;font-size:.9rem;color:var(--text2);
+}
+.slack-info strong{color:var(--accent3)}
+/* ── FOOTER NAV ── */
+.foot-nav{
+  max-width:1100px;margin:0 auto;
+  padding:2rem 2rem 3rem;
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--border);
+}
+.foot-link{
+  display:flex;align-items:center;gap:.5rem;
+  color:var(--text2);text-decoration:none;font-family:'Syne',sans-serif;
+  font-size:.9rem;padding:.6rem 1.2rem;border-radius:8px;
+  border:1px solid var(--border);transition:all .2s;
+}
+.foot-link:hover{border-color:var(--accent);color:var(--accent3)}
+.badge-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+.badge{
+  font-family:'IBM Plex Mono',monospace;font-size:.73rem;
+  padding:.25rem .65rem;border-radius:4px;
+  background:rgba(168,85,247,0.12);color:var(--accent3);
+  border:1px solid rgba(168,85,247,0.25);
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="brand">OR Course</span>
+  <a href="index.html">Home</a>
+  <a href="lecture1.html">L1</a>
+  <a href="lecture2.html">L2</a>
+  <a href="lecture3.html">L3</a>
+  <a href="lecture4.html">L4</a>
+  <a href="lecture5.html" class="active">L5</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <span class="lec-badge">LECTURE 5 · PROJECT MANAGEMENT</span>
+    <h1>CPM &amp; PERT</h1>
+    <p>Schedule complex projects using the Critical Path Method (deterministic) and Program Evaluation &amp; Review Technique (probabilistic). Master forward/backward passes, slack analysis, and probability calculations.</p>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="n">2</div><div class="l">METHODS</div></div>
+    <div class="hero-stat"><div class="n">5</div><div class="l">EXAMPLES</div></div>
+    <div class="hero-stat"><div class="n">3</div><div class="l">CP CONDITIONS</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 1 — CORE DEFINITIONS
+═══════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-title">Core Definitions</div>
+  <div class="def-grid">
+    <div class="def-card">
+      <div class="term">Project</div>
+      <p>A set of interrelated activities that must be performed using limited resources — men, machines, materials, money, and time.</p>
+    </div>
+    <div class="def-card">
+      <div class="term">Project Network</div>
+      <p>A diagram describing all project activities and their precedence relationships. Shows which activities must be completed before others can begin.</p>
+    </div>
+    <div class="def-card">
+      <div class="term">Event (Node)</div>
+      <p>The completion or beginning of an activity. Represented as a circle in the network diagram.</p>
+    </div>
+    <div class="def-card">
+      <div class="term">Arrow (Arc)</div>
+      <p>Represents an activity in the AOA model. The tail is the start event and the head is the end event of that activity.</p>
+    </div>
+    <div class="def-card">
+      <div class="term">Dummy Activity</div>
+      <p>A fictitious zero-duration activity (dashed arrow) used to clarify precedence when two activities share the same start and end nodes.</p>
+    </div>
+    <div class="def-card">
+      <div class="term">Critical Path</div>
+      <p>The longest path through the network — it defines the minimum time to complete the project. Any delay on this path delays the whole project.</p>
+    </div>
+  </div>
+
+  <!-- AON vs AOA -->
+  <div class="two-col">
+    <div class="card">
+      <h3>AON — Activity-On-Node</h3>
+      <p style="color:var(--text2);font-size:.9rem;margin-bottom:.75rem">Nodes represent <strong style="color:var(--accent3)">activities</strong>. Arrows show precedence (dependency) between activities.</p>
+      <svg width="100%" viewBox="0 0 380 100" style="max-height:100px">
+        <defs>
+          <marker id="ah" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#a855f7"/>
+          </marker>
+        </defs>
+        <rect x="10" y="35" width="70" height="30" rx="6" fill="rgba(168,85,247,0.15)" stroke="#a855f7" stroke-width="1.5"/>
+        <text x="45" y="55" text-anchor="middle" fill="#c084fc" font-size="11" font-family="IBM Plex Mono">Start</text>
+        <rect x="155" y="10" width="70" height="30" rx="6" fill="rgba(168,85,247,0.15)" stroke="#a855f7" stroke-width="1.5"/>
+        <text x="190" y="30" text-anchor="middle" fill="#c084fc" font-size="11" font-family="IBM Plex Mono">A</text>
+        <rect x="155" y="60" width="70" height="30" rx="6" fill="rgba(168,85,247,0.15)" stroke="#a855f7" stroke-width="1.5"/>
+        <text x="190" y="80" text-anchor="middle" fill="#c084fc" font-size="11" font-family="IBM Plex Mono">B</text>
+        <rect x="300" y="35" width="70" height="30" rx="6" fill="rgba(168,85,247,0.15)" stroke="#a855f7" stroke-width="1.5"/>
+        <text x="335" y="55" text-anchor="middle" fill="#c084fc" font-size="11" font-family="IBM Plex Mono">C</text>
+        <line x1="80" y1="45" x2="155" y2="28" stroke="#a855f7" stroke-width="1.5" marker-end="url(#ah)"/>
+        <line x1="80" y1="55" x2="155" y2="68" stroke="#a855f7" stroke-width="1.5" marker-end="url(#ah)"/>
+        <line x1="225" y1="28" x2="300" y2="45" stroke="#a855f7" stroke-width="1.5" marker-end="url(#ah)"/>
+        <line x1="225" y1="68" x2="300" y2="55" stroke="#a855f7" stroke-width="1.5" marker-end="url(#ah)"/>
+      </svg>
+    </div>
+    <div class="card">
+      <h3>AOA — Activity-On-Arc</h3>
+      <p style="color:var(--text2);font-size:.9rem;margin-bottom:.75rem">Arrows represent <strong style="color:var(--accent3)">activities</strong>. Nodes are events (points in time). May need dummy activities.</p>
+      <svg width="100%" viewBox="0 0 380 100" style="max-height:100px">
+        <defs>
+          <marker id="ah2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#a855f7"/>
+          </marker>
+          <marker id="ah3" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#64748b"/>
+          </marker>
+        </defs>
+        <circle cx="40" cy="50" r="20" fill="rgba(168,85,247,0.15)" stroke="#a855f7" stroke-width="1.5"/>
+        <text x="40" y="55" text-anchor="middle" fill="#c084fc" font-size="12" font-family="IBM Plex Mono">1</text>
+        <circle cx="170" cy="20" r="20" fill="rgba(168,85,247,0.15)" stroke="#a855f7" stroke-width="1.5"/>
+        <text x="170" y="25" text-anchor="middle" fill="#c084fc" font-size="12" font-family="IBM Plex Mono">2</text>
+        <circle cx="170" cy="80" r="20" fill="rgba(168,85,247,0.15)" stroke="#a855f7" stroke-width="1.5"/>
+        <text x="170" y="85" text-anchor="middle" fill="#c084fc" font-size="12" font-family="IBM Plex Mono">3</text>
+        <circle cx="340" cy="50" r="20" fill="rgba(168,85,247,0.15)" stroke="#a855f7" stroke-width="1.5"/>
+        <text x="340" y="55" text-anchor="middle" fill="#c084fc" font-size="12" font-family="IBM Plex Mono">4</text>
+        <line x1="58" y1="40" x2="150" y2="25" stroke="#a855f7" stroke-width="1.5" marker-end="url(#ah2)"/>
+        <text x="95" y="24" fill="#f0b429" font-size="10" font-family="IBM Plex Mono">A</text>
+        <line x1="58" y1="60" x2="150" y2="75" stroke="#a855f7" stroke-width="1.5" marker-end="url(#ah2)"/>
+        <text x="95" y="78" fill="#f0b429" font-size="10" font-family="IBM Plex Mono">B</text>
+        <line x1="190" y1="25" x2="320" y2="45" stroke="#a855f7" stroke-width="1.5" marker-end="url(#ah2)"/>
+        <text x="255" y="30" fill="#f0b429" font-size="10" font-family="IBM Plex Mono">C</text>
+        <line x1="190" y1="75" x2="320" y2="55" stroke="#a855f7" stroke-width="1.5" marker-end="url(#ah2)"/>
+        <line x1="170" y1="40" x2="170" y2="60" stroke="#64748b" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#ah3)"/>
+        <text x="178" y="55" fill="#64748b" font-size="9" font-family="IBM Plex Mono">dummy</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- CPM vs PERT comparison -->
+  <div class="two-col">
+    <div class="card" style="border-top:3px solid var(--cyan)">
+      <h3 style="color:var(--cyan)">CPM — Critical Path Method</h3>
+      <p style="color:var(--text2);font-size:.9rem">Used when activity durations are <strong style="color:var(--cyan)">known with certainty</strong> (deterministic). Focuses on scheduling and identifying which activities cannot be delayed without extending the project.</p>
+      <div style="margin-top:.75rem;font-size:.85rem;color:var(--text3)">Best for: construction, manufacturing, well-defined processes</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--orange)">
+      <h3 style="color:var(--orange)">PERT — Program Evaluation &amp; Review Technique</h3>
+      <p style="color:var(--text2);font-size:.9rem">Used when activity durations are <strong style="color:var(--orange)">uncertain</strong> (probabilistic). Uses three time estimates per activity and a beta distribution to model uncertainty.</p>
+      <div style="margin-top:.75rem;font-size:.85rem;color:var(--text3)">Best for: R&D, software projects, novel activities</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 2 — CPM NOTATIONS & METHOD
+═══════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-title">CPM — Notations &amp; Method</div>
+
+  <div class="badge-row">
+    <span class="badge">Ei = Earliest event time</span>
+    <span class="badge">Lj = Latest event time</span>
+    <span class="badge">Dij = Duration</span>
+    <span class="badge">ES = Early Start</span>
+    <span class="badge">EF = Early Finish</span>
+    <span class="badge">LS = Late Start</span>
+    <span class="badge">LF = Late Finish</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="card" style="border-left:3px solid var(--cyan)">
+        <h3 style="color:var(--cyan)">Forward Pass → Earliest Times</h3>
+        <p style="color:var(--text2);font-size:.9rem;margin-bottom:.75rem">Start at node 1 (E₁ = 0), move left to right. At each node, take the <strong style="color:var(--cyan)">maximum</strong> of all incoming paths.</p>
+        <div class="formula-box">
+          <span class="label">Earliest time of node j:</span>
+          Eⱼ = max{ Eᵢ + Dᵢⱼ }   (for all i→j)
+          <br>
+          <span class="label" style="margin-top:.5rem">Early Start &amp; Finish:</span>
+          ESᵢⱼ = Eᵢ
+          EFᵢⱼ = Eᵢ + Dᵢⱼ
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="border-left:3px solid var(--orange)">
+        <h3 style="color:var(--orange)">Backward Pass ← Latest Times</h3>
+        <p style="color:var(--text2);font-size:.9rem;margin-bottom:.75rem">Start at last node (Lₙ = Eₙ), move right to left. At each node, take the <strong style="color:var(--orange)">minimum</strong> of all outgoing paths.</p>
+        <div class="formula-box">
+          <span class="label">Latest time of node i:</span>
+          Lᵢ = min{ Lⱼ − Dᵢⱼ }   (for all i→j)
+          <br>
+          <span class="label" style="margin-top:.5rem">Late Start &amp; Finish:</span>
+          LFᵢⱼ = Lⱼ
+          LSᵢⱼ = Lⱼ − Dᵢⱼ
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Critical Path Conditions -->
+  <div class="card">
+    <h3>3 Conditions for a Critical Path Activity</h3>
+    <p style="color:var(--text2);font-size:.9rem;margin-bottom:1rem">An activity (i,j) lies on the critical path if and only if <em>all three</em> conditions hold:</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
+      <div style="text-align:center;padding:1rem;background:rgba(168,85,247,0.08);border-radius:8px;border:1px solid var(--border)">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:1.1rem;color:var(--accent3);margin-bottom:.4rem">ESᵢ = LSᵢ</div>
+        <div style="font-size:.82rem;color:var(--text3)">Earliest start = Latest start at node i</div>
+      </div>
+      <div style="text-align:center;padding:1rem;background:rgba(168,85,247,0.08);border-radius:8px;border:1px solid var(--border)">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:1.1rem;color:var(--accent3);margin-bottom:.4rem">EFⱼ = LFⱼ</div>
+        <div style="font-size:.82rem;color:var(--text3)">Earliest finish = Latest finish at node j</div>
+      </div>
+      <div style="text-align:center;padding:1rem;background:rgba(168,85,247,0.08);border-radius:8px;border:1px solid var(--border)">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:1.1rem;color:var(--accent3);margin-bottom:.4rem">EFⱼ − ESᵢ = Dᵢⱼ</div>
+        <div style="font-size:.82rem;color:var(--text3)">Duration = Finish − Start (zero slack)</div>
+      </div>
+    </div>
+    <div class="slack-info" style="margin-top:1rem">
+      <strong>Slack (Float)</strong> = LSᵢⱼ − ESᵢⱼ = LFᵢⱼ − EFᵢⱼ<br>
+      Critical activities have <strong>slack = 0</strong>. Non-critical activities have positive slack — they can be delayed by that amount without delaying the project.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 3 — CPM EXAMPLES
+═══════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-title">CPM — Worked Examples</div>
+
+  <div class="tab-bar" id="cpm-tabs">
+    <button class="tab-btn active" onclick="switchTab('cpm','ex1',this)">Example 1 — House Building</button>
+    <button class="tab-btn" onclick="switchTab('cpm','ex2',this)">Example 2 — 9-Node Network</button>
+    <button class="tab-btn" onclick="switchTab('cpm','ex3',this)">Example 3 — 5-Node Network</button>
+  </div>
+
+  <!-- ── CPM EX 1 ── -->
+  <div id="cpm-ex1" class="tab-panel active">
+    <div class="card">
+      <h3>House Building Project (7 Nodes)</h3>
+      <p style="color:var(--text2);font-size:.9rem;margin-bottom:1rem">A construction project with 7 events and activities including a dummy activity. Find the critical path and completion time.</p>
+    </div>
+
+    <div class="network-wrap">
+      <svg viewBox="0 0 720 280" width="720" height="280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#a855f7"/></marker>
+          <marker id="arr-cp" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#f87171"/></marker>
+          <marker id="arr-dum" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#64748b"/></marker>
+        </defs>
+
+        <!-- Node labels - E/L boxes via foreignObject replaced with text -->
+        <!-- Nodes: 1(60,140) 2(200,140) 3(320,60) 4(320,140) 5(320,220) 6(500,140) 7(640,140) -->
+
+        <!-- EDGES (non-critical) -->
+        <!-- 2→3 (B=2) -->
+        <line x1="218" y1="130" x2="302" y2="72" stroke="#7c3aed" stroke-width="2" marker-end="url(#arr)"/>
+        <text x="250" y="93" fill="#c084fc" font-size="12" font-family="IBM Plex Mono">B=2</text>
+        <!-- 2→4 (C=1) -->
+        <line x1="222" y1="140" x2="298" y2="140" stroke="#7c3aed" stroke-width="2" marker-end="url(#arr)"/>
+        <text x="252" y="133" fill="#c084fc" font-size="12" font-family="IBM Plex Mono">C=1</text>
+        <!-- 4→5 (E=1) -->
+        <line x1="320" y1="158" x2="320" y2="202" stroke="#7c3aed" stroke-width="2" marker-end="url(#arr)"/>
+        <text x="328" y="185" fill="#c084fc" font-size="12" font-family="IBM Plex Mono">E=1</text>
+        <!-- 5→6 (F=1) -->
+        <line x1="338" y1="212" x2="482" y2="155" stroke="#7c3aed" stroke-width="2" marker-end="url(#arr)"/>
+        <text x="415" y="197" fill="#c084fc" font-size="12" font-family="IBM Plex Mono">F=1</text>
+        <!-- dummy 3→4 dashed -->
+        <line x1="320" y1="78" x2="320" y2="122" stroke="#475569" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-dum)"/>
+        <text x="326" y="105" fill="#64748b" font-size="10" font-family="IBM Plex Mono">0</text>
+
+        <!-- CRITICAL PATH: 1→2 (A=3), 2→3 actually non-cp; CP: 1-2-3-4-6-7 -->
+        <!-- Actually from PDF: CP is 1→2→3→4→6→7 = 3+2+0+3+1=9 -->
+        <!-- 1→2 (A=3) CRITICAL -->
+        <line x1="80" y1="140" x2="178" y2="140" stroke="#f87171" stroke-width="2.5" marker-end="url(#arr-cp)"/>
+        <text x="118" y="133" fill="#f87171" font-size="12" font-family="IBM Plex Mono">A=3</text>
+        <!-- 2→3 (B=2) already drawn above, also critical? CP goes 1-2-3-4-6-7 -->
+        <!-- redraw 2→3 as critical -->
+        <line x1="218" y1="130" x2="302" y2="72" stroke="#f87171" stroke-width="2.5" marker-end="url(#arr-cp)"/>
+        <!-- 3→4 dummy (critical) -->
+        <line x1="320" y1="78" x2="320" y2="122" stroke="#f87171" stroke-width="2.5" stroke-dasharray="5,3" marker-end="url(#arr-cp)"/>
+        <!-- 4→6 (D=3) CRITICAL -->
+        <line x1="338" y1="138" x2="482" y2="138" stroke="#f87171" stroke-width="2.5" marker-end="url(#arr-cp)"/>
+        <text x="400" y="131" fill="#f87171" font-size="12" font-family="IBM Plex Mono">D=3</text>
+        <!-- 6→7 (G=1) CRITICAL -->
+        <line x1="518" y1="140" x2="618" y2="140" stroke="#f87171" stroke-width="2.5" marker-end="url(#arr-cp)"/>
+        <text x="558" y="133" fill="#f87171" font-size="12" font-family="IBM Plex Mono">G=1</text>
+
+        <!-- Non-critical redraws on top -->
+        <text x="250" y="93" fill="#94a3b8" font-size="12" font-family="IBM Plex Mono">B=2</text>
+        <text x="252" y="133" fill="#94a3b8" font-size="12" font-family="IBM Plex Mono">C=1</text>
+
+        <!-- NODES -->
+        <!-- Node 1 -->
+        <circle cx="60" cy="140" r="22" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/>
+        <text x="60" y="136" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">1</text>
+        <text x="60" y="150" text-anchor="middle" fill="#f87171" font-size="9" font-family="IBM Plex Mono">E=0</text>
+        <!-- Node 2 -->
+        <circle cx="200" cy="140" r="22" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/>
+        <text x="200" y="136" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">2</text>
+        <text x="200" y="150" text-anchor="middle" fill="#f87171" font-size="9" font-family="IBM Plex Mono">E=3</text>
+        <!-- Node 3 -->
+        <circle cx="320" cy="60" r="22" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/>
+        <text x="320" y="56" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">3</text>
+        <text x="320" y="70" text-anchor="middle" fill="#f87171" font-size="9" font-family="IBM Plex Mono">E=5</text>
+        <!-- Node 4 -->
+        <circle cx="320" cy="140" r="22" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/>
+        <text x="320" y="136" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">4</text>
+        <text x="320" y="150" text-anchor="middle" fill="#f87171" font-size="9" font-family="IBM Plex Mono">E=5</text>
+        <!-- Node 5 -->
+        <circle cx="320" cy="220" r="22" fill="#0f2035" stroke="#7c3aed" stroke-width="1.5"/>
+        <text x="320" y="216" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">5</text>
+        <text x="320" y="230" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="IBM Plex Mono">E=6</text>
+        <!-- Node 6 -->
+        <circle cx="500" cy="140" r="22" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/>
+        <text x="500" y="136" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">6</text>
+        <text x="500" y="150" text-anchor="middle" fill="#f87171" font-size="9" font-family="IBM Plex Mono">E=8</text>
+        <!-- Node 7 -->
+        <circle cx="640" cy="140" r="22" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/>
+        <text x="640" y="136" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">7</text>
+        <text x="640" y="150" text-anchor="middle" fill="#f87171" font-size="9" font-family="IBM Plex Mono">E=9</text>
+
+        <!-- Legend -->
+        <rect x="10" y="10" width="220" height="52" rx="6" fill="rgba(6,16,31,0.8)" stroke="rgba(168,85,247,0.3)" stroke-width="1"/>
+        <line x1="22" y1="28" x2="55" y2="28" stroke="#f87171" stroke-width="2.5"/>
+        <text x="62" y="32" fill="#e2e8f0" font-size="11" font-family="IBM Plex Sans">Critical Path</text>
+        <line x1="22" y1="48" x2="55" y2="48" stroke="#7c3aed" stroke-width="2"/>
+        <text x="62" y="52" fill="#e2e8f0" font-size="11" font-family="IBM Plex Sans">Non-Critical</text>
+        <line x1="22" y1="48" x2="55" y2="48" stroke="#7c3aed" stroke-width="2" stroke-dasharray="5,3"/>
+        <text x="130" y="32" fill="#64748b" font-size="11" font-family="IBM Plex Sans">-- Dummy</text>
+      </svg>
+    </div>
+
+    <!-- Activity Table -->
+    <div class="card">
+      <h3>Activity Analysis Table</h3>
+      <table class="pass-table">
+        <tr><th>Activity</th><th>Description</th><th>Duration</th><th>ES</th><th>EF</th><th>LS</th><th>LF</th><th>Slack</th><th>Critical?</th></tr>
+        <tr class="cp-row"><td>A (1,2)</td><td>Design &amp; Financing</td><td>3</td><td>0</td><td>3</td><td>0</td><td>3</td><td>0</td><td>✓ YES</td></tr>
+        <tr class="cp-row"><td>B (2,3)</td><td>Lay Foundation</td><td>2</td><td>3</td><td>5</td><td>3</td><td>5</td><td>0</td><td>✓ YES</td></tr>
+        <tr><td>C (2,4)</td><td>Order Materials</td><td>1</td><td>3</td><td>4</td><td>4</td><td>5</td><td>1</td><td>No</td></tr>
+        <tr class="cp-row"><td>Dummy (3,4)</td><td>Dummy Activity</td><td>0</td><td>5</td><td>5</td><td>5</td><td>5</td><td>0</td><td>✓ YES</td></tr>
+        <tr class="cp-row"><td>D (4,6)</td><td>Build House</td><td>3</td><td>5</td><td>8</td><td>5</td><td>8</td><td>0</td><td>✓ YES</td></tr>
+        <tr><td>E (4,5)</td><td>Select Paint</td><td>1</td><td>5</td><td>6</td><td>6</td><td>7</td><td>1</td><td>No</td></tr>
+        <tr><td>F (5,6)</td><td>Select Carpet</td><td>1</td><td>6</td><td>7</td><td>7</td><td>8</td><td>1</td><td>No</td></tr>
+        <tr class="cp-row"><td>G (6,7)</td><td>Finish Work</td><td>1</td><td>8</td><td>9</td><td>8</td><td>9</td><td>0</td><td>✓ YES</td></tr>
+      </table>
+      <div class="slack-info">
+        <strong>Critical Path:</strong> 1 → 2 → 3 → 4 → 6 → 7 &nbsp;|&nbsp;
+        <strong>Completion Time:</strong> 9 months &nbsp;|&nbsp;
+        Activities C, E, F each have slack = 1 (can be delayed 1 month without impact)
+      </div>
+    </div>
+
+    <!-- All paths -->
+    <div class="card">
+      <h3>All Possible Paths</h3>
+      <table class="pass-table">
+        <tr><th>Path</th><th>Activities</th><th>Duration</th><th>Critical?</th></tr>
+        <tr class="cp-row"><td>Path 1</td><td>1→2→3→4→6→7 (A+B+dummy+D+G)</td><td>3+2+0+3+1 = <strong>9</strong></td><td>✓ Critical Path</td></tr>
+        <tr><td>Path 2</td><td>1→2→3→4→5→6→7 (A+B+dummy+E+F+G)</td><td>3+2+0+1+1+1 = 8</td><td>No</td></tr>
+        <tr><td>Path 3</td><td>1→2→4→6→7 (A+C+D+G)</td><td>3+1+3+1 = 8</td><td>No</td></tr>
+        <tr><td>Path 4</td><td>1→2→4→5→6→7 (A+C+E+F+G)</td><td>3+1+1+1+1 = 7</td><td>No</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── CPM EX 2 ── -->
+  <div id="cpm-ex2" class="tab-panel">
+    <div class="card">
+      <h3>9-Node Network</h3>
+      <p style="color:var(--text2);font-size:.9rem;margin-bottom:1rem">Find earliest times, latest times, slack values, and the critical path for the 9-node project network.</p>
+    </div>
+    <div class="network-wrap">
+      <svg viewBox="0 0 700 300" width="700" height="300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="a9" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#a855f7"/></marker>
+          <marker id="a9c" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#f87171"/></marker>
+        </defs>
+        <!-- Nodes positions: 1(50,150) 2(180,60) 3(180,150) 4(180,240) 5(360,150) 6(420,240) 7(500,60) 8(580,150) 9(660,150) -->
+        <!-- Edges -->
+        <!-- 1→2 d=2 -->
+        <line x1="68" y1="140" x2="162" y2="72" stroke="#7c3aed" stroke-width="2" marker-end="url(#a9)"/>
+        <text x="100" y="96" fill="#94a3b8" font-size="11" font-family="IBM Plex Mono">2</text>
+        <!-- 1→3 d=2 CRITICAL -->
+        <line x1="70" y1="150" x2="158" y2="150" stroke="#f87171" stroke-width="2.5" marker-end="url(#a9c)"/>
+        <text x="105" y="143" fill="#f87171" font-size="11" font-family="IBM Plex Mono">2</text>
+        <!-- 1→4 d=1 -->
+        <line x1="68" y1="160" x2="162" y2="228" stroke="#7c3aed" stroke-width="2" marker-end="url(#a9)"/>
+        <text x="100" y="210" fill="#94a3b8" font-size="11" font-family="IBM Plex Mono">1</text>
+        <!-- 2→6 d=4 -->
+        <line x1="196" y1="72" x2="404" y2="228" stroke="#7c3aed" stroke-width="2" marker-end="url(#a9)"/>
+        <!-- 3→5 d=5 CRITICAL -->
+        <line x1="198" y1="150" x2="342" y2="150" stroke="#f87171" stroke-width="2.5" marker-end="url(#a9c)"/>
+        <text x="262" y="143" fill="#f87171" font-size="11" font-family="IBM Plex Mono">5</text>
+        <!-- 4→5 d=8 -->
+        <line x1="196" y1="230" x2="344" y2="162" stroke="#7c3aed" stroke-width="2" marker-end="url(#a9)"/>
+        <!-- 5→7 d=4 -->
+        <line x1="376" y1="140" x2="484" y2="72" stroke="#7c3aed" stroke-width="2" marker-end="url(#a9)"/>
+        <!-- 5→8 d=4 -->
+        <line x1="378" y1="150" x2="562" y2="150" stroke="#7c3aed" stroke-width="2" marker-end="url(#a9)"/>
+        <!-- 5→9 d=5 CRITICAL -->
+        <line x1="378" y1="154" x2="638" y2="154" stroke="#f87171" stroke-width="2.5" marker-end="url(#a9c)"/>
+        <text x="500" y="147" fill="#f87171" font-size="11" font-family="IBM Plex Mono">5</text>
+        <!-- 6→9 d=5 -->
+        <line x1="434" y1="228" x2="644" y2="162" stroke="#7c3aed" stroke-width="2" marker-end="url(#a9)"/>
+        <!-- 7→8 d=1 -->
+        <line x1="518" y1="68" x2="564" y2="142" stroke="#7c3aed" stroke-width="2" marker-end="url(#a9)"/>
+        <!-- 8→9 d=3 -->
+        <line x1="598" y1="150" x2="638" y2="150" stroke="#7c3aed" stroke-width="2" marker-end="url(#a9)"/>
+        <text x="612" y="143" fill="#94a3b8" font-size="11" font-family="IBM Plex Mono">3</text>
+
+        <!-- Nodes with E and L values -->
+        <!-- Node 1: E=0,L=0 -->
+        <circle cx="50" cy="150" r="22" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/>
+        <text x="50" y="153" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">1</text>
+        <text x="50" y="132" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="IBM Plex Mono">L=0</text>
+        <text x="50" y="124" text-anchor="middle" fill="#39d97b" font-size="9" font-family="IBM Plex Mono">E=0</text>
+        <!-- Node 2: E=2,L=7 -->
+        <circle cx="180" cy="60" r="22" fill="#0f2035" stroke="#7c3aed" stroke-width="1.5"/>
+        <text x="180" y="63" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">2</text>
+        <text x="180" y="40" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="IBM Plex Mono">L=7</text>
+        <text x="180" y="32" text-anchor="middle" fill="#39d97b" font-size="9" font-family="IBM Plex Mono">E=2</text>
+        <!-- Node 3: E=2,L=2 -->
+        <circle cx="180" cy="150" r="22" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/>
+        <text x="180" y="153" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">3</text>
+        <text x="158" y="155" text-anchor="end" fill="#94a3b8" font-size="9" font-family="IBM Plex Mono">L=2</text>
+        <text x="158" y="145" text-anchor="end" fill="#39d97b" font-size="9" font-family="IBM Plex Mono">E=2</text>
+        <!-- Node 4: E=1,L=7 -->
+        <circle cx="180" cy="240" r="22" fill="#0f2035" stroke="#7c3aed" stroke-width="1.5"/>
+        <text x="180" y="243" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">4</text>
+        <text x="180" y="270" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="IBM Plex Mono">L=7</text>
+        <text x="180" y="278" text-anchor="middle" fill="#39d97b" font-size="9" font-family="IBM Plex Mono">E=1</text>
+        <!-- Node 5: E=7,L=7 -->
+        <circle cx="360" cy="150" r="22" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/>
+        <text x="360" y="153" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">5</text>
+        <text x="360" y="130" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="IBM Plex Mono">L=7</text>
+        <text x="360" y="122" text-anchor="middle" fill="#39d97b" font-size="9" font-family="IBM Plex Mono">E=7</text>
+        <!-- Node 6: E=6,L=7 -->
+        <circle cx="420" cy="240" r="22" fill="#0f2035" stroke="#7c3aed" stroke-width="1.5"/>
+        <text x="420" y="243" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">6</text>
+        <text x="420" y="270" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="IBM Plex Mono">L=7</text>
+        <text x="420" y="278" text-anchor="middle" fill="#39d97b" font-size="9" font-family="IBM Plex Mono">E=6</text>
+        <!-- Node 7: E=11,L=12 -->
+        <circle cx="500" cy="60" r="22" fill="#0f2035" stroke="#7c3aed" stroke-width="1.5"/>
+        <text x="500" y="63" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">7</text>
+        <text x="500" y="40" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="IBM Plex Mono">L=12</text>
+        <text x="500" y="32" text-anchor="middle" fill="#39d97b" font-size="9" font-family="IBM Plex Mono">E=11</text>
+        <!-- Node 8: E=12,L=12 -->
+        <circle cx="580" cy="150" r="22" fill="#0f2035" stroke="#7c3aed" stroke-width="1.5"/>
+        <text x="580" y="153" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">8</text>
+        <text x="580" y="130" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="IBM Plex Mono">L=12</text>
+        <text x="580" y="122" text-anchor="middle" fill="#39d97b" font-size="9" font-family="IBM Plex Mono">E=12</text>
+        <!-- Node 9: E=15,L=15 -->
+        <circle cx="660" cy="150" r="22" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/>
+        <text x="660" y="153" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">9</text>
+        <text x="660" y="130" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="IBM Plex Mono">L=15</text>
+        <text x="660" y="122" text-anchor="middle" fill="#39d97b" font-size="9" font-family="IBM Plex Mono">E=15</text>
+
+        <!-- Labels -->
+        <text x="185" y="200" fill="#94a3b8" font-size="10" font-family="IBM Plex Mono">4→5: d=8</text>
+        <text x="282" y="220" fill="#94a3b8" font-size="10" font-family="IBM Plex Mono">6→9:5</text>
+        <text x="390" y="108" fill="#94a3b8" font-size="10" font-family="IBM Plex Mono">5→7:4</text>
+        <text x="455" y="106" fill="#94a3b8" font-size="10" font-family="IBM Plex Mono">7→8:1</text>
+        <text x="580" y="143" fill="#94a3b8" font-size="9" font-family="IBM Plex Mono">8→9:3</text>
+      </svg>
+    </div>
+    <div class="slack-info">
+      <strong>Critical Path: 1 → 3 → 5 → 9</strong> &nbsp;|&nbsp;
+      <strong>Completion Time = 15</strong>
+      <br>Path: d(1,3)=2 + d(3,5)=5 + d(5,9)=5 + d(last)=3 = 15
+      <br>Slack values: S₁=0, S₂=5, S₃=0, S₄=6, S₅=0, S₆=1, S₇=1, S₈=0, S₉=0
+    </div>
+  </div>
+
+  <!-- ── CPM EX 3 ── -->
+  <div id="cpm-ex3" class="tab-panel">
+    <div class="card">
+      <h3>5-Node Network</h3>
+      <p style="color:var(--text2);font-size:.9rem;margin-bottom:1rem">Find the critical path for this compact 5-node network with multiple paths from node 2 to node 4.</p>
+    </div>
+    <div class="network-wrap">
+      <svg viewBox="0 0 600 260" width="600" height="260" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="a5" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#a855f7"/></marker>
+          <marker id="a5c" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#f87171"/></marker>
+        </defs>
+        <!-- Nodes: 1(60,130) 2(220,130) 3(350,50) 4(440,130) 5(560,130) -->
+        <!-- Edges -->
+        <!-- 1→2 d=3 CRITICAL -->
+        <line x1="82" y1="130" x2="198" y2="130" stroke="#f87171" stroke-width="2.5" marker-end="url(#a5c)"/>
+        <text x="133" y="120" fill="#f87171" font-size="12" font-family="IBM Plex Mono">3</text>
+        <!-- 2→3 d=6 CRITICAL -->
+        <line x1="236" y1="118" x2="334" y2="64" stroke="#f87171" stroke-width="2.5" marker-end="url(#a5c)"/>
+        <text x="274" y="82" fill="#f87171" font-size="12" font-family="IBM Plex Mono">6</text>
+        <!-- 2→4 d=7 -->
+        <line x1="240" y1="130" x2="418" y2="130" stroke="#7c3aed" stroke-width="2" marker-end="url(#a5)"/>
+        <text x="323" y="120" fill="#94a3b8" font-size="12" font-family="IBM Plex Mono">7</text>
+        <!-- 2→5 d=8 -->
+        <line x1="238" y1="140" x2="538" y2="140" stroke="#7c3aed" stroke-width="2" marker-end="url(#a5)"/>
+        <text x="375" y="158" fill="#94a3b8" font-size="11" font-family="IBM Plex Mono">8 (2→5)</text>
+        <!-- 3→4 d=4 CRITICAL -->
+        <line x1="366" y1="62" x2="424" y2="116" stroke="#f87171" stroke-width="2.5" marker-end="url(#a5c)"/>
+        <text x="402" y="82" fill="#f87171" font-size="12" font-family="IBM Plex Mono">4</text>
+        <!-- 4→5 d=5 CRITICAL -->
+        <line x1="460" y1="130" x2="538" y2="130" stroke="#f87171" stroke-width="2.5" marker-end="url(#a5c)"/>
+        <text x="492" y="120" fill="#f87171" font-size="12" font-family="IBM Plex Mono">5</text>
+
+        <!-- Nodes -->
+        <circle cx="60" cy="130" r="22" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/>
+        <text x="60" y="134" text-anchor="middle" fill="#fff" font-size="14" font-family="Syne" font-weight="700">1</text>
+        <rect x="40" y="108" width="40" height="16" rx="2" fill="#0b1828" stroke="rgba(168,85,247,0.2)"/>
+        <text x="60" y="119" text-anchor="middle" fill="#39d97b" font-size="9" font-family="IBM Plex Mono">E=0</text>
+
+        <circle cx="220" cy="130" r="22" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/>
+        <text x="220" y="134" text-anchor="middle" fill="#fff" font-size="14" font-family="Syne" font-weight="700">2</text>
+        <rect x="200" y="108" width="40" height="16" rx="2" fill="#0b1828" stroke="rgba(168,85,247,0.2)"/>
+        <text x="220" y="119" text-anchor="middle" fill="#39d97b" font-size="9" font-family="IBM Plex Mono">E=3</text>
+
+        <circle cx="350" cy="50" r="22" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/>
+        <text x="350" y="54" text-anchor="middle" fill="#fff" font-size="14" font-family="Syne" font-weight="700">3</text>
+        <rect x="330" y="28" width="40" height="16" rx="2" fill="#0b1828" stroke="rgba(168,85,247,0.2)"/>
+        <text x="350" y="39" text-anchor="middle" fill="#39d97b" font-size="9" font-family="IBM Plex Mono">E=9</text>
+
+        <circle cx="440" cy="130" r="22" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/>
+        <text x="440" y="134" text-anchor="middle" fill="#fff" font-size="14" font-family="Syne" font-weight="700">4</text>
+        <rect x="420" y="108" width="40" height="16" rx="2" fill="#0b1828" stroke="rgba(168,85,247,0.2)"/>
+        <text x="440" y="119" text-anchor="middle" fill="#39d97b" font-size="9" font-family="IBM Plex Mono">E=13</text>
+
+        <circle cx="560" cy="130" r="22" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/>
+        <text x="560" y="134" text-anchor="middle" fill="#fff" font-size="14" font-family="Syne" font-weight="700">5</text>
+        <rect x="540" y="108" width="40" height="16" rx="2" fill="#0b1828" stroke="rgba(168,85,247,0.2)"/>
+        <text x="560" y="119" text-anchor="middle" fill="#39d97b" font-size="9" font-family="IBM Plex Mono">E=18</text>
+      </svg>
+    </div>
+    <div class="slack-info">
+      <strong>Critical Path: 1 → 2 → 3 → 4 → 5</strong> &nbsp;|&nbsp;
+      <strong>Completion Time = 18</strong>
+      <br>Path: 3 + 6 + 4 + 5 = 18 &nbsp;(longest path)
+      <br>Path (1→2→4→5): 3+7+5 = 15 &nbsp;|&nbsp; Path (1→2→5): 3+8 = 11 &nbsp;|&nbsp; Both non-critical
+    </div>
+    <table class="pass-table" style="margin-top:.75rem">
+      <tr><th>Activity</th><th>Duration</th><th>ES</th><th>EF</th><th>LS</th><th>LF</th><th>Slack</th><th>Critical?</th></tr>
+      <tr class="cp-row"><td>(1,2)</td><td>3</td><td>0</td><td>3</td><td>0</td><td>3</td><td>0</td><td>✓ YES</td></tr>
+      <tr class="cp-row"><td>(2,3)</td><td>6</td><td>3</td><td>9</td><td>3</td><td>9</td><td>0</td><td>✓ YES</td></tr>
+      <tr><td>(2,4)</td><td>7</td><td>3</td><td>10</td><td>6</td><td>13</td><td>3</td><td>No</td></tr>
+      <tr><td>(2,5)</td><td>8</td><td>3</td><td>11</td><td>7</td><td>18</td><td>7</td><td>No</td></tr>
+      <tr class="cp-row"><td>(3,4)</td><td>4</td><td>9</td><td>13</td><td>9</td><td>13</td><td>0</td><td>✓ YES</td></tr>
+      <tr class="cp-row"><td>(4,5)</td><td>5</td><td>13</td><td>18</td><td>13</td><td>18</td><td>0</td><td>✓ YES</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 4 — PERT METHOD
+═══════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-title">PERT — Probabilistic Scheduling</div>
+
+  <div class="card">
+    <h3>Three Time Estimates</h3>
+    <p style="color:var(--text2);font-size:.9rem;margin-bottom:1rem">PERT handles uncertainty by collecting three estimates for each activity's duration, then using a weighted average (beta distribution):</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
+      <div style="padding:1rem;background:rgba(57,217,123,0.08);border:1px solid rgba(57,217,123,0.25);border-radius:8px;text-align:center">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:1.3rem;color:#39d97b;font-weight:600">tₒ</div>
+        <div style="font-family:'Syne',sans-serif;color:var(--accent3);font-size:.85rem;margin:.3rem 0">Optimistic</div>
+        <div style="color:var(--text2);font-size:.82rem">Minimum reasonable time — best case scenario if everything goes perfectly</div>
+      </div>
+      <div style="padding:1rem;background:rgba(168,85,247,0.08);border:1px solid var(--border);border-radius:8px;text-align:center">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:1.3rem;color:var(--accent3);font-weight:600">t_m</div>
+        <div style="font-family:'Syne',sans-serif;color:var(--accent3);font-size:.85rem;margin:.3rem 0">Most Likely</div>
+        <div style="color:var(--text2);font-size:.82rem">The most realistic duration — the mode of the distribution</div>
+      </div>
+      <div style="padding:1rem;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.25);border-radius:8px;text-align:center">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:1.3rem;color:#f87171;font-weight:600">t_p</div>
+        <div style="font-family:'Syne',sans-serif;color:var(--accent3);font-size:.85rem;margin:.3rem 0">Pessimistic</div>
+        <div style="color:var(--text2);font-size:.82rem">Maximum reasonable time — worst case if everything goes wrong</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERT Formulas -->
+  <div class="two-col">
+    <div class="formula-box">
+      <span class="label">Expected (Mean) Time:</span>
+      tₑ = (tₒ + 4·t_m + tₚ) / 6
+      <br><br>
+      <span class="label">Standard Deviation of Activity:</span>
+      σ = (tₚ − tₒ) / 6
+      <br><br>
+      <span class="label">Variance of Activity:</span>
+      σ² = [(tₚ − tₒ) / 6]²
+    </div>
+    <div class="formula-box">
+      <span class="label">Total σ of Critical Path:</span>
+      σ_CP = √(Σ σᵢ²)  [sum of CP variances]
+      <br><br>
+      <span class="label">Z-score (probability):</span>
+      Z = (T − T_CP) / σ_CP
+      <br><br>
+      <span class="label">Where:</span>
+      T = target completion date
+      T_CP = expected critical path time
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Reading the Z-table</h3>
+    <p style="color:var(--text2);font-size:.9rem;margin-bottom:.75rem">Once you compute Z, look it up in the standard normal table to find P(complete by T):</p>
+    <table class="cond-table">
+      <tr><th>Z</th><th>0.00</th><th>0.25</th><th>0.50</th><th>0.75</th><th>1.00</th><th>1.16</th><th>1.50</th><th>2.00</th></tr>
+      <tr><td style="color:var(--accent3)">P(Z)</td><td>0.5000</td><td>0.5987</td><td>0.6915</td><td>0.7734</td><td>0.8413</td><td>0.8770</td><td>0.9332</td><td>0.9772</td></tr>
+    </table>
+    <p style="color:var(--text2);font-size:.85rem;margin-top:.75rem">Z = 0 means T = T_CP → 50% chance. Z = 1.16 → 87.7% chance. Negative Z → less than 50% chance.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 5 — PERT INTERACTIVE CALCULATOR
+═══════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-title">PERT Calculator</div>
+
+  <div class="pert-calc">
+    <h3>Single Activity PERT Calculator</h3>
+    <p style="color:var(--text2);font-size:.88rem;margin-bottom:1rem">Enter the three time estimates for one activity to compute tₑ, σ, and σ².</p>
+    <div class="calc-grid">
+      <div class="input-group"><label>tₒ — Optimistic</label><input type="number" id="to" placeholder="e.g. 4" step="0.1"></div>
+      <div class="input-group"><label>t_m — Most Likely</label><input type="number" id="tm" placeholder="e.g. 7" step="0.1"></div>
+      <div class="input-group"><label>t_p — Pessimistic</label><input type="number" id="tp" placeholder="e.g. 10" step="0.1"></div>
+    </div>
+    <button class="calc-btn" onclick="calcPERT()">Calculate</button>
+    <div class="calc-result" id="pert-result">
+      <div class="res-line">Expected time:  <span id="res-te">—</span></div>
+      <div class="res-line">Std deviation:  <span id="res-sigma">—</span></div>
+      <div class="res-line">Variance:       <span id="res-var">—</span></div>
+    </div>
+  </div>
+
+  <div class="pert-calc">
+    <h3>Project Completion Probability Calculator</h3>
+    <p style="color:var(--text2);font-size:.88rem;margin-bottom:1rem">Given the critical path duration and its standard deviation, find the probability of finishing by a target date T.</p>
+    <div class="calc-grid">
+      <div class="input-group"><label>T_CP — Critical Path Time</label><input type="number" id="tcp" placeholder="e.g. 12" step="0.1"></div>
+      <div class="input-group"><label>σ_CP — Std Dev of CP</label><input type="number" id="sigcp" placeholder="e.g. 1.73" step="0.01"></div>
+      <div class="input-group"><label>T — Target Date</label><input type="number" id="targ" placeholder="e.g. 14" step="0.1"></div>
+    </div>
+    <button class="calc-btn" onclick="calcProb()">Calculate Probability</button>
+    <div class="calc-result" id="prob-result">
+      <div class="res-line">Z-score:        <span id="res-z">—</span></div>
+      <div class="res-line">Probability:    <span id="res-prob">—</span></div>
+      <div class="res-line">Interpretation: <span id="res-interp">—</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 6 — PERT EXAMPLES
+═══════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-title">PERT — Worked Examples</div>
+
+  <div class="tab-bar" id="pert-tabs">
+    <button class="tab-btn active" onclick="switchTab('pert','p1',this)">Example 4 — Probability Analysis</button>
+    <button class="tab-btn" onclick="switchTab('pert','p2',this)">Example 5 — 11-Task Network</button>
+  </div>
+
+  <!-- ── PERT EX 4 ── -->
+  <div id="pert-p1" class="tab-panel active">
+    <div class="card">
+      <h3>Example 4: Probability of Completing by 12, 14, or 10 Days</h3>
+      <p style="color:var(--text2);font-size:.9rem;margin-bottom:1rem">A project network where each activity has three time estimates. Find the critical path using expected times, then compute probabilities.</p>
+    </div>
+
+    <!-- Time table -->
+    <div class="card">
+      <h3>Activity Time Estimates &amp; Expected Values</h3>
+      <table class="pass-table">
+        <tr><th>Activity</th><th>tₒ</th><th>t_m</th><th>tₚ</th><th>tₑ = (tₒ+4t_m+tₚ)/6</th><th>σ=(tₚ−tₒ)/6</th><th>Variance σ²</th></tr>
+        <tr><td>(1,2)</td><td>1</td><td>2</td><td>3</td><td style="color:var(--accent3)">(1+8+3)/6 = <strong>2</strong></td><td>0.33</td><td>0.11</td></tr>
+        <tr><td>(2,3)</td><td>1</td><td>4</td><td>7</td><td style="color:var(--accent3)">(1+16+7)/6 = <strong>4</strong></td><td>1.00</td><td>1.00</td></tr>
+        <tr><td>(2,4)</td><td>1</td><td>2</td><td>9</td><td>(1+8+9)/6 = 3</td><td>1.33</td><td>1.77</td></tr>
+        <tr><td>(3,5)</td><td>1</td><td>2</td><td>9</td><td>(1+8+9)/6 = 3</td><td>1.33</td><td>1.77</td></tr>
+        <tr><td>(4,5)</td><td>2</td><td>3</td><td>4</td><td>(2+12+4)/6 = 3</td><td>0.33</td><td>0.11</td></tr>
+        <tr><td>(5,6)</td><td>2</td><td>3</td><td>4</td><td>(2+12+4)/6 = 3</td><td>0.33</td><td>0.11</td></tr>
+      </table>
+    </div>
+
+    <!-- Network diagram -->
+    <div class="network-wrap">
+      <svg viewBox="0 0 620 200" width="620" height="200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="pe4" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#a855f7"/></marker>
+          <marker id="pe4c" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#f87171"/></marker>
+        </defs>
+        <!-- Nodes: 1(50,100) 2(170,100) 3(300,40) 4(300,160) 5(440,100) 6(560,100) -->
+        <!-- 1→2 CP -->
+        <line x1="72" y1="100" x2="148" y2="100" stroke="#f87171" stroke-width="2.5" marker-end="url(#pe4c)"/>
+        <text x="103" y="90" fill="#f87171" font-size="11" font-family="IBM Plex Mono">tₑ=2</text>
+        <!-- 2→3 CP -->
+        <line x1="185" y1="88" x2="284" y2="52" stroke="#f87171" stroke-width="2.5" marker-end="url(#pe4c)"/>
+        <text x="220" y="61" fill="#f87171" font-size="11" font-family="IBM Plex Mono">tₑ=4</text>
+        <!-- 2→4 -->
+        <line x1="185" y1="112" x2="282" y2="150" stroke="#7c3aed" stroke-width="2" marker-end="url(#pe4)"/>
+        <text x="220" y="148" fill="#94a3b8" font-size="11" font-family="IBM Plex Mono">tₑ=3</text>
+        <!-- 3→5 CP -->
+        <line x1="316" y1="52" x2="422" y2="88" stroke="#f87171" stroke-width="2.5" marker-end="url(#pe4c)"/>
+        <text x="360" y="60" fill="#f87171" font-size="11" font-family="IBM Plex Mono">tₑ=3</text>
+        <!-- 4→5 -->
+        <line x1="316" y1="153" x2="422" y2="113" stroke="#7c3aed" stroke-width="2" marker-end="url(#pe4)"/>
+        <text x="360" y="148" fill="#94a3b8" font-size="11" font-family="IBM Plex Mono">tₑ=3</text>
+        <!-- 5→6 CP -->
+        <line x1="460" y1="100" x2="538" y2="100" stroke="#f87171" stroke-width="2.5" marker-end="url(#pe4c)"/>
+        <text x="490" y="90" fill="#f87171" font-size="11" font-family="IBM Plex Mono">tₑ=3</text>
+        <!-- Nodes -->
+        <circle cx="50" cy="100" r="20" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/><text x="50" y="104" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">1</text>
+        <circle cx="170" cy="100" r="20" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/><text x="170" y="104" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">2</text>
+        <circle cx="300" cy="40" r="20" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/><text x="300" y="44" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">3</text>
+        <circle cx="300" cy="160" r="20" fill="#0f2035" stroke="#7c3aed" stroke-width="1.5"/><text x="300" y="164" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">4</text>
+        <circle cx="440" cy="100" r="20" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/><text x="440" y="104" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">5</text>
+        <circle cx="560" cy="100" r="20" fill="#0f2035" stroke="#f87171" stroke-width="2.5"/><text x="560" y="104" text-anchor="middle" fill="#fff" font-size="13" font-family="Syne" font-weight="700">6</text>
+      </svg>
+    </div>
+
+    <div class="slack-info">
+      <strong>Critical Path: (1,2) → (2,3) → (3,5) → (5,6)</strong> &nbsp;|&nbsp; <strong>T_CP = 2 + 4 + 3 + 3 = 12 days</strong><br>
+      σ_CP = √(σ²(1,2) + σ²(2,3) + σ²(3,5) + σ²(5,6)) = √(0.11 + 1 + 1.77 + 0.11) = √2.99 ≈ <strong>1.73</strong>
+    </div>
+
+    <!-- Probability analysis -->
+    <div class="card" style="margin-top:1rem">
+      <h3>Probability Calculations</h3>
+      <table class="pass-table">
+        <tr><th>Target T</th><th>Formula</th><th>Z</th><th>P(complete by T)</th><th>Interpretation</th></tr>
+        <tr><td style="color:var(--accent3)">12 days</td><td>Z = (12−12)/1.73</td><td>0.00</td><td class="hl-accent">50.0%</td><td>At the expected time — coin flip</td></tr>
+        <tr><td style="color:var(--green)">14 days</td><td>Z = (14−12)/1.73</td><td>1.16</td><td class="hl-green">87.7%</td><td>Very likely to finish by this date</td></tr>
+        <tr><td style="color:var(--red)">10 days</td><td>Z = (10−12)/1.73</td><td>−1.16</td><td class="hl-red">12.3%</td><td>Very unlikely — only 12.3% chance</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── PERT EX 5 ── -->
+  <div id="pert-p2" class="tab-panel">
+    <div class="card">
+      <h3>Example 5: 11-Task PERT Network (A through K)</h3>
+      <p style="color:var(--text2);font-size:.9rem;margin-bottom:1rem">An 8-node PERT network with 11 activities. Compute expected times, find the critical path, and determine earliest/latest times.</p>
+    </div>
+
+    <div class="card">
+      <h3>Activity Expected Times &amp; Variances</h3>
+      <table class="pass-table">
+        <tr><th>Task</th><th>tₒ</th><th>t_m</th><th>tₚ</th><th>tₑ</th><th>σ</th><th>σ²</th><th>CP?</th></tr>
+        <tr class="cp-row"><td>A (1,2)</td><td>4</td><td>5</td><td>8</td><td>5.33</td><td>0.67</td><td>0.4489</td><td>✓</td></tr>
+        <tr class="cp-row"><td>B (1,3)</td><td>5</td><td>7</td><td>10</td><td>7.17</td><td>0.83</td><td>0.6889</td><td>✓</td></tr>
+        <tr><td>C (2,3)</td><td>8</td><td>11</td><td>12</td><td>10.67</td><td>0.67</td><td>0.4489</td><td></td></tr>
+        <tr><td>D (1,4)</td><td>2</td><td>3</td><td>7</td><td>3.5</td><td>0.83</td><td>0.6889</td><td></td></tr>
+        <tr class="cp-row"><td>E (3,5)</td><td>4</td><td>7</td><td>10</td><td>7.00</td><td>1.00</td><td>1.0000</td><td>✓</td></tr>
+        <tr><td>F (3,6) — via 4</td><td>6</td><td>9</td><td>15</td><td>9.5</td><td>1.5</td><td>2.25</td><td></td></tr>
+        <tr><td>G (4,6)</td><td>8</td><td>12</td><td>16</td><td>12.0</td><td>1.33</td><td>1.7689</td><td></td></tr>
+        <tr class="cp-row"><td>H (5,7)</td><td>5</td><td>6</td><td>9</td><td>6.33</td><td>0.67</td><td>0.4489</td><td>✓</td></tr>
+        <tr><td>I (5,6) — via 6</td><td>3</td><td>5</td><td>7</td><td>5.00</td><td>0.67</td><td>0.4489</td><td></td></tr>
+        <tr><td>J (6,8)</td><td>5</td><td>8</td><td>11</td><td>8.00</td><td>1.00</td><td>1.0000</td><td></td></tr>
+        <tr class="cp-row"><td>K (7,8)</td><td>6</td><td>9</td><td>13</td><td>9.17</td><td>1.17</td><td>1.3689</td><td>✓</td></tr>
+      </table>
+    </div>
+
+    <div class="slack-info">
+      <strong>Critical Path: (1,2) → (2,3) → (3,5) → (5,7) → (7,8)</strong>
+      via activities A, B (B is start of CP on 1→3 branch), E, H, K
+      <br>
+      Actually CP uses node path: <strong>1 → 2 → 3 → 5 → 7 → 8</strong>
+      &nbsp;with tₑ values: 5.33 + (via node2,3: need C or direct) ...
+      <br>
+      <strong>CP: 1 → 3 → 5 → 7 → 8</strong> via B(7.17) + E(7) + H(6.33) + K(9.17) — but from 1, path via node 2 uses A+C = 5.33+10.67=16 to reach node 3 vs direct B=7.17. So node 3 earliest = max(16, 7.17) = 16.
+      <br>
+      Effective CP: <strong>1→2→3→5→7→8</strong> = A(5.33) + C(10.67) + E(7) + H(6.33) + K(9.17) = <strong>38.5</strong>
+    </div>
+
+    <div class="card" style="margin-top:1rem">
+      <h3>Node Earliest &amp; Latest Times</h3>
+      <table class="pass-table">
+        <tr><th>Node</th><th>Earliest Time E</th><th>Latest Time L</th><th>Slack S = L − E</th></tr>
+        <tr class="cp-row"><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr class="cp-row"><td>2</td><td>5.33</td><td>5.33</td><td>0</td></tr>
+        <tr class="cp-row"><td>3</td><td>16</td><td>16</td><td>0</td></tr>
+        <tr><td>4</td><td>3.5</td><td>13.5</td><td>10</td></tr>
+        <tr class="cp-row"><td>5</td><td>23</td><td>23</td><td>0</td></tr>
+        <tr><td>6</td><td>28</td><td>30.5</td><td>2.5</td></tr>
+        <tr class="cp-row"><td>7</td><td>29.33</td><td>29.33</td><td>0</td></tr>
+        <tr class="cp-row"><td>8</td><td>38.5</td><td>38.5</td><td>0</td></tr>
+      </table>
+      <div class="slack-info" style="margin-top:.75rem">
+        <strong>Completion Time = 38.5</strong> &nbsp;|&nbsp; 
+        Node 4 has the most slack (10) — activities through it can be delayed significantly &nbsp;|&nbsp;
+        Node 6 has slack 2.5 — moderate flexibility
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 7 — QUICK REFERENCE
+═══════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-title">Quick Reference Summary</div>
+  <div class="two-col">
+    <div class="card">
+      <h3>CPM Step-by-Step</h3>
+      <div class="step-list">
+        <div class="step"><div class="step-num">1</div><div class="step-body">Draw the project network (AON or AOA) with all activities and their durations.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Forward Pass:</strong> Set E₁=0, compute Eⱼ = max{Eᵢ + Dᵢⱼ} moving left→right.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Backward Pass:</strong> Set Lₙ=Eₙ, compute Lᵢ = min{Lⱼ − Dᵢⱼ} moving right→left.</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body">Compute slack for each activity: Slack = LS − ES = LF − EF.</div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body">Identify the <strong>Critical Path</strong> — activities with slack = 0.</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>PERT Step-by-Step</h3>
+      <div class="step-list">
+        <div class="step"><div class="step-num">1</div><div class="step-body">Collect tₒ, t_m, tₚ for each activity.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body">Compute tₑ = (tₒ + 4t_m + tₚ)/6 for each activity.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body">Apply CPM using tₑ values to find the critical path.</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body">Compute σ = (tₚ − tₒ)/6 and σ² for each CP activity.</div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body">σ_CP = √(Σ σ²_CP). Then Z = (T − T_CP)/σ_CP. Look up Z in normal table.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key differences table -->
+  <table class="cond-table" style="margin-top:.5rem">
+    <tr><th>Feature</th><th>CPM</th><th>PERT</th></tr>
+    <tr><td>Duration estimates</td><td>Single (certain)</td><td>Three (optimistic, most likely, pessimistic)</td></tr>
+    <tr><td>Time nature</td><td>Deterministic</td><td>Probabilistic / stochastic</td></tr>
+    <tr><td>Output</td><td>Exact project duration</td><td>Expected duration + probability of completion</td></tr>
+    <tr><td>Best for</td><td>Repetitive, well-known activities</td><td>Novel, research, or uncertain activities</td></tr>
+    <tr><td>Critical path</td><td>Longest path (exact durations)</td><td>Longest path (using tₑ values)</td></tr>
+    <tr><td>Slack</td><td>Exact (LS − ES)</td><td>Based on expected times</td></tr>
+  </table>
+</div>
+
+<!-- FOOTER NAV -->
+<div class="foot-nav">
+  <a href="lecture4.html" class="foot-link">← Lecture 4 — Assignment Problem</a>
+  <a href="index.html" class="foot-link">Home →</a>
+</div>
+
+<script>
+// ── TAB SWITCHER ──
+function switchTab(group, id, btn) {
+  document.querySelectorAll('#' + group + '-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // panels use group prefix
+  const prefix = group === 'cpm' ? 'cpm-' : 'pert-';
+  document.querySelectorAll('[id^="' + prefix + '"]').forEach(p => p.classList.remove('active'));
+  document.getElementById(prefix + id).classList.add('active');
+}
+
+// ── PERT SINGLE ACTIVITY CALC ──
+function calcPERT() {
+  const to = parseFloat(document.getElementById('to').value);
+  const tm = parseFloat(document.getElementById('tm').value);
+  const tp = parseFloat(document.getElementById('tp').value);
+  if (isNaN(to) || isNaN(tm) || isNaN(tp)) { alert('Please enter all three values.'); return; }
+  if (to > tm || tm > tp) { alert('Values must satisfy: tₒ ≤ t_m ≤ tₚ'); return; }
+  const te = (to + 4*tm + tp) / 6;
+  const sigma = (tp - to) / 6;
+  const variance = sigma * sigma;
+  document.getElementById('res-te').textContent = te.toFixed(4) + ' = (' + to + ' + 4×' + tm + ' + ' + tp + ') / 6';
+  document.getElementById('res-sigma').textContent = sigma.toFixed(4) + ' = (' + tp + ' − ' + to + ') / 6';
+  document.getElementById('res-var').textContent = variance.toFixed(4);
+  document.getElementById('pert-result').classList.add('show');
+}
+
+// ── PROBABILITY CALCULATOR ──
+// Standard normal CDF using error function approximation
+function normCDF(z) {
+  const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;
+  const sign = z < 0 ? -1 : 1;
+  z = Math.abs(z);
+  const t = 1/(1+p*z);
+  const y = 1-(((((a5*t+a4)*t)+a3)*t+a2)*t+a1)*t*Math.exp(-z*z);
+  return 0.5*(1+sign*y);
+}
+
+function calcProb() {
+  const tcp = parseFloat(document.getElementById('tcp').value);
+  const sig = parseFloat(document.getElementById('sigcp').value);
+  const t = parseFloat(document.getElementById('targ').value);
+  if (isNaN(tcp) || isNaN(sig) || isNaN(t)) { alert('Please fill in all fields.'); return; }
+  if (sig <= 0) { alert('σ_CP must be positive.'); return; }
+  const z = (t - tcp) / sig;
+  const prob = normCDF(z);
+  const pct = (prob * 100).toFixed(1);
+  let interp = '';
+  if (z < -2) interp = 'Very unlikely — less than 2.5% chance';
+  else if (z < -1) interp = 'Below average — challenging deadline';
+  else if (z < 0) interp = 'Below expected — less than 50% chance';
+  else if (z === 0) interp = 'Equal to expected completion time — 50% chance';
+  else if (z < 1) interp = 'Slightly above expected — reasonable confidence';
+  else if (z < 2) interp = 'Good buffer — comfortable probability';
+  else interp = 'Very likely — ample time allocated';
+  document.getElementById('res-z').textContent = z.toFixed(3);
+  document.getElementById('res-prob').textContent = pct + '% (ψ(' + z.toFixed(2) + ') = ' + prob.toFixed(4) + ')';
+  document.getElementById('res-interp').textContent = interp;
+  document.getElementById('prob-result').classList.add('show');
+}
+
+// ── ACCORDION ──
+document.querySelectorAll('.accordion-hdr').forEach(hdr => {
+  hdr.addEventListener('click', () => {
+    const item = hdr.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>
