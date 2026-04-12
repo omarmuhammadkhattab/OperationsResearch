@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lecture 2 — Graphical &amp; Simplex Methods</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#06101f;--surface:#0b1929;--surface2:#0f2040;--border:#1a3050;--accent:#ff6b35;--accent-cool:#00c8ff;--gold:#f0b429;--green:#39d97b;--text:#c8e0f4;--muted:#4e7090;--white:#e8f4ff}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:0.2;pointer-events:none;z-index:0}
+.container{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:0 2rem}
+nav{position:sticky;top:0;z-index:100;background:rgba(6,16,31,0.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;gap:1.5rem;min-height:52px;flex-wrap:wrap;row-gap:0}
+nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;font-size:.95rem;margin-right:auto;text-decoration:none;white-space:nowrap}
+nav a:not(.brand){color:var(--muted);text-decoration:none;font-size:.82rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.05em;padding:.25rem .5rem;border-radius:4px;transition:color .2s,background .2s;white-space:nowrap}
+nav a:not(.brand):hover,nav a.active{color:var(--accent);background:rgba(0,200,255,0.08)}
+.lec-hero{padding:4rem 0 3rem;border-bottom:1px solid var(--border);margin-bottom:3rem}
+.lec-num{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.2em;color:var(--accent);margin-bottom:1rem}
+.lec-hero h1{font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:800;color:var(--white);line-height:1.1;margin-bottom:1rem}
+.lec-hero h1 em{font-style:normal;color:var(--accent)}
+.lec-intro{font-size:1.05rem;line-height:1.8;max-width:680px}
+.toc{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.5rem;margin-bottom:3rem}
+.toc-title{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;color:var(--muted);margin-bottom:1rem}
+.toc ul{list-style:none;display:flex;flex-wrap:wrap;gap:0.5rem}
+.toc a{font-size:0.82rem;color:var(--accent);text-decoration:none;border:1px solid var(--border);padding:0.3rem 0.8rem;border-radius:2px;display:inline-block;transition:all 0.2s;font-family:'IBM Plex Mono',monospace}
+.toc a:hover{background:var(--surface2);border-color:var(--accent)}
+.section{margin-bottom:4rem}
+.section-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+.section-num{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--accent);letter-spacing:0.15em;white-space:nowrap}
+.section h2{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:700;color:var(--white)}
+.section-line{flex:1;height:1px;background:var(--border)}
+p{line-height:1.8;margin-bottom:1rem;font-size:0.95rem}
+.concept{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:4px;padding:1.5rem;margin:1.5rem 0}
+.concept-label{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;color:var(--accent);margin-bottom:0.5rem}
+.concept h3{font-family:'Syne',sans-serif;font-size:1.1rem;color:var(--white);margin-bottom:0.5rem}
+
+/* STEPS */
+.steps{margin:1.5rem 0}
+.step{display:flex;gap:1rem;margin-bottom:1.2rem;align-items:flex-start}
+.step-num{flex-shrink:0;width:32px;height:32px;background:var(--accent);color:var(--bg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:0.8rem;font-weight:500}
+.step-content{font-size:0.9rem;line-height:1.7;padding-top:0.35rem}
+.step-content strong{color:var(--white)}
+
+/* GRAPH SECTION */
+.graph-wrapper{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2rem;margin:2rem 0}
+.graph-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+.graph-title{font-family:'Syne',sans-serif;font-size:1rem;color:var(--white)}
+.graph-controls{display:flex;gap:0.5rem;flex-wrap:wrap}
+.graph-btn{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:0.08em;padding:0.4rem 0.9rem;border:1px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;transition:all 0.2s;border-radius:2px}
+.graph-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(255,107,53,0.1)}
+#graphCanvas{width:100%;max-width:550px;display:block;margin:0 auto;border:1px solid var(--border);border-radius:2px;background:#050e1c}
+.graph-legend{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem;font-size:0.78rem;font-family:'IBM Plex Mono',monospace;justify-content:center}
+.legend-item{display:flex;align-items:center;gap:0.4rem}
+.legend-dot{width:10px;height:10px;border-radius:50%}
+.corner-table-wrap{margin-top:1.5rem}
+.corner-table{width:100%;border-collapse:collapse;font-size:0.82rem}
+.corner-table th{background:var(--surface2);color:var(--accent-cool);padding:0.6rem 0.8rem;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:0.7rem;border:1px solid var(--border)}
+.corner-table td{padding:0.5rem 0.8rem;text-align:center;border:1px solid var(--border)}
+.corner-table tr.optimal td{background:rgba(57,217,123,0.12);color:var(--green);font-weight:500}
+
+/* SIMPLEX TABLE */
+.simp-wrap{overflow-x:auto;margin:1.5rem 0}
+.simp-table{border-collapse:collapse;font-size:0.8rem;font-family:'IBM Plex Mono',monospace;width:100%}
+.simp-table th{background:var(--surface2);color:var(--accent-cool);padding:0.6rem 0.8rem;text-align:center;border:1px solid var(--border);white-space:nowrap}
+.simp-table td{padding:0.5rem 0.8rem;text-align:center;border:1px solid var(--border);color:var(--text);white-space:nowrap}
+.simp-table .pivot{background:rgba(57,217,123,0.2);color:var(--green);border:2px solid var(--green)}
+.simp-table .entering{background:rgba(0,200,255,0.1)}
+.simp-table .leaving{background:rgba(255,107,53,0.1)}
+.simp-table .neg{color:var(--accent2,#ff6b35)}
+.simp-table .zrow{background:var(--surface);color:var(--gold)}
+
+.model-box{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:1.5rem;margin:1rem 0;font-family:'IBM Plex Mono',monospace;font-size:0.85rem;line-height:2}
+.model-box .obj{color:var(--accent)}
+.model-box .st{color:var(--muted)}
+.model-box .eq{color:var(--gold)}
+.model-box .nn{color:var(--green)}
+.model-box .std{color:var(--accent-cool)}
+
+.callout{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:1rem 1.2rem;margin:1rem 0;font-size:0.85rem;line-height:1.7}
+.callout strong{color:var(--gold)}
+
+.badge-rule{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:2px;border:1px solid;margin:0 0.2rem}
+.br-enter{color:var(--accent-cool);border-color:rgba(0,200,255,0.4);background:rgba(0,200,255,0.08)}
+.br-leave{color:var(--accent);border-color:rgba(255,107,53,0.4);background:rgba(255,107,53,0.08)}
+.br-pivot{color:var(--green);border-color:rgba(57,217,123,0.4);background:rgba(57,217,123,0.08)}
+
+.tab-list2{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:0;border-bottom:1px solid var(--border)}
+.tab-btn2{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;padding:0.5rem 1rem;border:1px solid var(--border);border-bottom:none;background:var(--surface);color:var(--muted);cursor:pointer;transition:all 0.2s;border-radius:4px 4px 0 0;position:relative;bottom:-1px}
+.tab-btn2.active{background:var(--surface2);color:var(--accent-cool);border-color:var(--accent-cool)}
+.tab-panel2{display:none;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 4px 4px 4px;padding:2rem;animation:fadeIn 0.3s ease}
+.tab-panel2.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── MOBILE ── */
+@media(max-width:640px){
+  .container{padding:0 1rem}
+  nav{gap:.75rem;padding:0 1rem}
+  nav .brand{font-size:.85rem}
+  nav a:not(.brand){font-size:.75rem;padding:.2rem .3rem}
+  .lec-hero{padding:2rem 0 1.5rem;margin-bottom:1.5rem}
+  .lec-hero h1{font-size:1.9rem}
+  .lec-intro{font-size:.92rem}
+  .toc{padding:1rem}
+  .toc ul{gap:.35rem}
+  .section{margin-bottom:2rem}
+  .tab-list2{gap:.35rem}
+  .tab-btn2{font-size:.68rem;padding:.4rem .65rem}
+  .tab-panel2{padding:1rem}
+  canvas{max-width:100%;height:auto}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .simp-table{font-size:.78rem}
+  .simp-table th,.simp-table td{padding:.4rem .5rem}
+  .step-grid{grid-template-columns:1fr}
+  .corner-cards{grid-template-columns:1fr}
+}
+footer{border-top:1px solid var(--border);padding:2rem 0;text-align:center;font-size:0.78rem;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin-top:4rem;position:relative;z-index:1}
+.foot-nav{display:flex;justify-content:space-between;align-items:center;max-width:980px;margin:0 auto;padding:0 2rem;gap:1rem}
+.foot-link{display:flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-family:'Syne',sans-serif;font-size:.88rem;padding:.55rem 1.1rem;border-radius:8px;border:1px solid var(--border);transition:all .2s;white-space:nowrap}
+.foot-link:hover{border-color:var(--accent);color:var(--accent)}
+@media(max-width:480px){.foot-nav{flex-direction:column;padding:0 1rem}.foot-link{justify-content:center;width:100%}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="brand">OR Course</a>
+  <a href="index.html">Home</a>
+  <a href="lecture1.html">L1</a>
+  <a href="lecture2.html" class="active">L2</a>
+  <a href="lecture3.html">L3</a>
+  <a href="lecture4.html">L4</a>
+  <a href="lecture5.html">L5</a>
+</nav>
+<div class="container">
+<div class="lec-hero">
+  <div class="lec-num" style="color:var(--accent)">LECTURE 02</div>
+  <h1>Graphical &amp;<br><em>Simplex Methods</em></h1>
+  <p class="lec-intro">Two powerful techniques to find the optimal solution to LP problems. The graphical method gives visual intuition for 2-variable problems; the Simplex method scales to any number of variables.</p>
+</div>
+
+<div class="toc">
+  <div class="toc-title">// CONTENTS</div>
+  <ul>
+    <li><a href="#graphical">Graphical Method</a></li>
+    <li><a href="#interactive">Interactive Graph</a></li>
+    <li><a href="#simplex">Simplex Method</a></li>
+    <li><a href="#simp-examples">Simplex Examples</a></li>
+  </ul>
+</div>
+
+<!-- GRAPHICAL METHOD -->
+<div class="section" id="graphical">
+  <div class="section-head">
+    <span class="section-num" style="color:var(--accent)">01</span>
+    <h2>The Graphical Method</h2>
+    <div class="section-line"></div>
+  </div>
+  <p>The graphical method applies to LP problems with <strong style="color:var(--white)">exactly two decision variables</strong>. It works by plotting all constraints on a 2D plane to find the <strong style="color:var(--white)">feasible region</strong> — the set of all points that satisfy every constraint simultaneously.</p>
+
+  <div class="concept">
+    <div class="concept-label">KEY THEOREM</div>
+    <h3>Corner Point (Extreme Point) Theorem</h3>
+    <p>The optimal solution to a linear program always occurs at one of the <strong>corner points (vertices)</strong> of the feasible region. We simply evaluate the objective function at every corner and pick the best value.</p>
+  </div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num" style="background:var(--accent)">1</div>
+      <div class="step-content"><strong>Plot each constraint as an equality.</strong> Set the constraint to "=" and find two points (set x=0, find y; set y=0, find x). Draw the line.</div></div>
+    <div class="step"><div class="step-num" style="background:var(--accent)">2</div>
+      <div class="step-content"><strong>Identify the feasible region.</strong> For ≤ constraints, shade toward the origin. For ≥ constraints, shade away from the origin. The feasible region is the intersection of all shaded areas.</div></div>
+    <div class="step"><div class="step-num" style="background:var(--accent)">3</div>
+      <div class="step-content"><strong>Find all corner points.</strong> Corner points are where constraint lines intersect each other or the axes. Solve pairs of equations simultaneously.</div></div>
+    <div class="step"><div class="step-num" style="background:var(--accent)">4</div>
+      <div class="step-content"><strong>Evaluate Z at each corner.</strong> Substitute each corner point into the objective function. For maximization: pick the largest Z. For minimization: pick the smallest Z.</div></div>
+  </div>
+</div>
+
+<!-- INTERACTIVE GRAPH -->
+<div class="section" id="interactive">
+  <div class="section-head">
+    <span class="section-num" style="color:var(--accent)">02</span>
+    <h2>Interactive Examples</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="graph-wrapper">
+    <div class="graph-header">
+      <div class="graph-title">LP Graphical Solver — Select an Example</div>
+      <div class="graph-controls">
+        <button class="graph-btn active" onclick="loadExample(0,this)">Example 1</button>
+        <button class="graph-btn" onclick="loadExample(1,this)">Example 2</button>
+        <button class="graph-btn" onclick="loadExample(2,this)">Example 3 (Min)</button>
+      </div>
+    </div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:0.8rem;color:var(--gold);margin-bottom:1rem;text-align:center" id="problemText"></div>
+    <canvas id="graphCanvas" width="520" height="420"></canvas>
+    <div class="graph-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#ff6b35"></div><span>Constraint 1</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#00c8ff"></div><span>Constraint 2</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f0b429;opacity:0.6"></div><span>Constraint 3</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(57,217,123,0.5)"></div><span>Feasible Region</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ff0;border:2px solid #fff;width:12px;height:12px"></div><span>Corner Points</span></div>
+    </div>
+    <div class="corner-table-wrap">
+      <table class="corner-table" id="cornerTable">
+        <thead><tr><th>Corner Point</th><th>x</th><th>y</th><th>Z = Objective</th><th>Status</th></tr></thead>
+        <tbody id="cornerBody"></tbody>
+      </table>
+    </div>
+    <div style="margin-top:1rem;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:0.85rem" id="solutionText"></div>
+  </div>
+</div>
+
+<!-- SIMPLEX METHOD -->
+<div class="section" id="simplex">
+  <div class="section-head">
+    <span class="section-num" style="color:var(--accent)">03</span>
+    <h2>The Simplex Method</h2>
+    <div class="section-line"></div>
+  </div>
+  <p>The Simplex method handles LP problems with <strong style="color:var(--white)">any number of variables</strong>. It moves systematically from one corner of the feasible region to a better adjacent corner, always improving the objective value until the optimum is reached.</p>
+
+  <div class="concept">
+    <div class="concept-label">STANDARD FORM</div>
+    <h3>Converting ≤ Constraints to Standard Form</h3>
+    <p>Add a <strong>slack variable</strong> (S₁, S₂, …) to each ≤ inequality to convert it to an equality. Slack variables represent unused resources. Their objective coefficient is 0.</p>
+  </div>
+
+  <div class="model-box">
+    <div class="st">Original Model:</div>
+    <div class="eq">  Max Z = 3X₁ + 5X₂</div>
+    <div class="eq">  3X₁ + 2X₂ ≤ 18,  X₁ ≤ 4,  X₂ ≤ 6</div>
+    <br>
+    <div class="st">Standard Form (add S₁, S₂, S₃):</div>
+    <div class="std">  Max Z = 3X₁ + 5X₂ + 0S₁ + 0S₂ + 0S₃</div>
+    <div class="std">  3X₁ + 2X₂ + S₁           = 18</div>
+    <div class="std">   X₁       + S₂           = 4</div>
+    <div class="std">        X₂       + S₃       = 6</div>
+    <div class="nn">  X₁, X₂, S₁, S₂, S₃ ≥ 0</div>
+  </div>
+
+  <h3 style="font-family:'Syne',sans-serif;color:var(--white);margin:2rem 0 1rem;font-size:1.1rem">Simplex Iteration Rules</h3>
+
+  <div class="steps">
+    <div class="step"><div class="step-num" style="background:var(--accent-cool);color:var(--bg)">1</div>
+      <div class="step-content"><strong>Find the Entering Variable:</strong> In the Zⱼ − Cⱼ row, pick the column with the <span class="badge-rule br-enter">MOST NEGATIVE</span> value. That column's variable enters the basis.</div></div>
+    <div class="step"><div class="step-num" style="background:var(--accent-cool);color:var(--bg)">2</div>
+      <div class="step-content"><strong>Find the Leaving Variable:</strong> Divide each RHS value by the corresponding positive element in the entering column. The row with the <span class="badge-rule br-leave">SMALLEST RATIO</span> identifies the leaving variable.</div></div>
+    <div class="step"><div class="step-num" style="background:var(--accent-cool);color:var(--bg)">3</div>
+      <div class="step-content"><strong>The Pivot Element:</strong> The intersection of entering column and leaving row is the <span class="badge-rule br-pivot">PIVOT</span>. Divide that entire row by the pivot value to make it equal to 1.</div></div>
+    <div class="step"><div class="step-num" style="background:var(--accent-cool);color:var(--bg)">4</div>
+      <div class="step-content"><strong>Row Operations:</strong> Use the new pivot row to eliminate the entering variable from all other rows (including Z row) using: New Row = Old Row − (factor × Pivot Row). Repeat until no negatives remain in Z row.</div></div>
+    <div class="step"><div class="step-num" style="background:var(--green);color:var(--bg)">✓</div>
+      <div class="step-content"><strong>Optimality Check:</strong> When all values in Zⱼ − Cⱼ row are <strong style="color:var(--green)">≥ 0</strong>, the current solution is optimal. Read the solution from the RHS column.</div></div>
+  </div>
+</div>
+
+<!-- SIMPLEX EXAMPLES -->
+<div class="section" id="simp-examples">
+  <div class="section-head">
+    <span class="section-num" style="color:var(--accent)">04</span>
+    <h2>Simplex Worked Examples</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="tab-list2">
+    <button class="tab-btn2 active" onclick="showTab2('s1',this)">Example 1 (3 vars)</button>
+    <button class="tab-btn2" onclick="showTab2('s2',this)">Example 2 (2 vars)</button>
+  </div>
+
+  <!-- Simplex Example 1 -->
+  <div id="s1" class="tab-panel2 active">
+    <p style="font-size:0.9rem;line-height:1.8;background:var(--surface2);padding:1rem;border-radius:4px;border-left:3px solid var(--gold);margin-bottom:1.5rem">
+      <strong style="color:var(--gold)">Problem:</strong> Max Z = 3X₁ + 5X₂ &nbsp;|&nbsp; S.T. 3X₁ + 2X₂ ≤ 18, X₁ ≤ 4, X₂ ≤ 6, X₁,X₂ ≥ 0
+    </p>
+
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.5rem;font-family:'IBM Plex Mono',monospace">TABLE 1 — Initial Basis: {S₁, S₂, S₃}</p>
+    <div class="simp-wrap">
+      <table class="simp-table">
+        <thead>
+          <tr><th>Cⱼ →</th><th>3</th><th class="entering">5</th><th>0</th><th>0</th><th>0</th><th>RHS</th><th>Ratio</th></tr>
+          <tr><th>Basis</th><th>X₁</th><th>X₂</th><th>S₁</th><th>S₂</th><th>S₃</th><th></th><th>RHS/col</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>S₁ (0)</td><td>3</td><td>2</td><td>1</td><td>0</td><td>0</td><td>18</td><td>18/2=9</td></tr>
+          <tr><td>S₂ (0)</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>4</td><td>—</td></tr>
+          <tr class="leaving"><td>S₃ (0)</td><td>0</td><td><span style="border:2px solid var(--green);padding:2px 6px;color:var(--green)">1</span></td><td>0</td><td>0</td><td>1</td><td>6</td><td style="color:var(--green)">6/1=6 ✓</td></tr>
+          <tr class="zrow"><td>Zⱼ-Cⱼ</td><td class="neg">-3</td><td class="neg">-5</td><td>0</td><td>0</td><td>0</td><td>Z=0</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">→ <strong>Entering:</strong> X₂ (most negative Z value = −5) &nbsp;|&nbsp; <strong>Leaving:</strong> S₃ (smallest ratio = 6) &nbsp;|&nbsp; <strong>Pivot = 1</strong> (already 1, no division needed)</div>
+
+    <p style="font-size:0.85rem;color:var(--muted);margin:1.5rem 0 0.5rem;font-family:'IBM Plex Mono',monospace">TABLE 2 — After pivoting X₂ in</p>
+    <div class="simp-wrap">
+      <table class="simp-table">
+        <thead>
+          <tr><th>Cⱼ →</th><th class="entering">3</th><th>5</th><th>0</th><th>0</th><th>0</th><th>RHS</th><th>Ratio</th></tr>
+          <tr><th>Basis</th><th>X₁</th><th>X₂</th><th>S₁</th><th>S₂</th><th>S₃</th><th></th><th></th></tr>
+        </thead>
+        <tbody>
+          <tr class="leaving"><td>S₁ (0)</td><td><span style="border:2px solid var(--green);padding:2px 6px;color:var(--green)">3</span></td><td>0</td><td>1</td><td>0</td><td>-2</td><td>6</td><td style="color:var(--green)">6/3=2 ✓</td></tr>
+          <tr><td>S₂ (0)</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>4</td><td>4/1=4</td></tr>
+          <tr><td>X₂ (5)</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>6</td><td>—</td></tr>
+          <tr class="zrow"><td>Zⱼ-Cⱼ</td><td class="neg">-3</td><td>0</td><td>0</td><td>0</td><td>5</td><td>Z=30</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">→ <strong>Entering:</strong> X₁ (only negative = −3) &nbsp;|&nbsp; <strong>Leaving:</strong> S₁ (smallest ratio = 2) &nbsp;|&nbsp; <strong>Pivot = 3</strong> → Divide S₁ row by 3</div>
+
+    <p style="font-size:0.85rem;color:var(--muted);margin:1.5rem 0 0.5rem;font-family:'IBM Plex Mono',monospace">TABLE 3 — OPTIMAL SOLUTION</p>
+    <div class="simp-wrap">
+      <table class="simp-table">
+        <thead>
+          <tr><th>Cⱼ →</th><th>3</th><th>5</th><th>0</th><th>0</th><th>0</th><th>RHS</th></tr>
+          <tr><th>Basis</th><th>X₁</th><th>X₂</th><th>S₁</th><th>S₂</th><th>S₃</th><th></th></tr>
+        </thead>
+        <tbody>
+          <tr><td>X₁ (3)</td><td>1</td><td>0</td><td>1/3</td><td>0</td><td>-2/3</td><td style="color:var(--green)">2</td></tr>
+          <tr><td>S₂ (0)</td><td>0</td><td>0</td><td>-1/3</td><td>1</td><td>2/3</td><td>2</td></tr>
+          <tr><td>X₂ (5)</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td style="color:var(--green)">6</td></tr>
+          <tr class="zrow"><td>Zⱼ-Cⱼ</td><td style="color:var(--green)">0</td><td>0</td><td>1</td><td>0</td><td>3</td><td style="color:var(--green)">Z=36</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="background:rgba(57,217,123,0.1);border:1px solid rgba(57,217,123,0.3);border-radius:4px;padding:1rem;margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.85rem">
+      ✓ All Zⱼ−Cⱼ ≥ 0 → <strong style="color:var(--green)">OPTIMAL SOLUTION FOUND</strong><br>
+      X₁* = 2, X₂* = 6, S₁ = 0, S₂ = 2, S₃ = 0<br>
+      <strong style="color:var(--green)">Max Z* = 3(2) + 5(6) = 36</strong>
+    </div>
+  </div>
+
+  <!-- Simplex Example 2 -->
+  <div id="s2" class="tab-panel2">
+    <p style="font-size:0.9rem;line-height:1.8;background:var(--surface2);padding:1rem;border-radius:4px;border-left:3px solid var(--gold);margin-bottom:1.5rem">
+      <strong style="color:var(--gold)">Problem:</strong> Max Z = 6X₁ + 8X₂ &nbsp;|&nbsp; S.T. 4X₁ + X₂ ≤ 20, X₁ + 4X₂ ≤ 40, X₁,X₂ ≥ 0
+    </p>
+
+    <div class="model-box">
+      <div class="st">Standard Form:</div>
+      <div class="std">  Max Z = 6X₁ + 8X₂ + 0S₁ + 0S₂</div>
+      <div class="std">  4X₁ +  X₂ + S₁       = 20</div>
+      <div class="std">   X₁ + 4X₂      + S₂  = 40</div>
+    </div>
+
+    <p style="font-size:0.85rem;color:var(--muted);margin:1rem 0 0.5rem;font-family:'IBM Plex Mono',monospace">TABLE 1 (Initial) → Entering: X₂ (most negative = −8) | Leaving: S₂ (ratio 40/4=10 &lt; 20/1=20)</p>
+    <div class="simp-wrap">
+      <table class="simp-table">
+        <thead><tr><th>Basis</th><th>X₁</th><th class="entering">X₂</th><th>S₁</th><th>S₂</th><th>RHS</th><th>Ratio</th></tr></thead>
+        <tbody>
+          <tr><td>S₁</td><td>4</td><td>1</td><td>1</td><td>0</td><td>20</td><td>20/1=20</td></tr>
+          <tr class="leaving"><td>S₂</td><td>1</td><td><span style="border:2px solid var(--green);padding:2px 4px;color:var(--green)">4</span></td><td>0</td><td>1</td><td>40</td><td style="color:var(--green)">40/4=10 ✓</td></tr>
+          <tr class="zrow"><td>Z</td><td class="neg">-6</td><td class="neg">-8</td><td>0</td><td>0</td><td>0</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">Divide S₂ row by 4 to get pivot=1. Then eliminate X₂ from other rows.</div>
+
+    <p style="font-size:0.85rem;color:var(--muted);margin:1rem 0 0.5rem;font-family:'IBM Plex Mono',monospace">TABLE 2 → Entering: X₁ (negative = −4) | Leaving: S₁ (ratio 10/15/4 = 2.67 &lt; 10/0.25 = 40)</p>
+    <div class="simp-wrap">
+      <table class="simp-table">
+        <thead><tr><th>Basis</th><th class="entering">X₁</th><th>X₂</th><th>S₁</th><th>S₂</th><th>RHS</th><th>Ratio</th></tr></thead>
+        <tbody>
+          <tr class="leaving"><td>S₁</td><td><span style="border:2px solid var(--green);padding:2px 4px;color:var(--green)">15/4</span></td><td>0</td><td>1</td><td>-1/4</td><td>10</td><td style="color:var(--green)">10÷(15/4)=8/3≈2.67 ✓</td></tr>
+          <tr><td>X₂</td><td>1/4</td><td>1</td><td>0</td><td>1/4</td><td>10</td><td>10÷(1/4)=40</td></tr>
+          <tr class="zrow"><td>Z</td><td class="neg">-4</td><td>0</td><td>0</td><td>2</td><td>80</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="font-size:0.85rem;color:var(--muted);margin:1rem 0 0.5rem;font-family:'IBM Plex Mono',monospace">TABLE 3 — OPTIMAL</p>
+    <div class="simp-wrap">
+      <table class="simp-table">
+        <thead><tr><th>Basis</th><th>X₁</th><th>X₂</th><th>S₁</th><th>S₂</th><th>RHS</th></tr></thead>
+        <tbody>
+          <tr><td>X₁</td><td>1</td><td>0</td><td>4/15</td><td>-1/15</td><td style="color:var(--green)">40/15 ≈ 2.667</td></tr>
+          <tr><td>X₂</td><td>0</td><td>1</td><td>-1/15</td><td>16/60</td><td style="color:var(--green)">140/15 ≈ 9.333</td></tr>
+          <tr class="zrow"><td>Z</td><td style="color:var(--green)">0</td><td>0</td><td>16/15</td><td>26/15</td><td style="color:var(--green)">1360/15 ≈ 90.67</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="background:rgba(57,217,123,0.1);border:1px solid rgba(57,217,123,0.3);border-radius:4px;padding:1rem;margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.85rem">
+      ✓ <strong style="color:var(--green)">OPTIMAL:</strong> X₁* = 40/15 ≈ 2.667, X₂* = 140/15 ≈ 9.333<br>
+      <strong style="color:var(--green)">Max Z* = 6(2.667) + 8(9.333) = 1360/15 ≈ 90.67</strong>
+    </div>
+  </div>
+</div>
+</div>
+
+<footer>
+  <div class="foot-nav">
+    <a href="lecture1.html" class="foot-link">← Lecture 1 — LP Formulation</a>
+    <a href="lecture3.html" class="foot-link">Lecture 3 — Transportation →</a>
+  </div>
+</footer>
+
+<script>
+const examples = [
+  {
+    label: "Max Z = 8x + y | x+y≤40, 2x+y≤60",
+    type: "max",
+    constraints: [
+      {a:1,b:1,c:40,label:"x+y=40",color:"#ff6b35"},
+      {a:2,b:1,c:60,label:"2x+y=60",color:"#00c8ff"}
+    ],
+    obj: {a:8,b:1},
+    corners: [{x:0,y:0},{x:0,y:40},{x:20,y:20},{x:30,y:0}],
+    scale: 8, axisMax: 70
+  },
+  {
+    label: "Max Z = 50x + 15y | 5x+y≤100, x+y≤50",
+    type: "max",
+    constraints: [
+      {a:5,b:1,c:100,label:"5x+y=100",color:"#ff6b35"},
+      {a:1,b:1,c:50,label:"x+y=50",color:"#00c8ff"}
+    ],
+    obj: {a:50,b:15},
+    corners: [{x:0,y:0},{x:0,y:50},{x:12.5,y:37.5},{x:20,y:0}],
+    scale: 5, axisMax: 110
+  },
+  {
+    label: "Min Z = 20x + 10y | x+2y≤40, 3x+y≥30, 4x+3y≥60",
+    type: "min",
+    constraints: [
+      {a:1,b:2,c:40,label:"x+2y=40",color:"#ff6b35",leq:true},
+      {a:3,b:1,c:30,label:"3x+y=30",color:"#00c8ff",leq:false},
+      {a:4,b:3,c:60,label:"4x+3y=60",color:"#f0b429",leq:false}
+    ],
+    obj: {a:20,b:10},
+    corners: [{x:6,y:12},{x:15,y:0},{x:40,y:0}],
+    scale: 6, axisMax: 45
+  }
+];
+
+let currentEx = 0;
+
+function loadExample(idx, btn) {
+  currentEx = idx;
+  document.querySelectorAll('.graph-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const ex = examples[idx];
+  document.getElementById('problemText').textContent = ex.label;
+  drawGraph(ex);
+  buildCornerTable(ex);
+}
+
+function drawGraph(ex) {
+  const canvas = document.getElementById('graphCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const pad = {l:50,r:20,t:20,b:40};
+  const dw = W - pad.l - pad.r;
+  const dh = H - pad.t - pad.b;
+  const aM = ex.axisMax;
+
+  function toCanvas(x,y) {
+    return [pad.l + (x/aM)*dw, H - pad.b - (y/aM)*dh];
+  }
+
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#050e1c';
+  ctx.fillRect(0,0,W,H);
+
+  // Grid
+  ctx.strokeStyle='rgba(26,48,80,0.8)';ctx.lineWidth=0.5;
+  const step = aM <= 70 ? 10 : 20;
+  for(let v=0;v<=aM;v+=step){
+    const [x1,y1]=toCanvas(v,0); const [x2,y2]=toCanvas(v,aM);
+    ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+    const [ax,ay]=toCanvas(0,v); const [bx,by]=toCanvas(aM,v);
+    ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke();
+  }
+
+  // Axes
+  ctx.strokeStyle='#4e7090';ctx.lineWidth=1.5;
+  const [ox,oy]=toCanvas(0,0);const [ax,ay]=toCanvas(aM,0);const [bx,by]=toCanvas(0,aM);
+  ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ax,ay);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(bx,by);ctx.stroke();
+
+  // Axis labels
+  ctx.fillStyle='#4e7090';ctx.font='11px IBM Plex Mono';ctx.textAlign='center';
+  for(let v=0;v<=aM;v+=step){
+    const [x,y]=toCanvas(v,0);
+    ctx.fillText(v,x,y+16);
+    const [x2,y2]=toCanvas(0,v);
+    ctx.textAlign='right';ctx.fillText(v,x2-5,y2+4);ctx.textAlign='center';
+  }
+  ctx.fillStyle='#c8e0f4';ctx.font='12px IBM Plex Mono';
+  const [lx,ly]=toCanvas(aM*0.9,0);ctx.fillText('x',lx+5,ly);
+  const [ly2x,ly2y]=toCanvas(0,aM*0.9);ctx.fillText('y',ly2x-15,ly2y);
+
+  // Feasible region (approximate with polygon)
+  const corners = ex.corners;
+  if(corners.length >= 3) {
+    ctx.beginPath();
+    const [fx0,fy0]=toCanvas(corners[0].x,corners[0].y);ctx.moveTo(fx0,fy0);
+    for(let i=1;i<corners.length;i++){
+      const [fx,fy]=toCanvas(corners[i].x,corners[i].y);ctx.lineTo(fx,fy);
+    }
+    ctx.closePath();
+    ctx.fillStyle='rgba(57,217,123,0.12)';ctx.fill();
+    ctx.strokeStyle='rgba(57,217,123,0.4)';ctx.lineWidth=1;ctx.stroke();
+  }
+
+  // Draw constraint lines
+  ex.constraints.forEach((con,i) => {
+    ctx.strokeStyle = con.color;ctx.lineWidth = 2;ctx.setLineDash([]);
+    ctx.beginPath();
+    let pts = [];
+    // x=0 → y=c/b
+    if(con.b !== 0){const yv=con.c/con.b;if(yv>=0&&yv<=aM)pts.push([0,yv]);}
+    // y=0 → x=c/a
+    if(con.a !== 0){const xv=con.c/con.a;if(xv>=0&&xv<=aM)pts.push([xv,0]);}
+    // clamp to axisMax
+    if(pts.length === 0) return;
+    if(pts.length < 2) {
+      // find another intersection
+      const xv2 = (con.c - con.b*aM)/con.a;
+      if(xv2>=0&&xv2<=aM) pts.push([xv2,aM]);
+      else pts.push([aM, (con.c-con.a*aM)/con.b]);
+    }
+    const [p1,p2]=pts.slice(0,2);
+    const [cx1,cy1]=toCanvas(p1[0],p1[1]);const [cx2,cy2]=toCanvas(p2[0],p2[1]);
+    ctx.beginPath();ctx.moveTo(cx1,cy1);ctx.lineTo(cx2,cy2);ctx.stroke();
+    // Label
+    ctx.fillStyle=con.color;ctx.font='bold 10px IBM Plex Mono';ctx.textAlign='left';
+    ctx.fillText(con.label,(cx1+cx2)/2+5,(cy1+cy2)/2-5);
+  });
+
+  // Corner points
+  corners.forEach((pt,i) => {
+    const [cx,cy]=toCanvas(pt.x,pt.y);
+    ctx.beginPath();ctx.arc(cx,cy,5,0,Math.PI*2);
+    ctx.fillStyle='#fff700';ctx.fill();
+    ctx.fillStyle='#e8f4ff';ctx.font='10px IBM Plex Mono';ctx.textAlign='left';
+    ctx.fillText(`(${pt.x},${pt.y})`,cx+8,cy-4);
+  });
+}
+
+function buildCornerTable(ex) {
+  const tbody = document.getElementById('cornerBody');
+  tbody.innerHTML = '';
+  let best = null; let bestZ = ex.type==='max' ? -Infinity : Infinity;
+  ex.corners.forEach(pt => {
+    const z = ex.obj.a*pt.x + ex.obj.b*pt.y;
+    if(ex.type==='max'&&z>bestZ){bestZ=z;best=pt;}
+    else if(ex.type==='min'&&z<bestZ){bestZ=z;best=pt;}
+  });
+  ex.corners.forEach(pt => {
+    const z = ex.obj.a*pt.x + ex.obj.b*pt.y;
+    const isOpt = pt===best;
+    const tr = document.createElement('tr');
+    if(isOpt)tr.classList.add('optimal');
+    tr.innerHTML = `<td>${isOpt?'★ ':''}</td><td>${pt.x}</td><td>${pt.y}</td><td>${z}</td><td>${isOpt?(ex.type==='max'?'MAX ✓':'MIN ✓'):''}</td>`;
+    tbody.appendChild(tr);
+  });
+  const sol = document.getElementById('solutionText');
+  sol.innerHTML = `<span style="color:var(--green)">Optimal: x=${best.x}, y=${best.y} → Z = ${bestZ}</span>`;
+}
+
+function showTab2(id, btn) {
+  document.querySelectorAll('.tab-panel2').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn2').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// Init
+loadExample(0, document.querySelector('.graph-btn.active'));
+</script>
+</body>
+</html>
