@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lecture 4 — Assignment Problem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#06101f;--surface:#0b1929;--surface2:#0f2040;--border:#1a3050;--accent:#39d97b;--accent-cool:#00c8ff;--accent2:#ff6b35;--gold:#f0b429;--text:#c8e0f4;--muted:#4e7090;--white:#e8f4ff}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:0.2;pointer-events:none;z-index:0}
+.container{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:0 2rem}
+nav{position:sticky;top:0;z-index:100;background:rgba(6,16,31,0.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;gap:1.5rem;min-height:52px;flex-wrap:wrap;row-gap:0}
+nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;font-size:.95rem;margin-right:auto;text-decoration:none;white-space:nowrap}
+nav a:not(.brand){color:var(--muted);text-decoration:none;font-size:.82rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.05em;padding:.25rem .5rem;border-radius:4px;transition:color .2s,background .2s;white-space:nowrap}
+nav a:not(.brand):hover,nav a.active{color:var(--accent);background:rgba(0,200,255,0.08)}
+.lec-hero{padding:4rem 0 3rem;border-bottom:1px solid var(--border);margin-bottom:3rem}
+.lec-num{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.2em;color:var(--accent);margin-bottom:1rem}
+.lec-hero h1{font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:800;color:var(--white);line-height:1.1;margin-bottom:1rem}
+.lec-hero h1 em{font-style:normal;color:var(--accent)}
+.lec-intro{font-size:1.05rem;line-height:1.8;max-width:680px}
+.toc{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.5rem;margin-bottom:3rem}
+.toc-title{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;color:var(--muted);margin-bottom:1rem}
+.toc ul{list-style:none;display:flex;flex-wrap:wrap;gap:0.5rem}
+.toc a{font-size:0.82rem;color:var(--accent);text-decoration:none;border:1px solid var(--border);padding:0.3rem 0.8rem;border-radius:2px;display:inline-block;transition:all 0.2s;font-family:'IBM Plex Mono',monospace}
+.toc a:hover{background:var(--surface2);border-color:var(--accent)}
+.section{margin-bottom:4rem}
+.section-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+.section-num{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--accent);letter-spacing:0.15em;white-space:nowrap}
+.section h2{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:700;color:var(--white)}
+.section-line{flex:1;height:1px;background:var(--border)}
+p{line-height:1.8;margin-bottom:1rem;font-size:0.95rem}
+.concept{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:4px;padding:1.5rem;margin:1.5rem 0}
+.concept-label{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;color:var(--accent);margin-bottom:0.5rem}
+.concept h3{font-family:'Syne',sans-serif;font-size:1.1rem;color:var(--white);margin-bottom:0.5rem}
+
+/* ALGORITHM STEPS */
+.algo-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin:2rem 0}
+.algo-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.5rem;position:relative;overflow:hidden}
+.algo-card::before{content:attr(data-step);position:absolute;top:-15px;right:10px;font-family:'Syne',sans-serif;font-size:5rem;font-weight:800;color:rgba(57,217,123,0.06);line-height:1}
+.algo-card h4{font-family:'Syne',sans-serif;font-size:0.95rem;color:var(--white);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.6rem}
+.algo-card h4::before{content:attr(data-step);font-family:'IBM Plex Mono',monospace;font-size:0.65rem;background:var(--accent);color:var(--bg);width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.algo-card p{font-size:0.82rem;line-height:1.7;color:var(--text);margin:0}
+
+/* INTERACTIVE HUNGARIAN */
+.hungarian-demo{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2rem;margin:2rem 0}
+.demo-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+.demo-title{font-family:'Syne',sans-serif;font-size:1rem;color:var(--white)}
+.demo-step-info{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--accent)}
+.step-controls{display:flex;gap:0.5rem;align-items:center}
+.step-btn{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;padding:0.5rem 1.2rem;border:1px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;transition:all 0.2s;border-radius:2px}
+.step-btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.step-btn:disabled{opacity:0.3;cursor:not-allowed}
+.step-indicator{display:flex;gap:0.4rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.step-dot{width:30px;height:6px;border-radius:3px;background:var(--border);transition:background 0.3s}
+.step-dot.active{background:var(--accent)}
+.step-dot.done{background:rgba(57,217,123,0.4)}
+.demo-explanation{background:var(--surface2);border-radius:4px;padding:1rem;margin-bottom:1.5rem;font-size:0.85rem;line-height:1.7;min-height:60px}
+.demo-explanation strong{color:var(--white)}
+.demo-explanation .highlight{color:var(--accent)}
+.matrix-wrap{overflow-x:auto}
+.matrix{border-collapse:collapse;margin:0 auto;font-size:0.85rem}
+.matrix th{background:var(--surface);color:var(--accent-cool);padding:0.6rem 1rem;text-align:center;border:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:0.72rem}
+.matrix td{width:60px;height:50px;text-align:center;border:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:0.9rem;transition:all 0.3s;cursor:default;vertical-align:middle}
+.matrix td.zero{color:var(--accent);background:rgba(57,217,123,0.12);font-weight:600}
+.matrix td.selected{background:rgba(57,217,123,0.3);color:var(--accent);border-color:var(--accent);font-weight:700}
+.matrix td.covered-h{background:rgba(0,200,255,0.07);border-bottom:2px solid var(--accent-cool)}
+.matrix td.covered-v{background:rgba(0,200,255,0.07);border-right:2px solid var(--accent-cool)}
+.matrix td.covered-cross{background:rgba(0,200,255,0.15)}
+.matrix td.subtract{background:rgba(255,107,53,0.1);color:var(--accent2)}
+
+/* Example Tabs */
+.ex-tabs{margin:2rem 0}
+.ex-list{display:flex;flex-wrap:wrap;gap:0.5rem;border-bottom:1px solid var(--border);margin-bottom:0}
+.ex-btn{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;padding:0.5rem 1rem;border:1px solid var(--border);border-bottom:none;background:var(--surface);color:var(--muted);cursor:pointer;transition:all 0.2s;border-radius:4px 4px 0 0;position:relative;bottom:-1px}
+.ex-btn.active{background:var(--surface2);color:var(--accent);border-color:var(--accent)}
+.ex-panel{display:none;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 4px 4px 4px;padding:2rem;animation:fadeIn 0.3s ease}
+.ex-panel.active{display:block}
+
+.matrix-step{overflow-x:auto;margin:1rem 0}
+.ms-label{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;color:var(--muted);margin-bottom:0.5rem}
+.ms-table{border-collapse:collapse;font-size:0.82rem;font-family:'IBM Plex Mono',monospace}
+.ms-table th{background:var(--surface2);color:var(--accent-cool);padding:0.5rem 0.9rem;text-align:center;border:1px solid var(--border)}
+.ms-table td{padding:0.5rem 0.9rem;text-align:center;border:1px solid var(--border);color:var(--text)}
+.ms-table td.zero{color:var(--accent);font-weight:600;background:rgba(57,217,123,0.1)}
+.ms-table td.optimal{background:rgba(57,217,123,0.25);color:var(--green);font-weight:700}
+.ms-table td.covered{background:rgba(0,200,255,0.08)}
+.ms-table td.small{color:var(--accent2);font-weight:600}
+.result-box{background:rgba(57,217,123,0.08);border:1px solid rgba(57,217,123,0.3);border-radius:4px;padding:1rem 1.5rem;margin-top:1.5rem;font-family:'IBM Plex Mono',monospace;font-size:0.85rem}
+.result-box strong{color:var(--green)}
+
+/* ── MOBILE ── */
+@media(max-width:640px){
+  .container{padding:0 1rem}
+  nav{gap:.75rem;padding:0 1rem}
+  nav .brand{font-size:.85rem}
+  nav a:not(.brand){font-size:.75rem;padding:.2rem .3rem}
+  .lec-hero{padding:2rem 0 1.5rem;margin-bottom:1.5rem}
+  .lec-hero h1{font-size:1.9rem}
+  .lec-intro{font-size:.92rem}
+  .toc{padding:1rem}
+  .toc ul{gap:.35rem}
+  .section{margin-bottom:2rem}
+  .steps-grid{grid-template-columns:1fr 1fr}
+  .ex-tabs{gap:.35rem}
+  .ex-tab{font-size:.72rem;padding:.4rem .65rem}
+  .ms-table{font-size:.78rem}
+  .ms-table th,.ms-table td{padding:.4rem .5rem}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  #demo-canvas{max-width:100%;height:auto}
+  .result-box{font-size:.78rem;padding:.75rem 1rem}
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+footer{border-top:1px solid var(--border);padding:2rem 0;text-align:center;font-size:0.78rem;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin-top:4rem;position:relative;z-index:1}
+.foot-nav{display:flex;justify-content:space-between;align-items:center;max-width:980px;margin:0 auto;padding:0 2rem;gap:1rem}
+.foot-link{display:flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-family:'Syne',sans-serif;font-size:.88rem;padding:.55rem 1.1rem;border-radius:8px;border:1px solid var(--border);transition:all .2s;white-space:nowrap}
+.foot-link:hover{border-color:var(--accent);color:var(--accent)}
+@media(max-width:480px){.foot-nav{flex-direction:column;padding:0 1rem}.foot-link{justify-content:center;width:100%}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="brand">OR Course</a>
+  <a href="index.html">Home</a>
+  <a href="lecture1.html">L1</a>
+  <a href="lecture2.html">L2</a>
+  <a href="lecture3.html">L3</a>
+  <a href="lecture4.html" class="active">L4</a>
+  <a href="lecture5.html">L5</a>
+</nav>
+<div class="container">
+<div class="lec-hero">
+  <div class="lec-num" style="color:var(--accent)">LECTURE 04</div>
+  <h1>The <em>Assignment</em><br>Problem</h1>
+  <p class="lec-intro">Assign <em>n</em> workers to <em>n</em> jobs to minimize total cost. A special case of transportation where each supply and demand equals 1. Solved elegantly with the <strong>Hungarian Algorithm</strong>.</p>
+</div>
+
+<div class="toc">
+  <div class="toc-title">// CONTENTS</div>
+  <ul>
+    <li><a href="#formulation">Formulation</a></li>
+    <li><a href="#algorithm">Hungarian Algorithm</a></li>
+    <li><a href="#interactive">Interactive Demo</a></li>
+    <li><a href="#examples">Worked Examples</a></li>
+  </ul>
+</div>
+
+<!-- FORMULATION -->
+<div class="section" id="formulation">
+  <div class="section-head">
+    <span class="section-num">01</span>
+    <h2>Problem Formulation</h2>
+    <div class="section-line"></div>
+  </div>
+  <p>Given <em>n</em> jobs and <em>n</em> persons (workers/machines), where C<sub>ij</sub> is the cost of assigning person <em>i</em> to job <em>j</em>. We want to minimize total assignment cost.</p>
+  <div style="background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:1.5rem;font-family:'IBM Plex Mono',monospace;font-size:0.85rem;line-height:2;margin:1.5rem 0">
+    <div style="color:var(--accent-cool)">Minimize &nbsp; Z = ΣΣ Cᵢⱼ · Xᵢⱼ</div>
+    <div style="color:var(--muted)">Subject to:</div>
+    <div style="color:var(--gold)">&nbsp;&nbsp;Σᵢ Xᵢⱼ = 1 &nbsp;for j = 1…n &nbsp; (each job done by exactly one person)</div>
+    <div style="color:var(--gold)">&nbsp;&nbsp;Σⱼ Xᵢⱼ = 1 &nbsp;for i = 1…n &nbsp; (each person does exactly one job)</div>
+    <div style="color:var(--green)">&nbsp;&nbsp;Xᵢⱼ ∈ {0, 1} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(binary: assigned or not)</div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-label">KEY PROPERTY</div>
+    <h3>Relationship to Transportation Problem</h3>
+    <p>The assignment problem is a transportation problem where every supply Sᵢ = 1 and every demand Dⱼ = 1. The special structure allows the elegant Hungarian Method, which is far more efficient than general LP or transportation algorithms.</p>
+  </div>
+</div>
+
+<!-- ALGORITHM -->
+<div class="section" id="algorithm">
+  <div class="section-head">
+    <span class="section-num">02</span>
+    <h2>The Hungarian Algorithm</h2>
+    <div class="section-line"></div>
+  </div>
+  <p>The key insight: subtracting a constant from any row or column does not change the optimal assignment (only the total cost changes). We reduce costs until zeros appear in a pattern that reveals the optimal assignment.</p>
+
+  <div class="algo-steps">
+    <div class="algo-card" data-step="1"><h4 data-step="1">Subtract Row Minima</h4><p>For each row, find the minimum element. Subtract it from every element in that row. This creates at least one zero per row.</p></div>
+    <div class="algo-card" data-step="2"><h4 data-step="2">Subtract Column Minima</h4><p>For each column, find the minimum element. Subtract it from every element in that column. This creates at least one zero per column.</p></div>
+    <div class="algo-card" data-step="3"><h4 data-step="3">Cover All Zeros</h4><p>Find the <strong>minimum number</strong> of horizontal and vertical lines needed to cover all zeros. If this number equals n → go to Step 5 (optimal found!). Otherwise go to Step 4.</p></div>
+    <div class="algo-card" data-step="4"><h4 data-step="4">Create Additional Zeros</h4><p>Find the smallest uncovered element (call it k). Subtract k from all uncovered elements. Add k to elements covered by <strong>two</strong> lines. Return to Step 3.</p></div>
+    <div class="algo-card" data-step="5" style="border-color:var(--accent)"><h4 data-step="✓">Assign Optimal Cells</h4><p>Select zeros so that each row and each column has exactly one selected zero. These positions give the optimal assignment. Calculate total cost from the original matrix.</p></div>
+  </div>
+</div>
+
+<!-- INTERACTIVE DEMO -->
+<div class="section" id="interactive">
+  <div class="section-head">
+    <span class="section-num">03</span>
+    <h2>Interactive Step-Through</h2>
+    <div class="section-line"></div>
+  </div>
+  <p>Follow the Hungarian method step by step on this 3×3 example: 3 jobs (X, Y, Z) assigned to 3 machines (A, B, C) with the given cost matrix.</p>
+
+  <div class="hungarian-demo">
+    <div class="demo-header">
+      <div>
+        <div class="demo-title">Hungarian Method — 3×3 Example</div>
+        <div class="demo-step-info" id="stepLabel">Step 0: Original Cost Matrix</div>
+      </div>
+      <div class="step-controls">
+        <button class="step-btn" id="prevBtn" onclick="prevStep()" disabled>← Prev</button>
+        <button class="step-btn" id="nextBtn" onclick="nextStep()">Next →</button>
+      </div>
+    </div>
+    <div class="step-indicator" id="stepIndicator"></div>
+    <div class="demo-explanation" id="explanation"></div>
+    <div class="matrix-wrap">
+      <table class="matrix" id="demoMatrix">
+        <thead><tr><th></th><th>X</th><th>Y</th><th>Z</th></tr></thead>
+        <tbody>
+          <tr><th>A</th><td id="c00"></td><td id="c01"></td><td id="c02"></td></tr>
+          <tr><th>B</th><td id="c10"></td><td id="c11"></td><td id="c12"></td></tr>
+          <tr><th>C</th><td id="c20"></td><td id="c21"></td><td id="c22"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.82rem;color:var(--muted);text-align:center" id="demoResult"></div>
+  </div>
+</div>
+
+<!-- EXAMPLES -->
+<div class="section" id="examples">
+  <div class="section-head">
+    <span class="section-num">04</span>
+    <h2>Worked Examples</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="ex-tabs">
+    <div class="ex-list">
+      <button class="ex-btn active" onclick="showEx('ex1',this)">3×3 — Machines &amp; Jobs</button>
+      <button class="ex-btn" onclick="showEx('ex2',this)">5×5 — Sales Regions</button>
+      <button class="ex-btn" onclick="showEx('ex3',this)">4×4 — Workers (W,X,Y,Z)</button>
+    </div>
+
+    <!-- 3x3 -->
+    <div id="ex1" class="ex-panel active">
+      <p style="background:var(--surface2);border-left:3px solid var(--gold);padding:1rem;border-radius:4px;font-size:0.88rem;line-height:1.8;margin-bottom:1.5rem">
+        Three jobs (A,B,C) assigned to three machines (X,Y,Z). Original costs: A-X=$19, A-Y=$28, A-Z=$31; B-X=$11, B-Y=$17, B-Z=$16; C-X=$12, C-Y=$15, C-Z=$13. Minimize total cost.
+      </p>
+      <div class="matrix-step">
+        <div class="ms-label">STEP 1: Subtract row minima (A→19, B→11, C→12)</div>
+        <table class="ms-table"><thead><tr><th></th><th>X</th><th>Y</th><th>Z</th></tr></thead><tbody>
+          <tr><th>A</th><td class="zero">0</td><td>9</td><td>12</td></tr>
+          <tr><th>B</th><td class="zero">0</td><td>6</td><td>5</td></tr>
+          <tr><th>C</th><td class="zero">0</td><td>3</td><td>1</td></tr>
+        </tbody></table>
+      </div>
+      <div class="matrix-step">
+        <div class="ms-label">STEP 2: Subtract column minima (X→0, Y→3, Z→1)</div>
+        <table class="ms-table"><thead><tr><th></th><th>X</th><th>Y</th><th>Z</th></tr></thead><tbody>
+          <tr><th>A</th><td class="zero">0</td><td>6</td><td>11</td></tr>
+          <tr><th>B</th><td class="zero">0</td><td>3</td><td>4</td></tr>
+          <tr><th>C</th><td class="zero">0</td><td class="zero">0</td><td class="zero">0</td></tr>
+        </tbody></table>
+      </div>
+      <div class="matrix-step">
+        <div class="ms-label">STEP 3: Cover zeros — needs 2 lines (col X + row C). Lines &lt; n=3 → Step 4</div>
+        <table class="ms-table"><thead><tr><th></th><th>X (covered)</th><th>Y</th><th>Z</th></tr></thead><tbody>
+          <tr><th>A</th><td class="covered">0</td><td>6</td><td>11</td></tr>
+          <tr><th>B</th><td class="covered">0</td><td>3</td><td>4</td></tr>
+          <tr><th>C (covered)</th><td class="covered">0</td><td class="covered">0</td><td class="covered">0</td></tr>
+        </tbody></table>
+      </div>
+      <div class="matrix-step">
+        <div class="ms-label">STEP 4: Smallest uncovered = 3. Subtract 3 from uncovered; add 3 to doubly-covered.</div>
+        <table class="ms-table"><thead><tr><th></th><th>X</th><th>Y</th><th>Z</th></tr></thead><tbody>
+          <tr><th>A</th><td class="zero">0</td><td>3</td><td>8</td></tr>
+          <tr><th>B</th><td class="zero">0</td><td class="zero">0</td><td>1</td></tr>
+          <tr><th>C</th><td>3</td><td class="zero">0</td><td class="zero">0</td></tr>
+        </tbody></table>
+      </div>
+      <div class="matrix-step">
+        <div class="ms-label">STEP 3 again: Cover zeros — needs 3 lines = n=3 → OPTIMAL! → Step 5</div>
+        <table class="ms-table"><thead><tr><th></th><th>X</th><th>Y</th><th>Z</th></tr></thead><tbody>
+          <tr><th>A</th><td class="optimal">0 ★</td><td>3</td><td>8</td></tr>
+          <tr><th>B</th><td>0</td><td class="optimal">0 ★</td><td>1</td></tr>
+          <tr><th>C</th><td>3</td><td>0</td><td class="optimal">0 ★</td></tr>
+        </tbody></table>
+      </div>
+      <div class="result-box">
+        <strong>Optimal Assignment:</strong> A→X, B→Y, C→Z<br>
+        <strong>Total Cost:</strong> 19 + 17 + 13 = <strong style="color:var(--accent)">$49</strong>
+      </div>
+    </div>
+
+    <!-- 5x5 -->
+    <div id="ex2" class="ex-panel">
+      <p style="background:var(--surface2);border-left:3px solid var(--gold);padding:1rem;border-radius:4px;font-size:0.88rem;line-height:1.8;margin-bottom:1.5rem">
+        5 salespersons assigned to 5 regions (A,B,C,D,E). Time matrix (days) given. Minimize total coverage time.
+      </p>
+      <div class="matrix-step">
+        <div class="ms-label">ORIGINAL MATRIX</div>
+        <table class="ms-table"><thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr></thead><tbody>
+          <tr><th>1</th><td>17</td><td>10</td><td>15</td><td>16</td><td>20</td></tr>
+          <tr><th>2</th><td>12</td><td>9</td><td>16</td><td>9</td><td>14</td></tr>
+          <tr><th>3</th><td>11</td><td>16</td><td>14</td><td>15</td><td>12</td></tr>
+          <tr><th>4</th><td>14</td><td>10</td><td>10</td><td>18</td><td>17</td></tr>
+          <tr><th>5</th><td>13</td><td>12</td><td>9</td><td>15</td><td>11</td></tr>
+        </tbody></table>
+      </div>
+      <div class="matrix-step">
+        <div class="ms-label">AFTER ROW REDUCTION (subtract row minima: 10, 9, 11, 10, 9)</div>
+        <table class="ms-table"><thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr></thead><tbody>
+          <tr><th>1</th><td>7</td><td class="zero">0</td><td>5</td><td>6</td><td>10</td></tr>
+          <tr><th>2</th><td>3</td><td class="zero">0</td><td>7</td><td class="zero">0</td><td>5</td></tr>
+          <tr><th>3</th><td class="zero">0</td><td>5</td><td>3</td><td>4</td><td>1</td></tr>
+          <tr><th>4</th><td>4</td><td class="zero">0</td><td class="zero">0</td><td>8</td><td>7</td></tr>
+          <tr><th>5</th><td>4</td><td>3</td><td class="zero">0</td><td>6</td><td>2</td></tr>
+        </tbody></table>
+      </div>
+      <div class="matrix-step">
+        <div class="ms-label">AFTER COLUMN REDUCTION (subtract col minima: 0,0,0,0,1)</div>
+        <table class="ms-table"><thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr></thead><tbody>
+          <tr><th>1</th><td>7</td><td class="zero">0</td><td>5</td><td>6</td><td>9</td></tr>
+          <tr><th>2</th><td>3</td><td class="zero">0</td><td>7</td><td class="zero">0</td><td>4</td></tr>
+          <tr><th>3</th><td class="zero">0</td><td>5</td><td>3</td><td>4</td><td class="zero">0</td></tr>
+          <tr><th>4</th><td>4</td><td class="zero">0</td><td class="zero">0</td><td>8</td><td>6</td></tr>
+          <tr><th>5</th><td>4</td><td>3</td><td class="zero">0</td><td>6</td><td>1</td></tr>
+        </tbody></table>
+      </div>
+      <div class="matrix-step">
+        <div class="ms-label">AFTER STEP 4 (k=1, applied once) — 5 lines now needed → OPTIMAL</div>
+        <table class="ms-table"><thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr></thead><tbody>
+          <tr><th>1</th><td>6</td><td class="optimal">0 ★</td><td>5</td><td>5</td><td>8</td></tr>
+          <tr><th>2</th><td>3</td><td>1</td><td>8</td><td class="optimal">0 ★</td><td>4</td></tr>
+          <tr><th>3</th><td class="optimal">0 ★</td><td>6</td><td>4</td><td>4</td><td>0</td></tr>
+          <tr><th>4</th><td>3</td><td>0</td><td class="optimal">0 ★</td><td>7</td><td>5</td></tr>
+          <tr><th>5</th><td>3</td><td>3</td><td>0</td><td>5</td><td class="optimal">0 ★</td></tr>
+        </tbody></table>
+      </div>
+      <div class="result-box">
+        <strong>Optimal Assignment:</strong><br>
+        Person 1 → Region B (10 days)<br>
+        Person 2 → Region D (9 days)<br>
+        Person 3 → Region A (11 days)<br>
+        Person 4 → Region C (10 days)<br>
+        Person 5 → Region E (11 days)<br>
+        <strong>Total Time = 10 + 9 + 11 + 10 + 11 = <span style="color:var(--accent)">51 days</span></strong>
+      </div>
+    </div>
+
+    <!-- 4x4 -->
+    <div id="ex3" class="ex-panel">
+      <p style="background:var(--surface2);border-left:3px solid var(--gold);padding:1rem;border-radius:4px;font-size:0.88rem;line-height:1.8;margin-bottom:1.5rem">
+        4 workers (A,B,C,D) to 4 jobs (W,X,Y,Z). Minimize total cost. Original matrix: A=(10,14,16,13), B=(12,13,15,12), C=(9,12,12,12), D=(14,16,18,16).
+      </p>
+      <div class="matrix-step">
+        <div class="ms-label">TABLE 1: Subtract Row Minima (A→10, B→12, C→9, D→14)</div>
+        <table class="ms-table"><thead><tr><th></th><th>W</th><th>X</th><th>Y</th><th>Z</th></tr></thead><tbody>
+          <tr><th>A</th><td class="zero">0</td><td>4</td><td>6</td><td>3</td></tr>
+          <tr><th>B</th><td class="zero">0</td><td>1</td><td>3</td><td class="zero">0</td></tr>
+          <tr><th>C</th><td class="zero">0</td><td>3</td><td>3</td><td>3</td></tr>
+          <tr><th>D</th><td class="zero">0</td><td>2</td><td>4</td><td>2</td></tr>
+        </tbody></table>
+      </div>
+      <div class="matrix-step">
+        <div class="ms-label">TABLE 2: Subtract Column Minima (W→0, X→1, Y→3, Z→0)</div>
+        <table class="ms-table"><thead><tr><th></th><th>W</th><th>X</th><th>Y</th><th>Z</th></tr></thead><tbody>
+          <tr><th>A</th><td class="zero">0</td><td>3</td><td>3</td><td>3</td></tr>
+          <tr><th>B</th><td class="zero">0</td><td class="zero">0</td><td class="zero">0</td><td class="zero">0</td></tr>
+          <tr><th>C</th><td class="zero">0</td><td>2</td><td class="zero">0</td><td>3</td></tr>
+          <tr><th>D</th><td class="zero">0</td><td>1</td><td>1</td><td>2</td></tr>
+        </tbody></table>
+      </div>
+      <div class="matrix-step">
+        <div class="ms-label">TABLE 3: Cover zeros with 3 lines (not 4) → Step 4 (k=1)</div>
+        <table class="ms-table"><thead><tr><th></th><th>W</th><th>X</th><th>Y</th><th>Z</th></tr></thead><tbody>
+          <tr><th>A</th><td class="zero">0</td><td>2</td><td>2</td><td>2</td></tr>
+          <tr><th>B</th><td>1</td><td class="zero">0</td><td class="zero">0</td><td class="zero">0</td></tr>
+          <tr><th>C</th><td>1</td><td>2</td><td class="zero">0</td><td>3</td></tr>
+          <tr><th>D</th><td class="zero">0</td><td class="zero">0</td><td class="zero">0</td><td>1</td></tr>
+        </tbody></table>
+      </div>
+      <div class="matrix-step">
+        <div class="ms-label">TABLE 4+5: After another iteration — 4 lines = n=4 → OPTIMAL</div>
+        <table class="ms-table"><thead><tr><th></th><th>W</th><th>X</th><th>Y</th><th>Z</th></tr></thead><tbody>
+          <tr><th>A</th><td class="optimal">0 ★</td><td>2</td><td>2</td><td>2</td></tr>
+          <tr><th>B</th><td>1</td><td>0</td><td>0</td><td class="optimal">0 ★</td></tr>
+          <tr><th>C</th><td>1</td><td>2</td><td class="optimal">0 ★</td><td>3</td></tr>
+          <tr><th>D</th><td>0</td><td class="optimal">0 ★</td><td>0</td><td>1</td></tr>
+        </tbody></table>
+      </div>
+      <div class="result-box">
+        <strong>Optimal Assignment:</strong><br>
+        A → W ($10), B → Z ($12), C → Y ($12), D → X ($16)<br>
+        <strong>Total Cost = 10 + 12 + 12 + 16 = <span style="color:var(--accent)">$50</span></strong>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<footer>
+  <div class="foot-nav">
+    <a href="lecture3.html" class="foot-link">← Lecture 3 — Transportation</a>
+    <a href="lecture5.html" class="foot-link">Lecture 5 — Project Management →</a>
+  </div>
+</footer>
+
+<script>
+// Interactive Hungarian demo on 3x3
+const origMatrix = [[19,28,31],[11,17,16],[12,15,13]];
+const steps = [
+  {
+    label: "Step 0: Original Cost Matrix",
+    matrix: [[19,28,31],[11,17,16],[12,15,13]],
+    explanation: "Starting cost matrix. Goal: assign each machine (A,B,C) to exactly one job (X,Y,Z) to <strong>minimize total cost</strong>.",
+    classes: [[],[],[]],
+    result: ""
+  },
+  {
+    label: "Step 1: Subtract Row Minima",
+    matrix: [[0,9,12],[0,6,5],[0,3,1]],
+    explanation: "Subtract the <span class='highlight'>minimum value</span> of each row from all elements in that row.<br>Row A min=19, Row B min=11, Row C min=12.<br>Result: at least one zero per row.",
+    classes: [['zero',[0]],['zero',[0]],['zero',[0]]],
+    result: ""
+  },
+  {
+    label: "Step 2: Subtract Column Minima",
+    matrix: [[0,6,11],[0,3,4],[0,0,0]],
+    explanation: "Subtract the <span class='highlight'>minimum value</span> of each column.<br>Col X min=0, Col Y min=3, Col Z min=1.<br>Result: at least one zero per row AND column.",
+    classes: [['zero',[0]],['zero',[0]],['zero',[0,1,2]]],
+    result: ""
+  },
+  {
+    label: "Step 3: Cover All Zeros (2 lines)",
+    matrix: [[0,6,11],[0,3,4],[0,0,0]],
+    explanation: "Minimum lines needed to cover all zeros = <span class='highlight'>2</span> (Col X + Row C).<br>Since 2 &lt; n=3, we must <strong>continue to Step 4</strong>.",
+    classes: [['covered',[0]],['covered',[0]],['covered',[0,1,2]]],
+    result: ""
+  },
+  {
+    label: "Step 4: Create Additional Zeros (k=3)",
+    matrix: [[0,3,8],[0,0,1],[3,0,0]],
+    explanation: "Smallest <strong>uncovered</strong> element = 3 (was at B-Y and A-Y positions).<br>→ Subtract 3 from all uncovered cells<br>→ Add 3 to doubly-covered cells<br>→ Covered-once cells unchanged.",
+    classes: [['zero',[0]],['zero',[0,1]],['zero',[1,2]]],
+    result: ""
+  },
+  {
+    label: "Step 3 (repeat): Cover All Zeros (3 lines)",
+    matrix: [[0,3,8],[0,0,1],[3,0,0]],
+    explanation: "Now 3 lines are needed to cover all zeros = n=3.<br><strong class='highlight'>Optimal assignment exists!</strong> → Proceed to Step 5.",
+    classes: [['selected',[0]],['selected',[1]],['selected',[2]]],
+    result: "✓ Optimal: A→X ($19), B→Y ($17), C→Z ($13) | Total = $49"
+  }
+];
+
+let currentStep = 0;
+
+function renderStep(idx) {
+  const s = steps[idx];
+  document.getElementById('stepLabel').textContent = s.label;
+  document.getElementById('explanation').innerHTML = s.explanation;
+  document.getElementById('demoResult').textContent = s.result;
+
+  // Render matrix
+  for(let i=0;i<3;i++) for(let j=0;j<3;j++) {
+    const cell = document.getElementById(`c${i}${j}`);
+    cell.textContent = s.matrix[i][j];
+    cell.className = '';
+    if(s.matrix[i][j] === 0) cell.classList.add('zero');
+  }
+  if(s.classes) {
+    s.classes.forEach((row,i) => {
+      if(Array.isArray(row) && row.length===2 && Array.isArray(row[1])) {
+        row[1].forEach(j => {
+          document.getElementById(`c${i}${j}`).classList.add(row[0]);
+        });
+      }
+    });
+  }
+
+  // Step dots
+  const dots = document.getElementById('stepIndicator');
+  dots.innerHTML = '';
+  steps.forEach((_,k)=>{
+    const d = document.createElement('div');
+    d.className = 'step-dot' + (k===idx?' active':(k<idx?' done':''));
+    dots.appendChild(d);
+  });
+
+  document.getElementById('prevBtn').disabled = idx===0;
+  document.getElementById('nextBtn').disabled = idx===steps.length-1;
+}
+
+function nextStep(){if(currentStep<steps.length-1){currentStep++;renderStep(currentStep);}}
+function prevStep(){if(currentStep>0){currentStep--;renderStep(currentStep);}}
+
+function showEx(id,btn){
+  document.querySelectorAll('.ex-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ex-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+renderStep(0);
+</script>
+</body>
+</html>
