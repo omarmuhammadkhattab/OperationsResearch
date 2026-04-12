@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lecture 1 — Introduction &amp; LP Formulation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06101f;--surface:#0b1929;--surface2:#0f2040;
+  --border:#1a3050;--accent:#00c8ff;--accent2:#ff6b35;
+  --gold:#f0b429;--green:#39d97b;--text:#c8e0f4;--muted:#4e7090;--white:#e8f4ff;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:0.2;pointer-events:none;z-index:0}
+
+.container{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:0 2rem}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(6,16,31,0.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;gap:1.5rem;min-height:52px;flex-wrap:wrap;row-gap:0}
+nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;font-size:.95rem;margin-right:auto;text-decoration:none;white-space:nowrap}
+nav a:not(.brand){color:var(--muted);text-decoration:none;font-size:.82rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.05em;padding:.25rem .5rem;border-radius:4px;transition:color .2s,background .2s;white-space:nowrap}
+nav a:not(.brand):hover,nav a.active{color:var(--accent);background:rgba(0,200,255,0.08)}
+
+/* HERO */
+.lec-hero{padding:4rem 0 3rem;border-bottom:1px solid var(--border);margin-bottom:3rem}
+.lec-num{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.2em;color:var(--accent);margin-bottom:1rem}
+.lec-hero h1{font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:800;color:var(--white);line-height:1.1;margin-bottom:1rem}
+.lec-hero h1 em{font-style:normal;color:var(--accent)}
+.lec-intro{font-size:1.05rem;color:var(--text);line-height:1.8;max-width:680px}
+
+/* TOC */
+.toc{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.5rem;margin-bottom:3rem}
+.toc-title{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;color:var(--muted);margin-bottom:1rem}
+.toc ul{list-style:none;display:flex;flex-wrap:wrap;gap:0.5rem}
+.toc a{font-size:0.82rem;color:var(--accent);text-decoration:none;border:1px solid var(--border);padding:0.3rem 0.8rem;border-radius:2px;display:inline-block;transition:all 0.2s;font-family:'IBM Plex Mono',monospace}
+.toc a:hover{background:var(--surface2);border-color:var(--accent)}
+
+/* SECTIONS */
+.section{margin-bottom:4rem}
+.section-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+.section-num{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--accent);letter-spacing:0.15em;white-space:nowrap}
+.section h2{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:700;color:var(--white)}
+.section-line{flex:1;height:1px;background:var(--border)}
+
+p{line-height:1.8;margin-bottom:1rem;font-size:0.95rem}
+
+/* KEY CONCEPT CARD */
+.concept{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:4px;padding:1.5rem;margin:1.5rem 0}
+.concept-label{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;color:var(--accent);margin-bottom:0.5rem}
+.concept h3{font-family:'Syne',sans-serif;font-size:1.1rem;color:var(--white);margin-bottom:0.5rem}
+.concept p{font-size:0.9rem;color:var(--text);margin-bottom:0}
+
+/* FLOW DIAGRAM */
+.flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:1rem;margin:2rem 0;padding:2rem;background:var(--surface);border:1px solid var(--border);border-radius:4px}
+.flow-box{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:1rem 1.5rem;text-align:center;min-width:130px}
+.flow-box.accent{border-color:var(--green);background:rgba(57,217,123,0.07)}
+.flow-box.accent2{border-color:var(--accent);background:rgba(0,200,255,0.07)}
+.flow-box.accent3{border-color:var(--accent2);background:rgba(255,107,53,0.07)}
+.flow-box-title{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;margin-bottom:0.4rem}
+.flow-box.accent .flow-box-title{color:var(--green)}
+.flow-box.accent2 .flow-box-title{color:var(--accent)}
+.flow-box.accent3 .flow-box-title{color:var(--accent2)}
+.flow-box-sub{font-size:0.78rem;color:var(--muted)}
+.flow-arrow{font-size:1.5rem;color:var(--muted)}
+
+/* RULE BOX */
+.rule-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0}
+@media(max-width:600px){.rule-grid{grid-template-columns:1fr}}
+.rule-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.2rem}
+.rule-card.gold{border-top:2px solid var(--gold)}
+.rule-card.cyan{border-top:2px solid var(--accent)}
+.rule-card.orange{border-top:2px solid var(--accent2)}
+.rule-card.green{border-top:2px solid var(--green)}
+.rule-card h4{font-family:'Syne',sans-serif;font-size:0.95rem;color:var(--white);margin-bottom:0.6rem}
+.rule-card ul{list-style:none;font-size:0.85rem;line-height:1.9}
+.rule-card ul li::before{content:'→ ';color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:0.75rem}
+.rule-card.gold ul li::before{color:var(--gold)}
+.rule-card.orange ul li::before{color:var(--accent2)}
+.rule-card.green ul li::before{color:var(--green)}
+
+/* EXAMPLE TABS */
+.example-tabs{margin:2rem 0}
+.tab-list{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:0;border-bottom:1px solid var(--border);padding-bottom:0}
+.tab-btn{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.08em;padding:0.5rem 1rem;border:1px solid var(--border);border-bottom:none;background:var(--surface);color:var(--muted);cursor:pointer;transition:all 0.2s;border-radius:4px 4px 0 0;position:relative;bottom:-1px}
+.tab-btn.active{background:var(--surface2);color:var(--accent);border-color:var(--accent)}
+.tab-panel{display:none;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 4px 4px 4px;padding:2rem}
+.tab-panel.active{display:block;animation:fadeIn 0.3s ease}
+
+/* EXAMPLE CONTENT */
+.ex-problem{font-size:0.9rem;line-height:1.8;color:var(--text);margin-bottom:1.5rem;background:var(--surface2);border-radius:4px;padding:1.2rem;border-left:3px solid var(--gold)}
+.ex-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:0.85rem}
+.ex-table th{background:var(--surface2);color:var(--accent);padding:0.6rem 0.8rem;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;border:1px solid var(--border)}
+.ex-table td{padding:0.5rem 0.8rem;text-align:center;border:1px solid var(--border);color:var(--text)}
+.ex-table tr:hover td{background:var(--surface2)}
+
+.steps{margin:1rem 0}
+.step{display:flex;gap:1rem;margin-bottom:1rem;align-items:flex-start}
+.step-num{flex-shrink:0;width:28px;height:28px;background:var(--accent);color:var(--bg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;font-weight:500}
+.step-content{font-size:0.88rem;line-height:1.7;padding-top:0.3rem}
+.step-content strong{color:var(--white)}
+
+.model-box{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:1.5rem;margin:1rem 0;font-family:'IBM Plex Mono',monospace;font-size:0.85rem;line-height:2}
+.model-box .max{color:var(--accent2);font-weight:500}
+.model-box .st{color:var(--muted)}
+.model-box .eq{color:var(--gold)}
+.model-box .nn{color:var(--green)}
+
+/* FORMULA */
+.formula-inline{font-family:'IBM Plex Mono',monospace;background:var(--surface2);padding:0.15rem 0.5rem;border-radius:2px;font-size:0.85rem;color:var(--gold)}
+
+/* SUMMARY TABLE */
+.summary-table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:0.85rem}
+.summary-table th{background:var(--surface2);color:var(--accent);padding:0.8rem;font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;border:1px solid var(--border);text-align:left}
+.summary-table td{padding:0.7rem 0.8rem;border:1px solid var(--border);color:var(--text);vertical-align:top}
+.summary-table tr:hover td{background:var(--surface2)}
+.badge{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:2px;white-space:nowrap}
+.badge.max{background:rgba(255,107,53,0.15);color:var(--accent2);border:1px solid rgba(255,107,53,0.3)}
+.badge.min{background:rgba(0,200,255,0.1);color:var(--accent);border:1px solid rgba(0,200,255,0.3)}
+.badge.leq{background:rgba(240,180,41,0.1);color:var(--gold);border:1px solid rgba(240,180,41,0.3)}
+.badge.geq{background:rgba(57,217,123,0.1);color:var(--green);border:1px solid rgba(57,217,123,0.3)}
+
+footer{border-top:1px solid var(--border);padding:2rem 0;text-align:center;font-size:0.78rem;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin-top:4rem;position:relative;z-index:1}
+.foot-nav{display:flex;justify-content:space-between;align-items:center;max-width:980px;margin:0 auto;padding:0 2rem;gap:1rem}
+.foot-link{display:flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-family:'Syne',sans-serif;font-size:.88rem;padding:.55rem 1.1rem;border-radius:8px;border:1px solid var(--border);transition:all .2s;white-space:nowrap}
+.foot-link:hover{border-color:var(--accent);color:var(--accent)}
+@media(max-width:480px){.foot-nav{flex-direction:column;padding:0 1rem}.foot-link{justify-content:center;width:100%}}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── MOBILE ── */
+@media(max-width:640px){
+  .container{padding:0 1rem}
+  nav{gap:.75rem;padding:0 1rem}
+  nav .brand{font-size:.85rem}
+  nav a:not(.brand){font-size:.75rem;padding:.2rem .3rem}
+  .lec-hero{padding:2rem 0 1.5rem;margin-bottom:1.5rem}
+  .lec-hero h1{font-size:1.9rem}
+  .lec-intro{font-size:.92rem}
+  .rule-grid{grid-template-columns:1fr}
+  .tab-list{gap:.35rem}
+  .tab-list li a{font-size:.72rem;padding:.4rem .6rem}
+  .flow{padding:1rem;gap:.6rem}
+  .flow-box{padding:.75rem 1rem;min-width:0}
+  .section{margin-bottom:2rem}
+  .summary-table{font-size:.78rem}
+  .summary-table th,.summary-table td{padding:.5rem .6rem}
+  .toc{padding:1rem}
+  .toc ul{gap:.35rem}
+  .section-head{flex-wrap:wrap;gap:.5rem}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="brand">OR Course</a>
+  <a href="index.html">Home</a>
+  <a href="lecture1.html" class="active">L1</a>
+  <a href="lecture2.html">L2</a>
+  <a href="lecture3.html">L3</a>
+  <a href="lecture4.html">L4</a>
+  <a href="lecture5.html">L5</a>
+</nav>
+
+<div class="container">
+<div class="lec-hero">
+  <div class="lec-num">LECTURE 01</div>
+  <h1>Introduction &amp;<br><em>LP Formulation</em></h1>
+  <p class="lec-intro">Operations Research uses mathematical models to find optimal decisions. Linear Programming is its most fundamental tool — turning real-world resource allocation problems into solvable equations.</p>
+</div>
+
+<div class="toc">
+  <div class="toc-title">// CONTENTS</div>
+  <ul>
+    <li><a href="#what-is-or">What is OR?</a></li>
+    <li><a href="#lp-structure">LP Structure</a></li>
+    <li><a href="#rules">Key Rules</a></li>
+    <li><a href="#examples">Worked Examples</a></li>
+    <li><a href="#summary">Quick Reference</a></li>
+  </ul>
+</div>
+
+<!-- SECTION 1 -->
+<div class="section" id="what-is-or">
+  <div class="section-head">
+    <span class="section-num">01</span>
+    <h2>What is Operations Research?</h2>
+    <div class="section-line"></div>
+  </div>
+  <p><strong style="color:var(--white)">Operations Research (OR)</strong> is a quantitative approach to decision making based on the scientific method of problem solving. It applies mathematical and statistical methods to help organizations make better decisions.</p>
+  <p>The research process follows a clear pipeline: identify the situation → state the problem → construct a model → validate it → experiment → find candidate solutions.</p>
+
+  <div class="flow">
+    <div class="flow-box accent">
+      <div class="flow-box-title">INPUT</div>
+      <div class="flow-box-sub">Decision Variables<br>X, Y, Z…</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box accent2">
+      <div class="flow-box-title" style="color:var(--accent)">PROCESS</div>
+      <div class="flow-box-sub">Optimization<br>Subject to constraints</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box accent3">
+      <div class="flow-box-title" style="color:var(--accent2)">OUTPUT</div>
+      <div class="flow-box-sub">Objective Function<br>Max Profit / Min Cost</div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-label">DEFINITION</div>
+    <h3>Linear Programming (LP)</h3>
+    <p>LP deals with the <strong>optimization</strong> (maximization or minimization) of a function of variables — called the <strong>objective function</strong> — subject to a set of linear equalities and/or inequalities called <strong>constraints</strong>.</p>
+  </div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section" id="lp-structure">
+  <div class="section-head">
+    <span class="section-num">02</span>
+    <h2>Structure of an LP Model</h2>
+    <div class="section-line"></div>
+  </div>
+  <p>Every LP model has exactly <strong style="color:var(--white)">three components</strong>. Without all three, the model is incomplete.</p>
+
+  <div class="rule-grid">
+    <div class="rule-card gold" style="grid-column:span 2">
+      <h4>① Decision Variables</h4>
+      <p style="font-size:0.88rem;line-height:1.7">The unknowns we want to find — the quantities we control. Usually denoted X₁, X₂, X₃ or A, B, X, Y. Each variable represents something we're deciding how much of: units to produce, hectares to plant, hours to schedule, etc.</p>
+    </div>
+    <div class="rule-card cyan">
+      <h4>② Objective Function</h4>
+      <ul>
+        <li>A linear function of the decision variables</li>
+        <li>Either <strong style="color:var(--accent2)">Maximize</strong> (profit, revenue, output)</li>
+        <li>Or <strong style="color:var(--accent)">Minimize</strong> (cost, waste, time)</li>
+        <li>Written as: <span class="formula-inline">Max/Min Z = c₁x₁ + c₂x₂ + …</span></li>
+      </ul>
+    </div>
+    <div class="rule-card orange">
+      <h4>③ Constraints</h4>
+      <ul>
+        <li>Linear inequalities or equalities limiting the variables</li>
+        <li>Resource limits, demand caps, capacity bounds</li>
+        <li>Always include <strong style="color:var(--green)">non-negativity</strong>: X₁, X₂ ≥ 0</li>
+        <li>Written as: <span class="formula-inline">aX + bY ≤ RHS</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="model-box">
+    <div class="max">Max  Z = c₁X₁ + c₂X₂ + c₃X₃</div>
+    <div class="st">S.T.</div>
+    <div class="eq">    a₁₁X₁ + a₁₂X₂ + a₁₃X₃ ≤ b₁  &nbsp;(Resource 1)</div>
+    <div class="eq">    a₂₁X₁ + a₂₂X₂ + a₂₃X₃ ≤ b₂  &nbsp;(Resource 2)</div>
+    <div class="nn">    X₁, X₂, X₃ ≥ 0  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Non-negativity)</div>
+  </div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section" id="rules">
+  <div class="section-head">
+    <span class="section-num">03</span>
+    <h2>Key Rules for Formulation</h2>
+    <div class="section-line"></div>
+  </div>
+  <p>When reading a word problem, look for these <strong style="color:var(--white)">signal words</strong> to know what type of constraint or objective to write:</p>
+
+  <div class="rule-grid">
+    <div class="rule-card orange">
+      <h4>🎯 Objective Function</h4>
+      <ul>
+        <li><strong>Profit / Revenue / Income</strong> → <span class="badge max">Maximize</span></li>
+        <li><strong>Cost / Expense / Loss</strong> → <span class="badge min">Minimize</span></li>
+      </ul>
+    </div>
+    <div class="rule-card gold">
+      <h4>📐 Constraint Direction</h4>
+      <ul>
+        <li><strong>Budget / Maximum / At most / Capacity / Restricted</strong> → <span class="badge leq">≤</span></li>
+        <li><strong>Minimum / At least / Not less than / More than</strong> → <span class="badge geq">≥</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-label">REMEMBER</div>
+    <h3>Non-Negativity Constraint</h3>
+    <p>Always add <span class="formula-inline">X₁, X₂, … ≥ 0</span> to every LP model. Physical quantities (units produced, hours worked, etc.) cannot be negative. This constraint defines the feasible region to the positive quadrant.</p>
+  </div>
+</div>
+
+<!-- SECTION 4 — EXAMPLES -->
+<div class="section" id="examples">
+  <div class="section-head">
+    <span class="section-num">04</span>
+    <h2>Worked Examples</h2>
+    <div class="section-line"></div>
+  </div>
+  <p>Click each tab to explore a fully solved formulation example. Focus on the <strong style="color:var(--white)">three-step process</strong>: identify variables → write constraints → build objective function.</p>
+
+  <div class="example-tabs">
+    <div class="tab-list">
+      <button class="tab-btn active" onclick="showTab('ex1',this)">Ex 1 — Kitchen Appliances</button>
+      <button class="tab-btn" onclick="showTab('ex2',this)">Ex 2 — TV Sets</button>
+      <button class="tab-btn" onclick="showTab('ex3',this)">Ex 3 — Farm Crops</button>
+      <button class="tab-btn" onclick="showTab('ex4',this)">Ex 4 — Circuit Boards</button>
+      <button class="tab-btn" onclick="showTab('ex5',this)">Ex 5 — Diet (Min)</button>
+      <button class="tab-btn" onclick="showTab('ex6',this)">Ex 6 — Paint (Mixed)</button>
+    </div>
+
+    <!-- Example 1 -->
+    <div id="ex1" class="tab-panel active">
+      <p class="ex-problem">The HD Company manufactures 3 kitchen appliance models (A, B, C) requiring labor and raw material. The supply of raw material is restricted to <strong>200 lbs/day</strong>. Daily manpower availability is <strong>150 hours</strong>. Find the production mix that <strong>maximizes total daily profit</strong>.</p>
+      <table class="ex-table">
+        <tr><th>Resource</th><th>Model A</th><th>Model B</th><th>Model C</th><th>Limit</th></tr>
+        <tr><td>Labor (hrs/unit)</td><td>7</td><td>3</td><td>6</td><td>150 h</td></tr>
+        <tr><td>Material (lbs/unit)</td><td>4</td><td>4</td><td>5</td><td>200 lbs</td></tr>
+        <tr><td>Profit ($/unit)</td><td>4</td><td>2</td><td>3</td><td>—</td></tr>
+      </table>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Decision Variables:</strong><br>X₁ = daily production of Model A<br>X₂ = daily production of Model B<br>X₃ = daily production of Model C</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Constraints:</strong><br>Labor: 7X₁ + 3X₂ + 6X₃ ≤ 150<br>Material: 4X₁ + 4X₂ + 5X₃ ≤ 200<br>Non-negativity: X₁, X₂, X₃ ≥ 0</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Objective Function:</strong> Profit word → Maximize<br>Max Z = 4X₁ + 2X₂ + 3X₃</div></div>
+      </div>
+      <div class="model-box">
+        <div class="max">Max  Z = 4X₁ + 2X₂ + 3X₃</div>
+        <div class="st">S.T.</div>
+        <div class="eq">    7X₁ + 3X₂ + 6X₃ ≤ 150</div>
+        <div class="eq">    4X₁ + 4X₂ + 5X₃ ≤ 200</div>
+        <div class="nn">    X₁, X₂, X₃ ≥ 0</div>
+      </div>
+    </div>
+
+    <!-- Example 2 -->
+    <div id="ex2" class="tab-panel">
+      <p class="ex-problem">Apex Television produces 27-inch and 20-inch TV sets. Market research shows at most <strong>40 of the 27-inch</strong> and <strong>10 of the 20-inch</strong> sets can be sold monthly. Maximum work-hours available: <strong>500/month</strong>. A 27-inch set needs 20 hrs and produces $120 profit. A 20-inch needs 10 hrs and produces $80 profit. Maximize total profit.</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Decision Variables:</strong><br>A = number of 27-inch sets to produce<br>B = number of 20-inch sets to produce</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Constraints:</strong><br>Market (27-inch): A ≤ 40<br>Market (20-inch): B ≤ 10<br>Work-hours: 20A + 10B ≤ 500<br>Non-negativity: A, B ≥ 0</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Objective:</strong> Profit → Maximize<br>Max Profit = 120A + 80B</div></div>
+      </div>
+      <div class="model-box">
+        <div class="max">Max  Profit = 120A + 80B</div>
+        <div class="st">S.T.</div>
+        <div class="eq">    A ≤ 40</div>
+        <div class="eq">    B ≤ 10</div>
+        <div class="eq">    20A + 10B ≤ 500</div>
+        <div class="nn">    A, B ≥ 0</div>
+      </div>
+    </div>
+
+    <!-- Example 3 -->
+    <div id="ex3" class="tab-panel">
+      <p class="ex-problem">A farmer has <strong>20 hectares</strong> for growing barley and swedes. Budget: <strong>$480</strong> (barley costs $30/ha, swedes $20/ha). Labour: <strong>36 man-days</strong> (barley needs 1 man-day/ha, swedes need 2). Profit: $100/ha barley, $120/ha swedes. Maximize total profit.</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Decision Variables:</strong><br>X = hectares of barley planted<br>Y = hectares of swedes planted</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Constraints:</strong><br>Land: X + Y ≤ 20<br>Budget (≤ signal word): 30X + 20Y ≤ 480<br>Labour: X + 2Y ≤ 36<br>Non-negativity: X, Y ≥ 0</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Objective:</strong> Profit → Maximize<br>Max Profit = 100X + 120Y</div></div>
+      </div>
+      <div class="model-box">
+        <div class="max">Max  Profit = 100X + 120Y</div>
+        <div class="st">S.T.</div>
+        <div class="eq">      X +   Y ≤ 20</div>
+        <div class="eq">    30X + 20Y ≤ 480</div>
+        <div class="eq">      X + 2Y  ≤ 36</div>
+        <div class="nn">    X, Y ≥ 0</div>
+      </div>
+    </div>
+
+    <!-- Example 4 -->
+    <div id="ex4" class="tab-panel">
+      <p class="ex-problem">A manufacturer has a stock of <strong>200 resistors, 120 transistors, 150 capacitors</strong>. Type A circuits need (20R, 10T, 10C) and yield $5 profit. Type B circuits need (10R, 20T, 30C) and yield $12 profit. Maximize profit.</p>
+      <table class="ex-table">
+        <tr><th>Component</th><th>Type A</th><th>Type B</th><th>Stock</th></tr>
+        <tr><td>Resistors</td><td>20</td><td>10</td><td>200</td></tr>
+        <tr><td>Transistors</td><td>10</td><td>20</td><td>120</td></tr>
+        <tr><td>Capacitors</td><td>10</td><td>30</td><td>150</td></tr>
+        <tr><td>Profit ($)</td><td>5</td><td>12</td><td>—</td></tr>
+      </table>
+      <div class="model-box">
+        <div class="max">Max  Profit = 5X₁ + 12X₂</div>
+        <div class="st">S.T.</div>
+        <div class="eq">    20X₁ + 10X₂ ≤ 200  (Resistors)</div>
+        <div class="eq">    10X₁ + 20X₂ ≤ 120  (Transistors)</div>
+        <div class="eq">    10X₁ + 30X₂ ≤ 150  (Capacitors)</div>
+        <div class="nn">    X₁, X₂ ≥ 0</div>
+      </div>
+    </div>
+
+    <!-- Example 5 -->
+    <div id="ex5" class="tab-panel">
+      <p class="ex-problem"><strong>Minimization Example.</strong> A dietitian designs a breakfast menu from items A and B. Each ounce of A: 2 units Vit C + 2 units Iron, costs $4. Each ounce of B: 1 unit Vit C + 2 units Iron, costs $3. Breakfast must provide <strong>at least 8 units Vit C</strong> and <strong>at least 10 units Iron</strong>. Minimize cost.</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Decision Variables:</strong><br>X = ounces of item A<br>Y = ounces of item B</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Constraints:</strong><br>"At least" → <span class="badge geq">≥</span><br>Vitamin C: 2X + Y ≥ 8<br>Iron: 2X + 2Y ≥ 10<br>Non-negativity: X, Y ≥ 0</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Objective:</strong> Cost → Minimize<br>Min Cost = 4X + 3Y</div></div>
+      </div>
+      <div class="model-box">
+        <div style="color:var(--accent)">Min  Cost = 4X + 3Y</div>
+        <div class="st">S.T.</div>
+        <div class="eq">    2X + Y  ≥ 8   (Vit C)</div>
+        <div class="eq">    2X + 2Y ≥ 10  (Iron)</div>
+        <div class="nn">    X, Y ≥ 0</div>
+      </div>
+    </div>
+
+    <!-- Example 6 -->
+    <div id="ex6" class="tab-panel">
+      <p class="ex-problem">Reddy Mikks produces exterior and interior paints from M1 and M2. Data: exterior paint uses 6 tons M1 and 1 ton M2 per ton, yields $5K profit. Interior paint uses 4 tons M1 and 2 tons M2, yields $4K. M1 available: 24 tons/day. M2: 6 tons/day. Interior demand cannot exceed exterior + 1 ton. Max interior demand = 2 tons.</p>
+      <table class="ex-table">
+        <tr><th>Material</th><th>Exterior</th><th>Interior</th><th>Max Daily</th></tr>
+        <tr><td>M1 (tons)</td><td>6</td><td>4</td><td>24</td></tr>
+        <tr><td>M2 (tons)</td><td>1</td><td>2</td><td>6</td></tr>
+        <tr><td>Profit ($1000)</td><td>5</td><td>4</td><td>—</td></tr>
+      </table>
+      <div class="steps">
+        <div class="step"><div class="step-num">⚠</div><div class="step-content"><strong>Tricky Constraint:</strong> "Interior cannot exceed exterior by 1 ton" means X₂ ≤ X₁ + 1, which rearranges to <strong>–X₁ + X₂ ≤ 1</strong></div></div>
+      </div>
+      <div class="model-box">
+        <div class="max">Max  Profit = 5X₁ + 4X₂</div>
+        <div class="st">S.T.</div>
+        <div class="eq">     6X₁ + 4X₂ ≤ 24  (M1)</div>
+        <div class="eq">      X₁ + 2X₂ ≤ 6   (M2)</div>
+        <div class="eq">    -X₁  +  X₂ ≤ 1   (Demand relationship)</div>
+        <div class="eq">           X₂ ≤ 2   (Max interior)</div>
+        <div class="nn">     X₁, X₂ ≥ 0</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5 — QUICK REFERENCE -->
+<div class="section" id="summary">
+  <div class="section-head">
+    <span class="section-num">05</span>
+    <h2>Quick Reference</h2>
+    <div class="section-line"></div>
+  </div>
+  <p>Use this table to quickly identify how to translate word-problem language into LP notation.</p>
+  <table class="summary-table">
+    <tr><th>Word / Phrase</th><th>LP Element</th><th>Symbol</th><th>Example</th></tr>
+    <tr><td>Profit, Revenue, Income</td><td>Objective</td><td><span class="badge max">MAX</span></td><td>Maximize Z = 4X₁ + 2X₂</td></tr>
+    <tr><td>Cost, Expense, Loss</td><td>Objective</td><td><span class="badge min">MIN</span></td><td>Minimize Z = 3X + 5Y</td></tr>
+    <tr><td>At most / Budget / Capacity / Maximum / Restricted</td><td>Constraint</td><td><span class="badge leq">≤</span></td><td>2X + 3Y ≤ 100</td></tr>
+    <tr><td>At least / Minimum / Not less than / More than</td><td>Constraint</td><td><span class="badge geq">≥</span></td><td>X + Y ≥ 50</td></tr>
+    <tr><td>Exactly / Equals</td><td>Constraint</td><td>=</td><td>X + Y = 40</td></tr>
+    <tr><td>Units produced / Quantities / Amounts</td><td>Decision Variables</td><td>X, Y, Z</td><td>X₁ = units of Product A</td></tr>
+    <tr><td>Cannot be negative / Physical quantities</td><td>Non-negativity</td><td><span class="badge geq">≥ 0</span></td><td>X₁, X₂ ≥ 0</td></tr>
+  </table>
+
+  <div class="concept">
+    <div class="concept-label">3-STEP FORMULATION PROCESS</div>
+    <h3>How to Always Solve Formulation Problems</h3>
+    <p><strong>Step 1:</strong> Read carefully and define your <strong>decision variables</strong> — what are you choosing?<br>
+    <strong>Step 2:</strong> Identify all <strong>constraints</strong> — what limits your choices? (resources, demands, capacities)<br>
+    <strong>Step 3:</strong> Write the <strong>objective function</strong> — what are you trying to optimize?</p>
+  </div>
+</div>
+</div>
+
+<footer>
+  <div class="foot-nav">
+    <a href="index.html" class="foot-link">← Home</a>
+    <a href="lecture2.html" class="foot-link">Lecture 2 — Graphical &amp; Simplex →</a>
+  </div>
+</footer>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
