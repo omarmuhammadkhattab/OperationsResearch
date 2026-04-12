@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operations Research — Interactive Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06101f;
+  --surface:#0b1929;
+  --surface2:#0f2040;
+  --border:#1a3050;
+  --accent:#00c8ff;
+  --accent2:#ff6b35;
+  --gold:#f0b429;
+  --green:#39d97b;
+  --text:#c8e0f4;
+  --muted:#4e7090;
+  --white:#e8f4ff;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'IBM Plex Sans',sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* Blueprint grid background */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size:60px 60px;
+  opacity:0.25;
+  pointer-events:none;
+  z-index:0;
+}
+
+.container{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 2rem}
+
+/* HERO */
+.hero{
+  padding:6rem 0 4rem;
+  text-align:center;
+}
+.hero-badge{
+  display:inline-block;
+  border:1px solid var(--accent);
+  color:var(--accent);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:0.7rem;
+  letter-spacing:0.2em;
+  padding:0.3rem 1rem;
+  border-radius:2px;
+  margin-bottom:2rem;
+  animation:fadeDown 0.6s ease;
+}
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2.8rem,7vw,5rem);
+  font-weight:800;
+  line-height:1.05;
+  letter-spacing:-0.03em;
+  color:var(--white);
+  margin-bottom:1rem;
+  animation:fadeDown 0.6s 0.1s ease both;
+}
+.hero h1 span{color:var(--accent)}
+.hero-sub{
+  font-size:1.1rem;
+  color:var(--muted);
+  max-width:540px;
+  margin:0 auto 3rem;
+  line-height:1.7;
+  animation:fadeDown 0.6s 0.2s ease both;
+}
+
+/* Stats bar */
+.stats{
+  display:flex;
+  justify-content:center;
+  gap:3rem;
+  margin-bottom:5rem;
+  animation:fadeUp 0.6s 0.3s ease both;
+}
+.stat{text-align:center}
+.stat-num{
+  font-family:'Syne',sans-serif;
+  font-size:2.2rem;
+  font-weight:800;
+  color:var(--accent);
+}
+.stat-label{
+  font-size:0.75rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-top:0.2rem;
+}
+
+/* LECTURE GRID */
+.section-label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:0.7rem;
+  letter-spacing:0.2em;
+  color:var(--muted);
+  text-transform:uppercase;
+  margin-bottom:2rem;
+}
+.lectures-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:1.5rem;
+  margin-bottom:6rem;
+}
+.lecture-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:2rem;
+  text-decoration:none;
+  color:inherit;
+  display:block;
+  position:relative;
+  overflow:hidden;
+  transition:transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  animation:fadeUp 0.5s ease both;
+}
+.lecture-card:nth-child(1){animation-delay:0.1s}
+.lecture-card:nth-child(2){animation-delay:0.2s}
+.lecture-card:nth-child(3){animation-delay:0.3s}
+.lecture-card:nth-child(4){animation-delay:0.4s}
+.lecture-card:nth-child(5){animation-delay:0.5s}
+
+.lecture-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:2px;
+  background:var(--card-accent, var(--accent));
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform 0.3s ease;
+}
+.lecture-card:hover::before{transform:scaleX(1)}
+.lecture-card:hover{
+  transform:translateY(-4px);
+  border-color:var(--card-accent, var(--accent));
+  box-shadow:0 12px 40px rgba(0,200,255,0.08);
+}
+
+.card-num{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:0.65rem;
+  letter-spacing:0.15em;
+  color:var(--card-accent, var(--accent));
+  margin-bottom:1.2rem;
+}
+.card-title{
+  font-family:'Syne',sans-serif;
+  font-size:1.3rem;
+  font-weight:700;
+  color:var(--white);
+  margin-bottom:0.8rem;
+  line-height:1.2;
+}
+.card-desc{
+  font-size:0.88rem;
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:1.5rem;
+}
+.card-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.5rem;
+}
+.tag{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:0.65rem;
+  padding:0.25rem 0.6rem;
+  border:1px solid var(--border);
+  border-radius:2px;
+  color:var(--muted);
+}
+.card-arrow{
+  position:absolute;
+  bottom:2rem;right:2rem;
+  font-size:1.3rem;
+  color:var(--card-accent, var(--accent));
+  opacity:0;
+  transform:translateX(-8px);
+  transition:all 0.2s;
+}
+.lecture-card:hover .card-arrow{opacity:1;transform:translateX(0)}
+
+/* Color variants */
+.card-1{--card-accent:#00c8ff}
+.card-2{--card-accent:#ff6b35}
+.card-3{--card-accent:#f0b429}
+.card-4{--card-accent:#39d97b}
+.card-5{--card-accent:#c084fc}
+
+/* FORMULA SHOWCASE */
+.formula-bar{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:2rem;
+  margin-bottom:6rem;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.formula-bar::before{
+  content:'KEY FORMULAS';
+  position:absolute;
+  top:1rem;left:1.5rem;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:0.6rem;
+  letter-spacing:0.2em;
+  color:var(--muted);
+}
+.formulas{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:3rem;
+  margin-top:1rem;
+}
+.formula-item{
+  text-align:center;
+}
+.formula-eq{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:1rem;
+  color:var(--gold);
+  margin-bottom:0.3rem;
+}
+.formula-name{
+  font-size:0.72rem;
+  color:var(--muted);
+  letter-spacing:0.05em;
+}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--border);
+  padding:2rem 0 2.5rem;
+  margin-top:2rem;
+  position:relative;z-index:1;
+}
+.foot-nav-index{
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;
+}
+.foot-copy{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.72rem;color:var(--muted);letter-spacing:.05em;
+}
+.foot-lec-links{display:flex;flex-wrap:wrap;gap:.5rem}
+.foot-lec-links a{
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+  color:var(--muted);text-decoration:none;
+  padding:.25rem .6rem;border:1px solid var(--border);
+  border-radius:4px;transition:all .2s;
+}
+.foot-lec-links a:hover{color:var(--accent);border-color:var(--accent)}
+
+@keyframes fadeDown{
+  from{opacity:0;transform:translateY(-20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Animated cyan dot */
+.dot{
+  display:inline-block;
+  width:8px;height:8px;
+  background:var(--accent);
+  border-radius:50%;
+  margin-right:0.5rem;
+  animation:pulse 2s infinite;
+  vertical-align:middle;
+}
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(0,200,255,0.4)}
+  50%{box-shadow:0 0 0 6px rgba(0,200,255,0)}
+}
+
+/* ── SHARED NAV ── */
+.site-nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(6,16,31,0.95);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  padding:0 1.5rem;
+  display:flex;align-items:center;gap:1.5rem;
+  min-height:52px;flex-wrap:wrap;row-gap:0;
+}
+.site-nav .brand{
+  color:var(--accent);font-weight:700;
+  font-family:'Syne',sans-serif;
+  font-size:.95rem;margin-right:auto;
+  text-decoration:none;white-space:nowrap;
+}
+.site-nav a:not(.brand){
+  color:var(--muted);text-decoration:none;
+  font-size:.82rem;font-family:'IBM Plex Mono',monospace;
+  letter-spacing:.05em;padding:.25rem .5rem;
+  border-radius:4px;transition:color .2s,background .2s;
+  white-space:nowrap;
+}
+.site-nav a:not(.brand):hover,.site-nav a.active{
+  color:var(--accent);background:rgba(0,200,255,0.08);
+}
+
+/* ── MOBILE ── */
+@media(max-width:640px){
+  .hero{padding:3rem 0 2.5rem}
+  .hero h1{font-size:2.4rem}
+  .hero-sub{font-size:.95rem;margin-bottom:2rem}
+  .stats{gap:1.5rem;flex-wrap:wrap;margin-bottom:3rem}
+  .stat-num{font-size:1.7rem}
+  .lectures-grid{grid-template-columns:1fr;gap:1rem}
+  .lecture-card{padding:1.5rem}
+  .formulas{gap:1.5rem}
+  .formula-eq{font-size:.85rem}
+  .container{padding:0 1rem}
+  .site-nav{gap:1rem;padding:0 1rem}
+  .site-nav .brand{font-size:.85rem}
+  .site-nav a:not(.brand){font-size:.78rem;padding:.2rem .3rem}
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a href="index.html" class="brand">OR Course</a>
+  <a href="index.html" class="active">Home</a>
+  <a href="lecture1.html">L1</a>
+  <a href="lecture2.html">L2</a>
+  <a href="lecture3.html">L3</a>
+  <a href="lecture4.html">L4</a>
+  <a href="lecture5.html">L5</a>
+</nav>
+<div class="container">
+  <div class="hero">
+    <div class="hero-badge"><span class="dot"></span>Interactive Course Material</div>
+    <h1>Operations<br><span>Research</span></h1>
+    <p class="hero-sub">A quantitative approach to decision making — from linear programming fundamentals to project management with CPM &amp; PERT.</p>
+    <div class="stats">
+      <div class="stat"><div class="stat-num">5</div><div class="stat-label">Lectures</div></div>
+      <div class="stat"><div class="stat-num">30+</div><div class="stat-label">Examples</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Methods</div></div>
+    </div>
+  </div>
+
+  <p class="section-label">// Course Lectures</p>
+  <div class="lectures-grid">
+    <a href="lecture1.html" class="lecture-card card-1">
+      <div class="card-num">LECTURE 01</div>
+      <div class="card-title">Introduction &amp; LP Formulation</div>
+      <div class="card-desc">Learn how to model real-world problems as linear programs. Master the art of identifying variables, building objective functions, and writing constraints.</div>
+      <div class="card-tags">
+        <span class="tag">LP Model</span>
+        <span class="tag">Objective Function</span>
+        <span class="tag">Constraints</span>
+        <span class="tag">Max / Min</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a href="lecture2.html" class="lecture-card card-2">
+      <div class="card-num">LECTURE 02</div>
+      <div class="card-title">Graphical &amp; Simplex Methods</div>
+      <div class="card-desc">Solve two-variable LP problems graphically by finding the feasible region and corner points. Then tackle any-size problems with the powerful Simplex algorithm.</div>
+      <div class="card-tags">
+        <span class="tag">Graphical Method</span>
+        <span class="tag">Feasible Region</span>
+        <span class="tag">Simplex</span>
+        <span class="tag">Pivot</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a href="lecture3.html" class="lecture-card card-3">
+      <div class="card-num">LECTURE 03</div>
+      <div class="card-title">Transportation Problem</div>
+      <div class="card-desc">Minimize the cost of shipping goods from multiple sources to multiple destinations. Three methods: NW Corner, Least Cost, and Vogel's Approximation.</div>
+      <div class="card-tags">
+        <span class="tag">NW Corner</span>
+        <span class="tag">Least Cost</span>
+        <span class="tag">Vogel</span>
+        <span class="tag">MODI</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a href="lecture4.html" class="lecture-card card-4">
+      <div class="card-num">LECTURE 04</div>
+      <div class="card-title">Assignment Problem</div>
+      <div class="card-desc">Optimally assign n jobs to n workers to minimize total cost or time. Master the Hungarian Method with its elegant row/column reduction algorithm.</div>
+      <div class="card-tags">
+        <span class="tag">Hungarian Method</span>
+        <span class="tag">Cost Matrix</span>
+        <span class="tag">Zero Coverage</span>
+        <span class="tag">Optimal Assignment</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a href="lecture5.html" class="lecture-card card-5">
+      <div class="card-num">LECTURE 05</div>
+      <div class="card-title">Project Management (CPM/PERT)</div>
+      <div class="card-desc">Schedule complex projects using network diagrams. Find the critical path with CPM and handle uncertain activity durations with PERT's probabilistic model.</div>
+      <div class="card-tags">
+        <span class="tag">CPM</span>
+        <span class="tag">PERT</span>
+        <span class="tag">Critical Path</span>
+        <span class="tag">Slack Time</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+  </div>
+
+  <div class="formula-bar">
+    <div class="formulas">
+      <div class="formula-item">
+        <div class="formula-eq">Max/Min Z = Σ cⱼxⱼ</div>
+        <div class="formula-name">Objective Function</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-eq">TC = ΣΣ Cᵢⱼ Xᵢⱼ</div>
+        <div class="formula-name">Transportation Cost</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-eq">tₑ = (t₀ + 4tₘ + tₚ) / 6</div>
+        <div class="formula-name">PERT Expected Time</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-eq">Z = (T − T꜀ₚ) / σ</div>
+        <div class="formula-name">PERT Z-Score</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="foot-nav-index">
+      <span class="foot-copy">Operations Research — Interactive Course Notes</span>
+      <div class="foot-lec-links">
+        <a href="lecture1.html">L1 — LP Formulation</a>
+        <a href="lecture2.html">L2 — Simplex</a>
+        <a href="lecture3.html">L3 — Transportation</a>
+        <a href="lecture4.html">L4 — Assignment</a>
+        <a href="lecture5.html">L5 — CPM &amp; PERT</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
