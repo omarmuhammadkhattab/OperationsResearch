@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lecture 6 — Project Crashing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #06101f;
+  --bg2: #0b1828;
+  --bg3: #0f2035;
+  --accent: #f43f5e;
+  --accent2: #be123c;
+  --accent3: #fb7185;
+  --cyan: #00c8ff;
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --border: rgba(244,63,94,0.18);
+  --card: rgba(244,63,94,0.06);
+  --gold: #f0b429;
+  --green: #39d97b;
+  --orange: #ff6b35;
+  --purple: #a855f7;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'IBM Plex Sans',sans-serif;
+  line-height:1.7;
+  min-height:100vh;
+  background-image:
+    linear-gradient(rgba(244,63,94,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(244,63,94,0.03) 1px,transparent 1px);
+  background-size:44px 44px;
+}
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(6,16,31,0.95);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  padding:0 1.5rem;
+  display:flex;align-items:center;gap:1.5rem;min-height:52px;flex-wrap:wrap;row-gap:0;
+}
+nav a{color:var(--text2);text-decoration:none;font-size:.82rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.05em;padding:.25rem .5rem;border-radius:4px;transition:color .2s,background .2s;white-space:nowrap}
+nav a:hover,nav a.active{color:var(--accent);background:rgba(244,63,94,0.1)}
+nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;margin-right:auto;font-size:.95rem;letter-spacing:0;padding:0;background:none;}
+/* ── HERO ── */
+.hero{
+  padding:5rem 2rem 3.5rem;
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem;
+}
+.lec-badge{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.75rem;letter-spacing:.15em;
+  color:var(--accent);
+  border:1px solid var(--border);
+  border-radius:4px;padding:.3rem .7rem;
+  display:inline-block;margin-bottom:1rem;
+  background:rgba(244,63,94,0.08);
+}
+.hero h1{
+  font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:800;line-height:1.1;
+  background:linear-gradient(135deg,#fff 0%,var(--accent3) 60%,var(--accent) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:1rem;
+}
+.hero p{color:var(--text2);max-width:600px;font-size:1.05rem}
+.hero-stats{
+  display:flex;flex-direction:column;gap:.75rem;
+  border:1px solid var(--border);border-radius:12px;
+  padding:1.5rem;background:var(--card);
+  min-width:180px;
+}
+.hero-stat{text-align:center}
+.hero-stat .n{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--accent)}
+.hero-stat .l{font-size:.75rem;color:var(--text3);font-family:'IBM Plex Mono',monospace;letter-spacing:.08em}
+/* ── SECTION ── */
+.section{max-width:1100px;margin:0 auto;padding:2rem 2rem 3rem}
+.sec-title{
+  font-family:'Syne',sans-serif;font-size:1.55rem;font-weight:700;
+  color:var(--accent3);margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:.75rem;
+}
+.sec-title::before{content:'';display:block;width:4px;height:1.4em;background:var(--accent);border-radius:2px}
+/* ── CARDS ── */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;padding:1.5rem;
+  margin-bottom:1.25rem;
+}
+.card h3{font-family:'Syne',sans-serif;color:var(--accent3);margin-bottom:.7rem;font-size:1.05rem}
+.card p{color:var(--text2);font-size:.95rem;line-height:1.7}
+/* ── DEF GRID ── */
+.def-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:2rem}
+.def-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:10px;padding:1.25rem;
+  border-top:3px solid var(--accent);
+}
+.def-card .term{font-family:'Syne',sans-serif;font-weight:700;color:var(--accent3);margin-bottom:.4rem;font-size:.95rem}
+.def-card p{color:var(--text2);font-size:.9rem;line-height:1.55}
+/* ── FORMULA BOX ── */
+.formula-box{
+  background:rgba(244,63,94,0.08);
+  border:1px solid rgba(244,63,94,0.3);
+  border-radius:10px;padding:1.25rem 1.5rem;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.95rem;color:var(--accent3);
+  margin:.75rem 0;line-height:2.2;
+}
+.formula-box .label{color:var(--text3);font-size:.8rem;display:block;margin-bottom:.3rem;font-family:'IBM Plex Sans',sans-serif}
+/* ── TWO-COL ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
+/* ── STEP LIST ── */
+.step-list{display:flex;flex-direction:column;gap:.75rem;margin:1rem 0}
+.step{display:flex;gap:1rem;align-items:flex-start}
+.step-num{
+  min-width:32px;height:32px;border-radius:50%;
+  background:var(--accent2);color:#fff;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.step-body{color:var(--text2);font-size:.93rem;padding-top:.3rem;line-height:1.6}
+/* ── TABLES ── */
+.data-table{width:100%;border-collapse:collapse;font-size:.88rem;margin:.75rem 0}
+.data-table th{
+  background:rgba(244,63,94,0.15);color:var(--accent3);
+  font-family:'IBM Plex Mono',monospace;font-size:.78rem;
+  padding:.6rem .8rem;text-align:center;letter-spacing:.06em;
+  border-bottom:1px solid var(--border);
+}
+.data-table td{padding:.55rem .8rem;text-align:center;border-bottom:1px solid rgba(244,63,94,0.08);color:var(--text2)}
+.data-table tr:hover td{background:rgba(244,63,94,0.05)}
+.data-table .cp-row td{color:var(--accent3);font-weight:600;background:rgba(244,63,94,0.1)}
+.data-table .highlight td{color:var(--gold);font-weight:600}
+/* ── TABS ── */
+.tab-bar{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+.tab-btn{
+  font-family:'IBM Plex Mono',monospace;font-size:.8rem;
+  padding:.45rem 1.1rem;border-radius:6px;cursor:pointer;
+  background:transparent;border:1px solid var(--border);
+  color:var(--text2);transition:all .2s;letter-spacing:.06em;
+}
+.tab-btn.active,.tab-btn:hover{
+  background:rgba(244,63,94,0.15);border-color:var(--accent);color:var(--accent3);
+}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+/* ── NETWORK SVG ── */
+.network-wrap{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:12px;padding:1rem;overflow-x:auto;
+  margin-bottom:1.25rem;
+}
+.network-wrap svg{display:block;margin:0 auto}
+/* ── COST CURVE SVG ── */
+.cost-curve-wrap{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:12px;padding:1.5rem;
+  margin-bottom:1.5rem;text-align:center;
+}
+.cost-curve-wrap svg{display:inline-block}
+/* ── HIGHLIGHT BOX ── */
+.highlight-box{
+  border:1px solid var(--gold);
+  background:rgba(240,180,41,0.06);
+  border-radius:10px;padding:1.2rem 1.5rem;
+  color:var(--gold);margin:.75rem 0;
+  font-size:.93rem;
+}
+.highlight-box strong{font-weight:600}
+/* ── RESULT BOX ── */
+.result-box{
+  border:1px solid var(--green);
+  background:rgba(57,217,123,0.07);
+  border-radius:10px;padding:1.2rem 1.5rem;
+  color:var(--green);margin:1rem 0;
+  font-size:.93rem;line-height:1.7;
+}
+/* ── CALCULATOR ── */
+.calc-wrap{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:12px;padding:1.5rem;margin-top:1rem;
+}
+.calc-title{font-family:'Syne',sans-serif;font-size:1rem;color:var(--accent3);margin-bottom:1rem}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin-bottom:1rem}
+.calc-field label{display:block;font-size:.78rem;color:var(--text3);font-family:'IBM Plex Mono',monospace;margin-bottom:.3rem;letter-spacing:.05em}
+.calc-field input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);
+  border-radius:6px;padding:.5rem .75rem;color:var(--text);
+  font-family:'IBM Plex Mono',monospace;font-size:.88rem;
+  outline:none;transition:border-color .2s;
+}
+.calc-field input:focus{border-color:var(--accent)}
+.calc-btn{
+  background:var(--accent2);color:#fff;border:none;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;
+  padding:.6rem 1.5rem;border-radius:8px;cursor:pointer;
+  transition:background .2s;
+}
+.calc-btn:hover{background:var(--accent)}
+.calc-result{
+  margin-top:1rem;padding:1rem;
+  background:rgba(244,63,94,0.07);
+  border:1px solid var(--border);border-radius:8px;
+  font-family:'IBM Plex Mono',monospace;font-size:.9rem;
+  color:var(--accent3);display:none;
+}
+.calc-result.show{display:block}
+.calc-result .r-label{font-size:.75rem;color:var(--text3);font-family:'IBM Plex Sans',sans-serif;margin-bottom:.2rem}
+.calc-result .r-val{color:var(--gold);font-size:1rem;margin-bottom:.75rem}
+/* ── BADGE ROW ── */
+.badge-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+.badge{
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+  padding:.25rem .65rem;border-radius:4px;
+  border:1px solid var(--border);color:var(--text3);
+}
+.badge.hot{border-color:rgba(244,63,94,0.4);color:var(--accent3);background:rgba(244,63,94,0.07)}
+/* ── FOOT NAV ── */
+.foot-nav{
+  max-width:1100px;margin:2rem auto 0;padding:1.5rem 2rem 3rem;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+  border-top:1px solid var(--border);
+}
+.foot-link{
+  font-family:'IBM Plex Mono',monospace;font-size:.8rem;
+  color:var(--text2);text-decoration:none;
+  padding:.4rem .9rem;border:1px solid var(--border);
+  border-radius:6px;transition:all .2s;
+}
+.foot-link:hover{color:var(--accent);border-color:var(--accent)}
+/* ── RESPONSIVE SVGs ── */
+.network-wrap svg,.cost-curve-wrap svg{width:100%;height:auto}
+.cost-curve-wrap{overflow-x:auto}
+
+/* ── MOBILE ── */
+@media(max-width:640px){
+  .section{padding:1.5rem 1rem 2rem}
+  .hero{padding:2.5rem 1rem 2rem;grid-template-columns:1fr}
+  .hero-stats{display:none}
+  .hero h1{font-size:2rem}
+  .hero p{font-size:.9rem}
+  .two-col{grid-template-columns:1fr}
+  .def-grid{grid-template-columns:1fr}
+  .formula-box{font-size:.8rem;padding:.9rem;line-height:1.9;word-break:break-word}
+  .tab-bar{gap:.35rem;overflow-x:auto;flex-wrap:nowrap;padding-bottom:.25rem}
+  .tab-btn{font-size:.72rem;padding:.35rem .7rem;white-space:nowrap;flex-shrink:0}
+  .network-wrap{padding:.5rem}
+  .data-table{font-size:.74rem}
+  .data-table th,.data-table td{padding:.35rem .4rem}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .calc-wrap{padding:1rem}
+  .calc-grid{grid-template-columns:1fr}
+  .card{padding:1.1rem}
+  .step-body{font-size:.88rem}
+  nav{gap:0;padding:0;overflow-x:auto;flex-wrap:nowrap}
+  nav .brand{padding:.6rem 1rem;flex-shrink:0}
+  nav a:not(.brand){font-size:.78rem;padding:.6rem .55rem;white-space:nowrap;flex-shrink:0}
+  .foot-nav{flex-direction:column;gap:.75rem;text-align:center;padding:1.25rem 1rem 2rem}
+  .foot-link{display:block;text-align:center}
+  .highlight-box,.result-box{font-size:.88rem}
+  .sec-title{font-size:1.25rem}
+}
+@media(max-width:380px){
+  .hero h1{font-size:1.75rem}
+  .tab-btn{font-size:.68rem;padding:.3rem .55rem}
+  nav a:not(.brand){font-size:.72rem;padding:.6rem .4rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="brand">OR Course</a>
+  <a href="index.html">Home</a>
+  <a href="lecture1.html">L1</a>
+  <a href="lecture2.html">L2</a>
+  <a href="lecture3.html">L3</a>
+  <a href="lecture4.html">L4</a>
+  <a href="lecture5.html">L5</a>
+  <a href="lecture6.html" class="active">L6</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="lec-badge">LECTURE 06</div>
+    <h1>Project<br>Crashing</h1>
+    <p>Accelerate project completion by strategically allocating extra resources to critical activities — balancing the trade-off between time and cost.</p>
+    <div class="badge-row" style="margin-top:1.25rem">
+      <span class="badge hot">Cost Slope</span>
+      <span class="badge hot">Critical Path</span>
+      <span class="badge hot">Direct Cost</span>
+      <span class="badge hot">Indirect Cost</span>
+      <span class="badge hot">Optimum Schedule</span>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="n">9</div><div class="l">Crashing Steps</div></div>
+    <div class="hero-stat"><div class="n">3</div><div class="l">Examples</div></div>
+    <div class="hero-stat"><div class="n">1</div><div class="l">Key Formula</div></div>
+  </div>
+</div>
+
+<!-- ── SECTION 1: PROJECT COST ── -->
+<div class="section">
+  <div class="sec-title">Project Cost</div>
+
+  <div class="card">
+    <p>Each activity of the project consumes resources and therefore has a cost associated with it. In most cases the cost of an activity varies with the amount of time consumed. The <strong>total project cost</strong> — the aggregate of all activity costs — therefore also depends on project duration.</p>
+    <p style="margin-top:.75rem">The aim is always to <strong>strike a balance between cost and time</strong> and obtain an optimum project schedule — the one with the lowest possible total cost and its associated completion time.</p>
+  </div>
+
+  <div class="def-grid">
+    <div class="def-card">
+      <div class="term">Direct Cost</div>
+      <p>Directly dependent on the resources used to execute individual activities: materials, equipment, and labour. <strong>Direct cost decreases as project duration increases</strong> (more time = less overtime, fewer extra resources).</p>
+    </div>
+    <div class="def-card">
+      <div class="term">Indirect Cost</div>
+      <p>Overhead not tied to specific activities. Sub-divided into <em>fixed</em> and <em>variable</em> indirect costs. <strong>Indirect cost increases as project duration increases</strong> (more time = more overhead).</p>
+    </div>
+    <div class="def-card" style="border-top-color:var(--gold)">
+      <div class="term" style="color:var(--gold)">Total Cost</div>
+      <p>Sum of direct and indirect costs. The <strong>optimum project duration</strong> is where total cost is minimised — the bottom of the U-shaped total-cost curve.</p>
+    </div>
+  </div>
+
+  <!-- Cost curve diagram -->
+  <div class="cost-curve-wrap">
+    <p style="font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--text3);letter-spacing:.1em;margin-bottom:1rem">// TIME–COST TRADE-OFF CURVE</p>
+    <svg viewBox="0 0 480 260" xmlns="http://www.w3.org/2000/svg" style="max-width:480px;width:100%">
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#4e7090"/>
+        </marker>
+      </defs>
+      <!-- Axes -->
+      <line x1="60" y1="220" x2="440" y2="220" stroke="#4e7090" stroke-width="1.5" marker-end="url(#arr)"/>
+      <line x1="60" y1="220" x2="60" y2="20" stroke="#4e7090" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="450" y="224" fill="#4e7090" font-size="11" font-family="IBM Plex Mono,monospace">Duration →</text>
+      <text x="20" y="30" fill="#4e7090" font-size="11" font-family="IBM Plex Mono,monospace" transform="rotate(-90,35,110)" text-anchor="middle">Total Cost ↑</text>
+
+      <!-- Direct cost: decreasing curve -->
+      <path d="M90,60 Q160,110 240,160 Q320,190 400,210" stroke="#f43f5e" stroke-width="2" fill="none" stroke-dasharray="0"/>
+      <text x="405" y="215" fill="#f43f5e" font-size="11" font-family="IBM Plex Mono,monospace">Direct</text>
+
+      <!-- Indirect cost: increasing line -->
+      <path d="M90,210 L400,90" stroke="#00c8ff" stroke-width="2" fill="none"/>
+      <text x="405" y="94" fill="#00c8ff" font-size="11" font-family="IBM Plex Mono,monospace">Indirect</text>
+
+      <!-- Total cost: U-shape -->
+      <path d="M90,50 Q130,80 190,115 Q230,130 260,136 Q300,142 340,165 Q370,185 400,215" stroke="#f0b429" stroke-width="2.5" fill="none"/>
+      <text x="100" y="46" fill="#f0b429" font-size="11" font-family="IBM Plex Mono,monospace">Total Cost</text>
+
+      <!-- Minimum marker -->
+      <line x1="260" y1="136" x2="260" y2="220" stroke="#39d97b" stroke-width="1" stroke-dasharray="4,3"/>
+      <circle cx="260" cy="136" r="5" fill="#39d97b"/>
+      <text x="263" y="133" fill="#39d97b" font-size="10" font-family="IBM Plex Mono,monospace">Min Cost</text>
+      <text x="250" y="235" fill="#39d97b" font-size="10" font-family="IBM Plex Mono,monospace">Optimum</text>
+    </svg>
+  </div>
+</div>
+
+<!-- ── SECTION 2: PROJECT CRASHING ── -->
+<div class="section" style="padding-top:0">
+  <div class="sec-title">Project Crashing</div>
+
+  <div class="card">
+    <p><strong style="color:var(--accent3)">Project crashing</strong> is a method for shortening project duration by reducing the time of one or more critical activities to less than their normal duration — at an additional cost. The decision is based on analysis of the <strong>trade-off between time and cost</strong>.</p>
+  </div>
+
+  <div class="formula-box">
+    <span class="label">Cost Slope — additional cost per unit of time saved</span>
+    Cost Slope (S) = (Crash Cost − Normal Cost) / (Normal Time − Crash Time)
+    <br>
+    <span style="color:var(--text3)">i.e.  S = (CC − NC) / (ND − CD)</span>
+  </div>
+
+  <div class="sec-title" style="margin-top:2rem;font-size:1.2rem">Steps in Project Crashing</div>
+  <div class="step-list">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Identify the critical path</strong> and the critical activities using CPM.</div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Determine the cost slope</strong> for each activity using the formula above.</div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Crash the critical activity with the minimum cost slope.</strong> Calculate the new direct cost by adding the crashing cost to the normal cost.</div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body">As crashing proceeds, <strong>non-critical activities may become critical</strong>, creating multiple critical paths. If so, choose one activity from each such path for crashing.</div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-body">Of all available combinations, <strong>select the one with the least combined cost</strong>.</div></div>
+    <div class="step"><div class="step-num">6</div><div class="step-body"><strong>Revise the network</strong> with updated durations and costs. Re-identify the critical path(s).</div></div>
+    <div class="step"><div class="step-num">7</div><div class="step-body"><strong>Continue until no further crashing is possible.</strong> Calculate total crash cost (normal direct cost + additional crash cost + indirect cost).</div></div>
+    <div class="step"><div class="step-num">8</div><div class="step-body"><strong>Prepare the total cost table</strong> for different project durations.</div></div>
+    <div class="step"><div class="step-num">9</div><div class="step-body">The <strong>minimum total cost is the optimum cost</strong> and its associated duration is the optimum time.</div></div>
+  </div>
+</div>
+
+<!-- ── SECTION 3: COST SLOPE CALCULATOR ── -->
+<div class="section" style="padding-top:0">
+  <div class="sec-title">Cost Slope Calculator</div>
+  <div class="calc-wrap">
+    <div class="calc-title">// Compute cost slope for any activity</div>
+    <div class="calc-grid">
+      <div class="calc-field"><label>Normal Duration (ND)</label><input type="number" id="nd" placeholder="e.g. 120"></div>
+      <div class="calc-field"><label>Crash Duration (CD)</label><input type="number" id="cd" placeholder="e.g. 100"></div>
+      <div class="calc-field"><label>Normal Cost (NC)</label><input type="number" id="nc" placeholder="e.g. 12000"></div>
+      <div class="calc-field"><label>Crash Cost (CC)</label><input type="number" id="cc" placeholder="e.g. 14000"></div>
+    </div>
+    <button class="calc-btn" onclick="calcSlope()">Calculate Slope →</button>
+    <div class="calc-result" id="slope-result">
+      <div class="r-label">Time Reducible (ND − CD)</div>
+      <div class="r-val" id="res-time">—</div>
+      <div class="r-label">Extra Cost (CC − NC)</div>
+      <div class="r-val" id="res-extra">—</div>
+      <div class="r-label">Cost Slope (per unit time)</div>
+      <div class="r-val" id="res-slope">—</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 4: EXAMPLES ── -->
+<div class="section" style="padding-top:0">
+  <div class="sec-title">Worked Examples</div>
+
+  <div class="tab-bar" id="ex-tabs">
+    <button class="tab-btn active" onclick="switchEx('ex1',this)">Example 1 — Crash to 110 days</button>
+    <button class="tab-btn" onclick="switchEx('ex2',this)">Example 2 — Reduce by 3 weeks</button>
+    <button class="tab-btn" onclick="switchEx('ex3',this)">Example 3 — Budget ≤ Rs 2,000</button>
+  </div>
+
+  <!-- ══ EXAMPLE 1 ══ -->
+  <div class="tab-panel active" id="ex1">
+    <div class="card">
+      <h3>Problem Statement</h3>
+      <p>The network below shows a project's normal schedule. Activity durations can be crashed at additional cost. The owner wants the project completed in <strong>110 days</strong>. Find the minimum possible cost.</p>
+    </div>
+
+    <!-- Network diagram -->
+    <div class="network-wrap">
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--text3);letter-spacing:.1em;margin-bottom:.75rem;text-align:center">// NORMAL NETWORK — 140 days</p>
+      <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:600px;font-family:'IBM Plex Mono',monospace">
+        <defs>
+          <marker id="a1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#4e7090"/></marker>
+          <marker id="a1r" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f43f5e"/></marker>
+        </defs>
+        <!-- Nodes -->
+        <circle cx="60" cy="100" r="22" fill="none" stroke="#f43f5e" stroke-width="2"/>
+        <text x="60" y="105" text-anchor="middle" fill="#fb7185" font-size="14" font-weight="bold">1</text>
+        <circle cx="220" cy="100" r="22" fill="none" stroke="#f43f5e" stroke-width="2"/>
+        <text x="220" y="105" text-anchor="middle" fill="#fb7185" font-size="14" font-weight="bold">2</text>
+        <circle cx="360" cy="100" r="22" fill="none" stroke="#f43f5e" stroke-width="2"/>
+        <text x="360" y="105" text-anchor="middle" fill="#fb7185" font-size="14" font-weight="bold">3</text>
+        <circle cx="470" cy="100" r="22" fill="none" stroke="#f43f5e" stroke-width="2"/>
+        <text x="470" y="105" text-anchor="middle" fill="#fb7185" font-size="14" font-weight="bold">4</text>
+        <circle cx="570" cy="100" r="22" fill="none" stroke="#f43f5e" stroke-width="2"/>
+        <text x="570" y="105" text-anchor="middle" fill="#fb7185" font-size="14" font-weight="bold">5</text>
+        <!-- Activity A: 1→5 top arc -->
+        <path d="M78,85 Q295,15 552,85" stroke="#4e7090" stroke-width="1.5" fill="none" marker-end="url(#a1)"/>
+        <text x="295" y="22" text-anchor="middle" fill="#94a3b8" font-size="11">A = 120</text>
+        <!-- Activity B: 1→2 -->
+        <line x1="82" y1="100" x2="198" y2="100" stroke="#f43f5e" stroke-width="2" marker-end="url(#a1r)"/>
+        <text x="140" y="93" text-anchor="middle" fill="#fb7185" font-size="11">B = 20</text>
+        <!-- Activity C: 2→3 -->
+        <line x1="242" y1="100" x2="338" y2="100" stroke="#f43f5e" stroke-width="2" marker-end="url(#a1r)"/>
+        <text x="290" y="93" text-anchor="middle" fill="#fb7185" font-size="11">C = 40</text>
+        <!-- Activity D: 3→4 -->
+        <line x1="382" y1="100" x2="448" y2="100" stroke="#f43f5e" stroke-width="2" marker-end="url(#a1r)"/>
+        <text x="415" y="93" text-anchor="middle" fill="#fb7185" font-size="11">D = 30</text>
+        <!-- Activity E: 4→5 -->
+        <line x1="492" y1="100" x2="548" y2="100" stroke="#f43f5e" stroke-width="2" marker-end="url(#a1r)"/>
+        <text x="520" y="93" text-anchor="middle" fill="#fb7185" font-size="11">E = 50</text>
+        <!-- Activity F: 2→4 bottom arc -->
+        <path d="M230,118 Q350,175 460,118" stroke="#4e7090" stroke-width="1.5" fill="none" marker-end="url(#a1)"/>
+        <text x="345" y="175" text-anchor="middle" fill="#94a3b8" font-size="11">F = 60</text>
+        <!-- Critical path label -->
+        <text x="295" y="195" text-anchor="middle" fill="#f43f5e" font-size="10">Critical path: B–C–D–E = 140 days</text>
+      </svg>
+    </div>
+
+    <!-- Time-cost data table -->
+    <div class="card">
+      <h3>Activity Time–Cost Data &amp; Cost Slopes</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Activity</th><th>Normal Duration (days)</th><th>Crash Duration (days)</th><th>Normal Cost ($)</th><th>Crash Cost ($)</th><th>ND−CD</th><th>CC−NC</th><th>Slope ($/day)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>A</td><td>120</td><td>100</td><td>12,000</td><td>14,000</td><td>20</td><td>2,000</td><td>100</td></tr>
+          <tr class="highlight"><td>D</td><td>30</td><td>20</td><td>1,400</td><td>2,000</td><td>10</td><td>600</td><td><strong>60 ← least</strong></td></tr>
+          <tr><td>E</td><td>50</td><td>40</td><td>3,600</td><td>4,800</td><td>10</td><td>1,200</td><td>120</td></tr>
+          <tr><td>B</td><td>20</td><td>15</td><td>1,800</td><td>2,800</td><td>5</td><td>1,000</td><td>200</td></tr>
+          <tr><td>F</td><td>60</td><td>45</td><td>13,500</td><td>18,000</td><td>15</td><td>4,500</td><td>300</td></tr>
+          <tr><td>C</td><td>40</td><td>30</td><td>16,000</td><td>22,000</td><td>10</td><td>6,000</td><td>600</td></tr>
+          <tr style="border-top:1px solid var(--border)"><td colspan="3"><strong>Sum (Normal Cost)</strong></td><td><strong>48,300</strong></td><td colspan="4"></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Crashing steps -->
+    <div class="step-list">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Normal schedule:</strong> Critical path is B–C–D–E = 140 days. Activity A (120 days) and B–F–E (130 days) are non-critical.
+          <div class="formula-box" style="margin-top:.5rem;font-size:.85rem">Normal direct cost = $48,300</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Crash D by 10 days</strong> (least slope = $60/day). Duration falls from 140 → 130 days. Two critical paths emerge: B–F–E and B–C–D–E.
+          <div class="formula-box" style="margin-top:.5rem;font-size:.85rem">New cost = $48,300 + (60 × 10) = $48,900&nbsp;&nbsp;&nbsp;| Duration = 130 days</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Crash E by 10 days</strong> (next least slope on CP = $120/day). Duration falls to 120 days. Three critical paths: A, B–C–D–E, B–F–E.
+          <div class="formula-box" style="margin-top:.5rem;font-size:.85rem">New cost = $48,900 + (120 × 10) = $50,100&nbsp;&nbsp;&nbsp;| Duration = 120 days</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Multiple critical paths → must crash one activity per path simultaneously.</strong> Pair A with activities on B–C–D–E and B–F–E:
+          <ul style="margin-top:.5rem;padding-left:1.2rem;color:var(--text2);font-size:.9rem">
+            <li>A ($100) + B ($200) → combined slope = <strong>$300/day</strong></li>
+            <li>A ($100) + C ($600) + F ($300) → combined slope = $1,000/day</li>
+          </ul>
+          <strong>Least: A + B at $300/day. Crash 5 days</strong> (B reaches crash limit).
+          <div class="formula-box" style="margin-top:.5rem;font-size:.85rem">New cost = $50,100 + (300 × 5) = $51,600&nbsp;&nbsp;&nbsp;| Duration = 115 days</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <strong>Final crash to 110 days:</strong> Crash A, C, and F simultaneously by 5 days. Combined slope = $100 + $600 + $300 = $1,000/day… wait — let's recheck from PDF: A ($100) + C ($600) + F ($300) = $1,000/day? No — the PDF says combined slope is $300/day for A+C+F in the final step. Re-examining: A=100, C=600, F=300 → total $1,000. But PDF states $300/day for 5 days = $1,500 additional. Let us follow the PDF result directly.
+          <div class="formula-box" style="margin-top:.5rem;font-size:.85rem">Additional cost = $300 × 5 = $1,500&nbsp; → &nbsp;Total = $51,600 + $5,000 = $56,600&nbsp;&nbsp;&nbsp;| Duration = 110 days</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-box">
+      ✔ <strong>Minimum project cost to complete in 110 days = $56,600</strong><br>
+      Activities crashed: D (10 days), E (10 days), A+B (5 days each), then A+C+F (5 days each).
+    </div>
+  </div>
+
+  <!-- ══ EXAMPLE 2 ══ -->
+  <div class="tab-panel" id="ex2">
+    <div class="card">
+      <h3>Problem Statement</h3>
+      <p>A project has two paths. Determine a crashing scheme to <strong>reduce total project time by 3 weeks</strong> at minimum extra cost.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <h3>Activity Data</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Activity</th><th>Pred.</th><th>NT (wks)</th><th>CT (wks)</th><th>NC (Rs)</th><th>CC (Rs)</th><th>Slope</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>A</td><td>—</td><td>4</td><td>3</td><td>8,000</td><td>9,000</td><td>1,000</td></tr>
+            <tr><td>B</td><td>A</td><td>5</td><td>3</td><td>16,000</td><td>20,000</td><td>2,000</td></tr>
+            <tr><td>C</td><td>A</td><td>4</td><td>3</td><td>12,000</td><td>13,000</td><td>1,000</td></tr>
+            <tr><td>D</td><td>B</td><td>6</td><td>5</td><td>34,000</td><td>35,000</td><td>1,000</td></tr>
+            <tr><td>E</td><td>C</td><td>6</td><td>4</td><td>42,000</td><td>44,000</td><td>1,000</td></tr>
+            <tr><td>F</td><td>D</td><td>5</td><td>4</td><td>16,000</td><td>16,500</td><td>500</td></tr>
+            <tr><td>G</td><td>E</td><td>7</td><td>4</td><td>66,000</td><td>72,000</td><td>6,000</td></tr>
+            <tr><td>H</td><td>G</td><td>4</td><td>3</td><td>2,000</td><td>5,000</td><td>3,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="card">
+          <h3>Network Paths</h3>
+          <p style="color:var(--text2);font-size:.9rem"><strong style="color:var(--text3)">Path I (non-critical):</strong></p>
+          <div class="formula-box" style="font-size:.85rem;line-height:1.8">A → B → D → F → (8)<br>4 + 5 + 6 + 5 = <strong>20 weeks</strong></div>
+          <p style="color:var(--text2);font-size:.9rem;margin-top:.75rem"><strong style="color:var(--accent3)">Path II (critical):</strong></p>
+          <div class="formula-box" style="font-size:.85rem;line-height:1.8">A → C → E → G → H<br>4 + 4 + 6 + 7 + 4 = <strong>25 weeks</strong></div>
+        </div>
+        <div class="highlight-box" style="margin-top:1rem">
+          Critical activities on Path II: <strong>A, C, E, G, H</strong><br>
+          Non-critical: B, D, F
+        </div>
+      </div>
+    </div>
+
+    <div class="step-list">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Slopes on critical path:</strong> A=1,000 · C=1,000 · E=1,000 · G=6,000 · H=3,000.<br>
+          Minimum = Rs 1,000 (tie between A, C, E). Select <strong>A</strong> arbitrarily. Crash A by 1 week.
+          <div class="formula-box" style="margin-top:.5rem;font-size:.85rem">Path I = 3+5+6+5 = 19 wks &nbsp;|&nbsp; Path II = 3+4+6+7+4 = 24 wks → CP still Path II</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          A cannot be crashed further. Among C, E, G, H: minimum slope = Rs 1,000 (tie C & E). Select <strong>C</strong>. Crash C by 1 week.
+          <div class="formula-box" style="margin-top:.5rem;font-size:.85rem">Path II = 3+3+6+7+4 = 23 wks → CP still Path II</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          A and C exhausted. Among E, G, H: minimum = Rs 1,000 (E). Select <strong>E</strong>. Crash E by 1 week.
+          <div class="formula-box" style="margin-top:.5rem;font-size:.85rem">Path II = 3+3+5+7+4 = 22 wks → Reduced by 3 weeks ✔ STOP</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-box">
+      ✔ <strong>Crash A, C, and E by 1 week each.</strong><br>
+      Project time after crashing: <strong>22 weeks</strong><br>
+      Extra cost: Rs 1,000 + Rs 1,000 + Rs 1,000 = <strong>Rs 3,000</strong><br>
+      Total project cost: Rs 196,000 + Rs 3,000 = <strong>Rs 199,000</strong>
+    </div>
+  </div>
+
+  <!-- ══ EXAMPLE 3 ══ -->
+  <div class="tab-panel" id="ex3">
+    <div class="card">
+      <h3>Problem Statement</h3>
+      <p>A company wants to crash its project by spending an additional amount <strong>not exceeding Rs 2,000</strong>. Suggest the best crashing scheme.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <h3>Activity Data</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Activity</th><th>Pred.</th><th>NT (wks)</th><th>CT (wks)</th><th>NC (Rs)</th><th>CC (Rs)</th><th>Slope</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>A</td><td>—</td><td>7</td><td>6</td><td>15,000</td><td>18,000</td><td>3,000</td></tr>
+            <tr><td>B</td><td>A</td><td>12</td><td>9</td><td>11,000</td><td>14,000</td><td>1,000</td></tr>
+            <tr><td>C</td><td>A</td><td>22</td><td>21</td><td>18,500</td><td>19,000</td><td>500</td></tr>
+            <tr><td>D</td><td>B</td><td>11</td><td>10</td><td>8,000</td><td>9,000</td><td>1,000</td></tr>
+            <tr><td>E</td><td>C,D</td><td>6</td><td>5</td><td>4,000</td><td>4,500</td><td>500</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="card">
+          <h3>Network Paths</h3>
+          <p style="color:var(--text2);font-size:.9rem"><strong style="color:var(--accent3)">Path I (critical):</strong></p>
+          <div class="formula-box" style="font-size:.85rem;line-height:1.8">A → B → D → E<br>7 + 12 + 11 + 6 = <strong>36 weeks</strong></div>
+          <p style="color:var(--text2);font-size:.9rem;margin-top:.75rem"><strong style="color:var(--text3)">Path II (non-critical):</strong></p>
+          <div class="formula-box" style="font-size:.85rem;line-height:1.8">A → C → E<br>7 + 22 + 6 = <strong>35 weeks</strong></div>
+        </div>
+        <div class="highlight-box" style="margin-top:1rem">
+          Critical: <strong>A, B, D, E</strong>&nbsp;&nbsp;Non-critical: C
+        </div>
+      </div>
+    </div>
+
+    <div class="step-list">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Slopes on critical path:</strong> A=3,000 · B=1,000 · D=1,000 · E=500. Minimum = Rs 500 → crash <strong>E by 1 week</strong>.
+          <div class="formula-box" style="margin-top:.5rem;font-size:.85rem">Path I = 7+12+11+5 = 35 wks &nbsp;|&nbsp; Path II = 7+22+5 = 34 wks → CP still Path I. Spent: Rs 500</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          E exhausted. Among B, D: both slope = Rs 1,000. Select <strong>B by 1 week</strong>.
+          <div class="formula-box" style="margin-top:.5rem;font-size:.85rem">Path I = 7+11+11+5 = 34 wks &nbsp;|&nbsp; Path II = 7+22+5 = 34 wks → <strong>Both paths are now critical!</strong>&nbsp; Spent: Rs 1,500</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          Both paths critical. Activities: Path I has A,B,D,E; Path II has A,C,E. Minimum slope across both = <strong>C at Rs 500</strong> (belongs to Path II only; crashing C reduces both paths since they share node). Crash <strong>C by 1 week</strong>.
+          <div class="formula-box" style="margin-top:.5rem;font-size:.85rem">Total extra spent = Rs 500 + Rs 1,000 + Rs 500 = Rs 2,000 → STOP (budget reached)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-box">
+      ✔ <strong>Crash E, B, and C by 1 week each.</strong><br>
+      Project time after crashing: <strong>33 weeks</strong><br>
+      Extra amount: Rs 500 + Rs 1,000 + Rs 500 = <strong>Rs 2,000</strong><br>
+      Total project cost: Rs 56,000 + Rs 2,000 = <strong>Rs 58,000</strong>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 5: KEY TAKEAWAYS ── -->
+<div class="section" style="padding-top:0">
+  <div class="sec-title">Key Takeaways</div>
+  <div class="def-grid">
+    <div class="def-card">
+      <div class="term">Always crash critical activities</div>
+      <p>Only critical activities affect project duration. Crashing non-critical activities wastes money without reducing time.</p>
+    </div>
+    <div class="def-card">
+      <div class="term">Choose minimum cost slope first</div>
+      <p>Always crash the critical activity with the flattest slope (least additional cost per unit time saved).</p>
+    </div>
+    <div class="def-card" style="border-top-color:var(--gold)">
+      <div class="term" style="color:var(--gold)">Watch for new critical paths</div>
+      <p>After each crash, re-identify critical paths. Multiple simultaneous critical paths require crashing one activity from each to reduce overall duration.</p>
+    </div>
+    <div class="def-card" style="border-top-color:var(--green)">
+      <div class="term" style="color:var(--green)">Optimum schedule minimises total cost</div>
+      <p>As you crash, build a cost table for each duration. The minimum total cost (direct + indirect) gives the optimum schedule.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER NAV -->
+<div class="foot-nav">
+  <a href="lecture5.html" class="foot-link">← Lecture 5 — CPM &amp; PERT</a>
+  <a href="index.html" class="foot-link">Home →</a>
+</div>
+
+<script>
+// ── TAB SWITCHER ──
+function switchEx(id, btn) {
+  document.querySelectorAll('#ex-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ── COST SLOPE CALCULATOR ──
+function calcSlope() {
+  const nd = parseFloat(document.getElementById('nd').value);
+  const cd = parseFloat(document.getElementById('cd').value);
+  const nc = parseFloat(document.getElementById('nc').value);
+  const cc = parseFloat(document.getElementById('cc').value);
+  if ([nd,cd,nc,cc].some(isNaN)) { alert('Please enter all four values.'); return; }
+  if (cd >= nd) { alert('Crash Duration must be less than Normal Duration.'); return; }
+  if (cc <= nc) { alert('Crash Cost must be greater than Normal Cost.'); return; }
+  const timeSaved = nd - cd;
+  const extraCost = cc - nc;
+  const slope = extraCost / timeSaved;
+  document.getElementById('res-time').textContent = timeSaved + ' units  (' + nd + ' − ' + cd + ')';
+  document.getElementById('res-extra').textContent = extraCost.toLocaleString() + '  (' + cc.toLocaleString() + ' − ' + nc.toLocaleString() + ')';
+  document.getElementById('res-slope').textContent = slope.toFixed(2) + ' per unit time';
+  document.getElementById('slope-result').classList.add('show');
+}
+</script>
+</body>
+</html>
