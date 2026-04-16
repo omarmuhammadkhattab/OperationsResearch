@@ -141,7 +141,9 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   .calc-grid{grid-template-columns:1fr 1fr}
   .pert-calc{padding:1rem}
   .step-list .step-body{font-size:.85rem}
-  nav{gap:.75rem;padding:0 1rem}
+  nav{gap:0;padding:0;overflow-x:auto;flex-wrap:nowrap}
+  nav .brand{padding:.6rem 1rem;flex-shrink:0}
+  nav a:not(.brand){white-space:nowrap;flex-shrink:0;font-size:.78rem;padding:.6rem .5rem}
   nav .brand{font-size:.85rem}
   nav a{font-size:.75rem;padding:.2rem .3rem}
   .foot-nav{flex-direction:column;gap:.75rem;text-align:center}
@@ -1117,7 +1119,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
 <!-- FOOTER NAV -->
 <div class="foot-nav">
   <a href="lecture4.html" class="foot-link">← Lecture 4 — Assignment Problem</a>
-  <a href="index.html" class="foot-link">Home →</a>
+  <a href="lecture6.html" class="foot-link">Lecture 6 — Project Crashing →</a>
 </div>
 
 <script>
