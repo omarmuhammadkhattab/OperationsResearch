@@ -139,6 +139,7 @@ body::before{
 .lecture-card:nth-child(3){animation-delay:0.3s}
 .lecture-card:nth-child(4){animation-delay:0.4s}
 .lecture-card:nth-child(5){animation-delay:0.5s}
+.lecture-card:nth-child(6){animation-delay:0.6s}
 
 .lecture-card::before{
   content:'';
@@ -208,6 +209,7 @@ body::before{
 .card-3{--card-accent:#f0b429}
 .card-4{--card-accent:#39d97b}
 .card-5{--card-accent:#c084fc}
+.card-6{--card-accent:#f43f5e}
 
 /* FORMULA SHOWCASE */
 .formula-bar{
@@ -330,7 +332,9 @@ footer{
   .formulas{gap:1.5rem}
   .formula-eq{font-size:.85rem}
   .container{padding:0 1rem}
-  .site-nav{gap:1rem;padding:0 1rem}
+  .site-nav{gap:0;padding:0;overflow-x:auto;flex-wrap:nowrap}
+  .site-nav .brand{padding:.6rem 1rem;flex-shrink:0}
+  .site-nav a:not(.brand){white-space:nowrap;flex-shrink:0}
   .site-nav .brand{font-size:.85rem}
   .site-nav a:not(.brand){font-size:.78rem;padding:.2rem .3rem}
 }
@@ -345,6 +349,7 @@ footer{
   <a href="lecture3.html">L3</a>
   <a href="lecture4.html">L4</a>
   <a href="lecture5.html">L5</a>
+  <a href="lecture6.html">L6</a>
 </nav>
 <div class="container">
   <div class="hero">
@@ -352,7 +357,7 @@ footer{
     <h1>Operations<br><span>Research</span></h1>
     <p class="hero-sub">A quantitative approach to decision making — from linear programming fundamentals to project management with CPM &amp; PERT.</p>
     <div class="stats">
-      <div class="stat"><div class="stat-num">5</div><div class="stat-label">Lectures</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Lectures</div></div>
       <div class="stat"><div class="stat-num">30+</div><div class="stat-label">Examples</div></div>
       <div class="stat"><div class="stat-num">4</div><div class="stat-label">Methods</div></div>
     </div>
@@ -424,6 +429,19 @@ footer{
       </div>
       <div class="card-arrow">→</div>
     </a>
+
+    <a href="lecture6.html" class="lecture-card card-6">
+      <div class="card-num">LECTURE 06</div>
+      <div class="card-title">Project Crashing</div>
+      <div class="card-desc">Shorten project duration by investing extra resources in critical activities. Master the cost slope formula and step-by-step crashing procedure to find the optimum schedule.</div>
+      <div class="card-tags">
+        <span class="tag">Cost Slope</span>
+        <span class="tag">Direct Cost</span>
+        <span class="tag">Indirect Cost</span>
+        <span class="tag">Optimum Schedule</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
   </div>
 
  
@@ -437,6 +455,7 @@ footer{
         <a href="lecture3.html">L3 — Transportation</a>
         <a href="lecture4.html">L4 — Assignment</a>
         <a href="lecture5.html">L5 — CPM &amp; PERT</a>
+        <a href="lecture6.html">L6 — Project Crashing</a>
       </div>
     </div>
   </div>
