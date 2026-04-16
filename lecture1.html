@@ -134,7 +134,9 @@ footer{border-top:1px solid var(--border);padding:2rem 0;text-align:center;font-
 /* ── MOBILE ── */
 @media(max-width:640px){
   .container{padding:0 1rem}
-  nav{gap:.75rem;padding:0 1rem}
+  nav{gap:0;padding:0;overflow-x:auto;flex-wrap:nowrap}
+  nav .brand{padding:.6rem 1rem;flex-shrink:0}
+  nav a:not(.brand){white-space:nowrap;flex-shrink:0;font-size:.78rem;padding:.6rem .5rem}
   nav .brand{font-size:.85rem}
   nav a:not(.brand){font-size:.75rem;padding:.2rem .3rem}
   .lec-hero{padding:2rem 0 1.5rem;margin-bottom:1.5rem}
@@ -164,6 +166,7 @@ footer{border-top:1px solid var(--border);padding:2rem 0;text-align:center;font-
   <a href="lecture3.html">L3</a>
   <a href="lecture4.html">L4</a>
   <a href="lecture5.html">L5</a>
+  <a href="lecture6.html">L6</a>
 </nav>
 
 <div class="container">
