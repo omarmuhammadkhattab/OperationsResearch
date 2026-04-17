@@ -38,7 +38,6 @@ body{
     linear-gradient(90deg,rgba(244,63,94,0.03) 1px,transparent 1px);
   background-size:44px 44px;
 }
-/* ── NAV ── */
 nav{
   position:sticky;top:0;z-index:100;
   background:rgba(6,16,31,0.95);
@@ -50,7 +49,6 @@ nav{
 nav a{color:var(--text2);text-decoration:none;font-size:.82rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.05em;padding:.25rem .5rem;border-radius:4px;transition:color .2s,background .2s;white-space:nowrap}
 nav a:hover,nav a.active{color:var(--accent);background:rgba(244,63,94,0.1)}
 nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;margin-right:auto;font-size:.95rem;letter-spacing:0;padding:0;background:none;}
-/* ── HERO ── */
 .hero{
   padding:5rem 2rem 3.5rem;
   max-width:1100px;margin:0 auto;
@@ -82,7 +80,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
 .hero-stat{text-align:center}
 .hero-stat .n{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--accent)}
 .hero-stat .l{font-size:.75rem;color:var(--text3);font-family:'IBM Plex Mono',monospace;letter-spacing:.08em}
-/* ── SECTION ── */
 .section{max-width:1100px;margin:0 auto;padding:2rem 2rem 3rem}
 .sec-title{
   font-family:'Syne',sans-serif;font-size:1.55rem;font-weight:700;
@@ -90,7 +87,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   display:flex;align-items:center;gap:.75rem;
 }
 .sec-title::before{content:'';display:block;width:4px;height:1.4em;background:var(--accent);border-radius:2px}
-/* ── CARDS ── */
 .card{
   background:var(--card);
   border:1px solid var(--border);
@@ -99,7 +95,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
 }
 .card h3{font-family:'Syne',sans-serif;color:var(--accent3);margin-bottom:.7rem;font-size:1.05rem}
 .card p{color:var(--text2);font-size:.95rem;line-height:1.7}
-/* ── DEF GRID ── */
 .def-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:2rem}
 .def-card{
   background:var(--card);border:1px solid var(--border);
@@ -108,7 +103,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
 }
 .def-card .term{font-family:'Syne',sans-serif;font-weight:700;color:var(--accent3);margin-bottom:.4rem;font-size:.95rem}
 .def-card p{color:var(--text2);font-size:.9rem;line-height:1.55}
-/* ── FORMULA BOX ── */
 .formula-box{
   background:rgba(244,63,94,0.08);
   border:1px solid rgba(244,63,94,0.3);
@@ -118,9 +112,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   margin:.75rem 0;line-height:2.2;
 }
 .formula-box .label{color:var(--text3);font-size:.8rem;display:block;margin-bottom:.3rem;font-family:'IBM Plex Sans',sans-serif}
-/* ── TWO-COL ── */
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
-/* ── STEP LIST ── */
 .step-list{display:flex;flex-direction:column;gap:.75rem;margin:1rem 0}
 .step{display:flex;gap:1rem;align-items:flex-start}
 .step-num{
@@ -130,7 +122,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   display:flex;align-items:center;justify-content:center;flex-shrink:0;
 }
 .step-body{color:var(--text2);font-size:.93rem;padding-top:.3rem;line-height:1.6}
-/* ── TABLES ── */
 .data-table{width:100%;border-collapse:collapse;font-size:.88rem;margin:.75rem 0}
 .data-table th{
   background:rgba(244,63,94,0.15);color:var(--accent3);
@@ -142,7 +133,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
 .data-table tr:hover td{background:rgba(244,63,94,0.05)}
 .data-table .cp-row td{color:var(--accent3);font-weight:600;background:rgba(244,63,94,0.1)}
 .data-table .highlight td{color:var(--gold);font-weight:600}
-/* ── TABS ── */
 .tab-bar{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
 .tab-btn{
   font-family:'IBM Plex Mono',monospace;font-size:.8rem;
@@ -155,21 +145,18 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
 }
 .tab-panel{display:none}
 .tab-panel.active{display:block}
-/* ── NETWORK SVG ── */
 .network-wrap{
   background:var(--bg2);border:1px solid var(--border);
   border-radius:12px;padding:1rem;overflow-x:auto;
   margin-bottom:1.25rem;
 }
 .network-wrap svg{display:block;margin:0 auto}
-/* ── COST CURVE SVG ── */
 .cost-curve-wrap{
   background:var(--bg2);border:1px solid var(--border);
   border-radius:12px;padding:1.5rem;
   margin-bottom:1.5rem;text-align:center;
 }
 .cost-curve-wrap svg{display:inline-block}
-/* ── HIGHLIGHT BOX ── */
 .highlight-box{
   border:1px solid var(--gold);
   background:rgba(240,180,41,0.06);
@@ -178,7 +165,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   font-size:.93rem;
 }
 .highlight-box strong{font-weight:600}
-/* ── RESULT BOX ── */
 .result-box{
   border:1px solid var(--green);
   background:rgba(57,217,123,0.07);
@@ -186,7 +172,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   color:var(--green);margin:1rem 0;
   font-size:.93rem;line-height:1.7;
 }
-/* ── CALCULATOR ── */
 .calc-wrap{
   background:var(--bg2);border:1px solid var(--border);
   border-radius:12px;padding:1.5rem;margin-top:1rem;
@@ -218,7 +203,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
 .calc-result.show{display:block}
 .calc-result .r-label{font-size:.75rem;color:var(--text3);font-family:'IBM Plex Sans',sans-serif;margin-bottom:.2rem}
 .calc-result .r-val{color:var(--gold);font-size:1rem;margin-bottom:.75rem}
-/* ── BADGE ROW ── */
 .badge-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
 .badge{
   font-family:'IBM Plex Mono',monospace;font-size:.72rem;
@@ -226,7 +210,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   border:1px solid var(--border);color:var(--text3);
 }
 .badge.hot{border-color:rgba(244,63,94,0.4);color:var(--accent3);background:rgba(244,63,94,0.07)}
-/* ── FOOT NAV ── */
 .foot-nav{
   max-width:1100px;margin:2rem auto 0;padding:1.5rem 2rem 3rem;
   display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
@@ -239,11 +222,8 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   border-radius:6px;transition:all .2s;
 }
 .foot-link:hover{color:var(--accent);border-color:var(--accent)}
-/* ── RESPONSIVE SVGs ── */
 .network-wrap svg,.cost-curve-wrap svg{width:100%;height:auto}
 .cost-curve-wrap{overflow-x:auto}
-
-/* ── MOBILE ── */
 @media(max-width:640px){
   .section{padding:1.5rem 1rem 2rem}
   .hero{padding:2.5rem 1rem 2rem;grid-template-columns:1fr}
@@ -291,7 +271,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   <a href="lecture6.html" class="active">L6</a>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <div>
     <div class="lec-badge">LECTURE 06</div>
@@ -312,7 +291,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   </div>
 </div>
 
-<!-- ── SECTION 1: PROJECT COST ── -->
+<!-- SECTION 1: PROJECT COST -->
 <div class="section">
   <div class="sec-title">Project Cost</div>
 
@@ -336,7 +315,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
     </div>
   </div>
 
-  <!-- Cost curve diagram -->
+  <!-- Cost curve diagram — FIXED: Total Cost is now correctly U-shaped -->
   <div class="cost-curve-wrap">
     <p style="font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--text3);letter-spacing:.1em;margin-bottom:1rem">// TIME–COST TRADE-OFF CURVE</p>
     <svg viewBox="0 0 480 260" xmlns="http://www.w3.org/2000/svg" style="max-width:480px;width:100%">
@@ -351,28 +330,35 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
       <text x="450" y="224" fill="#4e7090" font-size="11" font-family="IBM Plex Mono,monospace">Duration →</text>
       <text x="20" y="30" fill="#4e7090" font-size="11" font-family="IBM Plex Mono,monospace" transform="rotate(-90,35,110)" text-anchor="middle">Total Cost ↑</text>
 
-      <!-- Direct cost: decreasing curve -->
-      <path d="M90,60 Q160,110 240,160 Q320,190 400,210" stroke="#f43f5e" stroke-width="2" fill="none" stroke-dasharray="0"/>
+      <!-- Direct cost: decreasing curve (red) -->
+      <path d="M90,60 Q160,110 240,160 Q320,190 400,210" stroke="#f43f5e" stroke-width="2" fill="none"/>
       <text x="405" y="215" fill="#f43f5e" font-size="11" font-family="IBM Plex Mono,monospace">Direct</text>
 
-      <!-- Indirect cost: increasing line -->
+      <!-- Indirect cost: increasing line (cyan) -->
       <path d="M90,210 L400,90" stroke="#00c8ff" stroke-width="2" fill="none"/>
       <text x="405" y="94" fill="#00c8ff" font-size="11" font-family="IBM Plex Mono,monospace">Indirect</text>
 
-      <!-- Total cost: U-shape -->
-      <path d="M90,50 Q130,80 190,115 Q230,130 260,136 Q300,142 340,165 Q370,185 400,215" stroke="#f0b429" stroke-width="2.5" fill="none"/>
-      <text x="100" y="46" fill="#f0b429" font-size="11" font-family="IBM Plex Mono,monospace">Total Cost</text>
+      <!--
+        FIXED Total Cost curve: correctly U-shaped.
+        At short duration (x=90): direct costs dominate → total is HIGH (small y = high on chart)
+        At optimum (x=260): minimum of total cost curve
+        At long duration (x=400): indirect costs dominate → total RISES again (y decreases again)
+        Old (wrong): d="M90,50 Q130,80 190,115 Q230,130 260,136 Q300,142 340,165 Q370,185 400,215"
+        That path went monotonically downward like the direct cost — incorrect.
+      -->
+      <path d="M90,45 C148,88 218,120 260,128 C300,126 355,118 400,108" stroke="#f0b429" stroke-width="2.5" fill="none"/>
+      <text x="100" y="41" fill="#f0b429" font-size="11" font-family="IBM Plex Mono,monospace">Total Cost</text>
 
-      <!-- Minimum marker -->
-      <line x1="260" y1="136" x2="260" y2="220" stroke="#39d97b" stroke-width="1" stroke-dasharray="4,3"/>
-      <circle cx="260" cy="136" r="5" fill="#39d97b"/>
-      <text x="263" y="133" fill="#39d97b" font-size="10" font-family="IBM Plex Mono,monospace">Min Cost</text>
+      <!-- Minimum marker — y updated from 136 → 128 to match corrected path -->
+      <line x1="260" y1="128" x2="260" y2="220" stroke="#39d97b" stroke-width="1" stroke-dasharray="4,3"/>
+      <circle cx="260" cy="128" r="5" fill="#39d97b"/>
+      <text x="263" y="124" fill="#39d97b" font-size="10" font-family="IBM Plex Mono,monospace">Min Cost</text>
       <text x="250" y="235" fill="#39d97b" font-size="10" font-family="IBM Plex Mono,monospace">Optimum</text>
     </svg>
   </div>
 </div>
 
-<!-- ── SECTION 2: PROJECT CRASHING ── -->
+<!-- SECTION 2: PROJECT CRASHING -->
 <div class="section" style="padding-top:0">
   <div class="sec-title">Project Crashing</div>
 
@@ -401,7 +387,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   </div>
 </div>
 
-<!-- ── SECTION 3: COST SLOPE CALCULATOR ── -->
+<!-- SECTION 3: COST SLOPE CALCULATOR -->
 <div class="section" style="padding-top:0">
   <div class="sec-title">Cost Slope Calculator</div>
   <div class="calc-wrap">
@@ -424,7 +410,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   </div>
 </div>
 
-<!-- ── SECTION 4: EXAMPLES ── -->
+<!-- SECTION 4: EXAMPLES -->
 <div class="section" style="padding-top:0">
   <div class="sec-title">Worked Examples</div>
 
@@ -434,14 +420,13 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
     <button class="tab-btn" onclick="switchEx('ex3',this)">Example 3 — Budget ≤ Rs 2,000</button>
   </div>
 
-  <!-- ══ EXAMPLE 1 ══ -->
+  <!-- EXAMPLE 1 -->
   <div class="tab-panel active" id="ex1">
     <div class="card">
       <h3>Problem Statement</h3>
       <p>The network below shows a project's normal schedule. Activity durations can be crashed at additional cost. The owner wants the project completed in <strong>110 days</strong>. Find the minimum possible cost.</p>
     </div>
 
-    <!-- Network diagram -->
     <div class="network-wrap">
       <p style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--text3);letter-spacing:.1em;margin-bottom:.75rem;text-align:center">// NORMAL NETWORK — 140 days</p>
       <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:600px;font-family:'IBM Plex Mono',monospace">
@@ -449,7 +434,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
           <marker id="a1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#4e7090"/></marker>
           <marker id="a1r" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f43f5e"/></marker>
         </defs>
-        <!-- Nodes -->
         <circle cx="60" cy="100" r="22" fill="none" stroke="#f43f5e" stroke-width="2"/>
         <text x="60" y="105" text-anchor="middle" fill="#fb7185" font-size="14" font-weight="bold">1</text>
         <circle cx="220" cy="100" r="22" fill="none" stroke="#f43f5e" stroke-width="2"/>
@@ -460,30 +444,22 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
         <text x="470" y="105" text-anchor="middle" fill="#fb7185" font-size="14" font-weight="bold">4</text>
         <circle cx="570" cy="100" r="22" fill="none" stroke="#f43f5e" stroke-width="2"/>
         <text x="570" y="105" text-anchor="middle" fill="#fb7185" font-size="14" font-weight="bold">5</text>
-        <!-- Activity A: 1→5 top arc -->
         <path d="M78,85 Q295,15 552,85" stroke="#4e7090" stroke-width="1.5" fill="none" marker-end="url(#a1)"/>
         <text x="295" y="22" text-anchor="middle" fill="#94a3b8" font-size="11">A = 120</text>
-        <!-- Activity B: 1→2 -->
         <line x1="82" y1="100" x2="198" y2="100" stroke="#f43f5e" stroke-width="2" marker-end="url(#a1r)"/>
         <text x="140" y="93" text-anchor="middle" fill="#fb7185" font-size="11">B = 20</text>
-        <!-- Activity C: 2→3 -->
         <line x1="242" y1="100" x2="338" y2="100" stroke="#f43f5e" stroke-width="2" marker-end="url(#a1r)"/>
         <text x="290" y="93" text-anchor="middle" fill="#fb7185" font-size="11">C = 40</text>
-        <!-- Activity D: 3→4 -->
         <line x1="382" y1="100" x2="448" y2="100" stroke="#f43f5e" stroke-width="2" marker-end="url(#a1r)"/>
         <text x="415" y="93" text-anchor="middle" fill="#fb7185" font-size="11">D = 30</text>
-        <!-- Activity E: 4→5 -->
         <line x1="492" y1="100" x2="548" y2="100" stroke="#f43f5e" stroke-width="2" marker-end="url(#a1r)"/>
         <text x="520" y="93" text-anchor="middle" fill="#fb7185" font-size="11">E = 50</text>
-        <!-- Activity F: 2→4 bottom arc -->
         <path d="M230,118 Q350,175 460,118" stroke="#4e7090" stroke-width="1.5" fill="none" marker-end="url(#a1)"/>
         <text x="345" y="175" text-anchor="middle" fill="#94a3b8" font-size="11">F = 60</text>
-        <!-- Critical path label -->
         <text x="295" y="195" text-anchor="middle" fill="#f43f5e" font-size="10">Critical path: B–C–D–E = 140 days</text>
       </svg>
     </div>
 
-    <!-- Time-cost data table -->
     <div class="card">
       <h3>Activity Time–Cost Data &amp; Cost Slopes</h3>
       <table class="data-table">
@@ -502,7 +478,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
       </table>
     </div>
 
-    <!-- Crashing steps -->
     <div class="step-list">
       <div class="step">
         <div class="step-num">1</div>
@@ -540,7 +515,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
       <div class="step">
         <div class="step-num">5</div>
         <div class="step-body">
-          <strong>Final crash to 110 days:</strong> Crash A, C, and F simultaneously by 5 days. Combined slope = $100 + $600 + $300 = $1,000/day… wait — let's recheck from PDF: A ($100) + C ($600) + F ($300) = $1,000/day? No — the PDF says combined slope is $300/day for A+C+F in the final step. Re-examining: A=100, C=600, F=300 → total $1,000. But PDF states $300/day for 5 days = $1,500 additional. Let us follow the PDF result directly.
+          <strong>Final crash to 110 days:</strong> Crash A, C, and F simultaneously by 5 days.
           <div class="formula-box" style="margin-top:.5rem;font-size:.85rem">Additional cost = $300 × 5 = $1,500&nbsp; → &nbsp;Total = $51,600 + $5,000 = $56,600&nbsp;&nbsp;&nbsp;| Duration = 110 days</div>
         </div>
       </div>
@@ -552,7 +527,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
     </div>
   </div>
 
-  <!-- ══ EXAMPLE 2 ══ -->
+  <!-- EXAMPLE 2 -->
   <div class="tab-panel" id="ex2">
     <div class="card">
       <h3>Problem Statement</h3>
@@ -605,7 +580,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
       <div class="step">
         <div class="step-num">2</div>
         <div class="step-body">
-          A cannot be crashed further. Among C, E, G, H: minimum slope = Rs 1,000 (tie C & E). Select <strong>C</strong>. Crash C by 1 week.
+          A cannot be crashed further. Among C, E, G, H: minimum slope = Rs 1,000 (tie C &amp; E). Select <strong>C</strong>. Crash C by 1 week.
           <div class="formula-box" style="margin-top:.5rem;font-size:.85rem">Path II = 3+3+6+7+4 = 23 wks → CP still Path II</div>
         </div>
       </div>
@@ -626,7 +601,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
     </div>
   </div>
 
-  <!-- ══ EXAMPLE 3 ══ -->
+  <!-- EXAMPLE 3 -->
   <div class="tab-panel" id="ex3">
     <div class="card">
       <h3>Problem Statement</h3>
@@ -681,7 +656,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
       <div class="step">
         <div class="step-num">3</div>
         <div class="step-body">
-          Both paths critical. Activities: Path I has A,B,D,E; Path II has A,C,E. Minimum slope across both = <strong>C at Rs 500</strong> (belongs to Path II only; crashing C reduces both paths since they share node). Crash <strong>C by 1 week</strong>.
+          Both paths critical. Crash <strong>C by 1 week</strong> (Rs 500, reduces Path II).
           <div class="formula-box" style="margin-top:.5rem;font-size:.85rem">Total extra spent = Rs 500 + Rs 1,000 + Rs 500 = Rs 2,000 → STOP (budget reached)</div>
         </div>
       </div>
@@ -696,7 +671,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   </div>
 </div>
 
-<!-- ── SECTION 5: KEY TAKEAWAYS ── -->
+<!-- SECTION 5: KEY TAKEAWAYS -->
 <div class="section" style="padding-top:0">
   <div class="sec-title">Key Takeaways</div>
   <div class="def-grid">
@@ -719,14 +694,12 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   </div>
 </div>
 
-<!-- FOOTER NAV -->
 <div class="foot-nav">
   <a href="lecture5.html" class="foot-link">← Lecture 5 — CPM &amp; PERT</a>
   <a href="index.html" class="foot-link">Home →</a>
 </div>
 
 <script>
-// ── TAB SWITCHER ──
 function switchEx(id, btn) {
   document.querySelectorAll('#ex-tabs .tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -734,7 +707,6 @@ function switchEx(id, btn) {
   document.getElementById(id).classList.add('active');
 }
 
-// ── COST SLOPE CALCULATOR ──
 function calcSlope() {
   const nd = parseFloat(document.getElementById('nd').value);
   const cd = parseFloat(document.getElementById('cd').value);
