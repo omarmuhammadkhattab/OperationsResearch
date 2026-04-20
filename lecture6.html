@@ -387,43 +387,36 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   <!-- Cost curve -->
   <div class="network-wrap">
     <p class="caption">// TIME–COST TRADE-OFF CURVE — why there's an optimum in the middle</p>
-    <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg" style="max-width:520px;font-family:'IBM Plex Mono',monospace">
+    <svg viewBox="0 0 480 265" xmlns="http://www.w3.org/2000/svg" style="max-width:480px;width:100%">
       <defs>
         <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
           <path d="M0,0 L0,6 L8,3 z" fill="#4e7090"/>
         </marker>
       </defs>
+
       <!-- Axes -->
-      <line x1="65" y1="235" x2="450" y2="235" stroke="#4e7090" stroke-width="1.5" marker-end="url(#arr)"/>
-      <line x1="65" y1="235" x2="65" y2="25"  stroke="#4e7090" stroke-width="1.5" marker-end="url(#arr)"/>
-      <text x="255" y="265" text-anchor="middle" fill="#4e7090" font-size="11">Project duration (longer →)</text>
-      <text x="24" y="130" fill="#4e7090" font-size="11" transform="rotate(-90,24,130)" text-anchor="middle">Cost →</text>
+      <line x1="60" y1="220" x2="430" y2="220" stroke="#4e7090" stroke-width="1.5" marker-end="url(#arr)"/>
+      <line x1="60" y1="220" x2="60" y2="20"  stroke="#4e7090" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="245" y="248" text-anchor="middle" fill="#4e7090" font-size="11" font-family="IBM Plex Mono,monospace">Project duration →</text>
+      <text x="22" y="120" fill="#4e7090" font-size="11" font-family="IBM Plex Mono,monospace" transform="rotate(-90,22,120)" text-anchor="middle">Total cost →</text>
 
-      <!-- Direct cost curve: starts high-left, drops to low-right -->
-      <path d="M85,125 Q200,185 420,228" stroke="#f43f5e" stroke-width="2" fill="none"/>
-      <text x="386" y="226" fill="#f43f5e" font-size="10.5" text-anchor="middle">Direct cost</text>
-      <text x="386" y="238" fill="#f43f5e" font-size="9" text-anchor="middle">(↓ with time)</text>
+      <!-- Direct cost: starts MIDDLE of chart (well below total cost), curves down to near bottom -->
+      <path d="M80,110 Q190,170 400,210" stroke="#f43f5e" stroke-width="2" fill="none"/>
+      <text x="360" y="213" fill="#f43f5e" font-size="11" font-family="IBM Plex Mono,monospace">Direct cost</text>
 
-      <!-- Indirect cost: low-left, rises right -->
-      <line x1="85" y1="205" x2="420" y2="120" stroke="#00c8ff" stroke-width="2"/>
-      <text x="400" y="117" fill="#00c8ff" font-size="10.5">Indirect cost</text>
-      <text x="400" y="129" fill="#00c8ff" font-size="9">(↑ with time)</text>
+      <!-- Indirect cost: straight line, starts LOW (non-zero), rises to middle-right -->
+      <!-- Intersects direct cost at approximately (209, 163) -->
+      <line x1="80" y1="195" x2="400" y2="115" stroke="#00c8ff" stroke-width="2"/>
+      <text x="347" y="113" fill="#00c8ff" font-size="11" font-family="IBM Plex Mono,monospace">Indirect cost</text>
 
-      <!-- Total cost: U-shape, minimum ~x=220 -->
-      <path d="M85,52 C140,82 205,98 220,99 C235,98 310,82 420,52" stroke="#f0b429" stroke-width="2.5" fill="none"/>
-      <text x="395" y="49" fill="#f0b429" font-size="10.5">Total cost</text>
+      <!-- Total cost: clear U-shape at top — min at x=209, well above intersection y=163 -->
+      <path d="M80,40 C138,72 198,84 209,85 C220,84 295,70 400,44" stroke="#f0b429" stroke-width="2.5" fill="none"/>
+      <text x="342" y="40" fill="#f0b429" font-size="11" font-family="IBM Plex Mono,monospace">Total cost</text>
 
-      <!-- Min line -->
-      <line x1="220" y1="99" x2="220" y2="235" stroke="#39d97b" stroke-width="1" stroke-dasharray="4,3"/>
-      <circle cx="220" cy="99" r="5" fill="#39d97b"/>
-      <text x="228" y="96" fill="#39d97b" font-size="10">⬅ Min Total Cost</text>
-      <text x="228" y="108" fill="#39d97b" font-size="9">(Optimum duration)</text>
-
-      <!-- Annotations -->
-      <text x="90" y="145" fill="#f43f5e" font-size="9" opacity=".7">Crash</text>
-      <text x="90" y="155" fill="#f43f5e" font-size="9" opacity=".7">point</text>
-      <text x="390" y="232" fill="#4e7090" font-size="9" opacity=".7">All-normal</text>
-      <text x="390" y="242" fill="#4e7090" font-size="9" opacity=".7">point</text>
+      <!-- Dashed line from Total Cost minimum down through intersection to x-axis -->
+      <line x1="209" y1="85" x2="209" y2="220" stroke="#39d97b" stroke-width="1" stroke-dasharray="4,3"/>
+      <circle cx="209" cy="85" r="5" fill="#39d97b"/>
+      <text x="216" y="81" fill="#39d97b" font-size="10" font-family="IBM Plex Mono,monospace">Min Cost</text>
     </svg>
   </div>
 
