@@ -375,7 +375,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
       <div class="term">📈 Indirect Cost</div>
       <p>Overhead costs not linked to any specific activity — things like site rent, management salaries, utilities, insurance, and administrative overhead. These are sub-divided into <em>fixed</em> and <em>variable</em> indirect costs.</p>
       <p><strong style="color:var(--accent)">↑ Increases as project duration increases.</strong> Why? The longer the project runs, the more overhead accumulates — you pay rent, salaries, and utilities every single day.</p>
-      <p style="margin-top:.5rem;color:var(--text3);font-size:.85rem">Example: A site office costs Rs. 500/day regardless of how much work is done.</p>
+      <p style="margin-top:.5rem;color:var(--text3);font-size:.85rem">Example: A site office costs $ 500/day regardless of how much work is done.</p>
     </div>
     <div class="def-card" style="border-top-color:var(--gold)">
       <div class="term" style="color:var(--gold)">⚖️ Total Cost = Direct + Indirect</div>
@@ -469,9 +469,9 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   </div>
 
   <div class="callout gold">
-    <span class="icon">📐</span> <strong>Example:</strong> If a task normally takes 10 days at Rs.5,000, but can be done in 7 days at Rs.8,000 —<br>
-    Cost Slope = (8,000 − 5,000) ÷ (10 − 7) = <strong>Rs.1,000 per day saved</strong>.<br>
-    This means every day you crash this activity costs Rs.1,000 extra.
+    <span class="icon">📐</span> <strong>Example:</strong> If a task normally takes 10 days at $5,000, but can be done in 7 days at $8,000 —<br>
+    Cost Slope = (8,000 − 5,000) ÷ (10 − 7) = <strong>$1,000 per day saved</strong>.<br>
+    This means every day you crash this activity costs $1,000 extra.
   </div>
 
   <!-- Steps -->
@@ -786,7 +786,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
         <div style="overflow-x:auto">
         <table class="data-table">
           <thead>
-            <tr><th>Activity</th><th>Pred.</th><th>Normal<br>Time (wks)</th><th>Crash<br>Time (wks)</th><th>Normal<br>Cost (Rs.)</th><th>Crash<br>Cost (Rs.)</th><th>Slope<br>(Rs./wk)</th></tr>
+            <tr><th>Activity</th><th>Pred.</th><th>Normal<br>Time (wks)</th><th>Crash<br>Time (wks)</th><th>Normal<br>Cost ($)</th><th>Crash<br>Cost ($)</th><th>Slope<br>($/wk)</th></tr>
           </thead>
           <tbody>
             <tr><td>A</td><td>—</td><td>4</td><td>3</td><td>8,000</td><td>9,000</td><td>1,000</td></tr>
@@ -828,14 +828,14 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
         </div>
         <div class="crash-entry-body">
           <p>Slopes on critical path: A=1,000 · C=1,000 · E=1,000 · G=6,000 · H=3,000.<br>
-          Minimum = Rs.1,000 (three-way tie: A, C, E). Break tie arbitrarily → select <strong>A</strong>.</p>
+          Minimum = $1,000 (three-way tie: A, C, E). Break tie arbitrarily → select <strong>A</strong>.</p>
           <p>A can be reduced by 1 week maximum (4→3 weeks).</p>
-          <div class="crash-entry-math">Extra cost = Rs.1,000 × 1 week = Rs.1,000</div>
+          <div class="crash-entry-math">Extra cost = $1,000 × 1 week = $1,000</div>
           <p>Path I: 3+5+6+5 = <strong>19 wks</strong> &nbsp;|&nbsp; Path II: 3+4+6+7+4 = <strong>24 wks</strong> → Path II still critical.</p>
         </div>
         <div class="crash-entry-result">
           <div class="r">Duration <span>24 weeks</span></div>
-          <div class="r">Extra Spent <span>Rs.1,000</span></div>
+          <div class="r">Extra Spent <span>$1,000</span></div>
           <div class="r">A is <span>fully crashed</span></div>
         </div>
       </div>
@@ -847,14 +847,14 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
         </div>
         <div class="crash-entry-body">
           <p>A is exhausted — cannot be crashed further. Remaining candidates on critical path: C, E, G, H.<br>
-          Minimum slope = Rs.1,000 (tie between C and E). Select <strong>C</strong> arbitrarily.</p>
+          Minimum slope = $1,000 (tie between C and E). Select <strong>C</strong> arbitrarily.</p>
           <p>C can be reduced by 1 week (4→3 weeks).</p>
-          <div class="crash-entry-math">Extra cost = Rs.1,000 × 1 week = Rs.1,000</div>
+          <div class="crash-entry-math">Extra cost = $1,000 × 1 week = $1,000</div>
           <p>Path II: 3+3+6+7+4 = <strong>23 wks</strong> → still only Path II is critical.</p>
         </div>
         <div class="crash-entry-result">
           <div class="r">Duration <span>23 weeks</span></div>
-          <div class="r">Extra Spent <span>Rs.2,000 total</span></div>
+          <div class="r">Extra Spent <span>$2,000 total</span></div>
           <div class="r">C is <span>fully crashed</span></div>
         </div>
       </div>
@@ -865,13 +865,13 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
           <span class="crash-entry-title">Crash Activity E by 1 week (23 → 22 weeks) ✓ STOP</span>
         </div>
         <div class="crash-entry-body">
-          <p>A and C are exhausted. Remaining: E, G, H. Minimum slope = Rs.1,000 → crash <strong>E</strong> by 1 week.</p>
-          <div class="crash-entry-math">Extra cost = Rs.1,000 × 1 week = Rs.1,000</div>
+          <p>A and C are exhausted. Remaining: E, G, H. Minimum slope = $1,000 → crash <strong>E</strong> by 1 week.</p>
+          <div class="crash-entry-math">Extra cost = $1,000 × 1 week = $1,000</div>
           <p>Path II: 3+3+5+7+4 = <strong>22 weeks</strong> → reduced by 3 weeks from original 25. <strong>Goal achieved — stop here.</strong></p>
         </div>
         <div class="crash-entry-result">
           <div class="r">Duration <span>22 weeks ✓</span></div>
-          <div class="r">Total Extra <span>Rs.3,000</span></div>
+          <div class="r">Total Extra <span>$3,000</span></div>
         </div>
       </div>
     </div>
@@ -879,8 +879,8 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
     <div class="callout green">
       ✅ <strong>Crash A, C, and E by 1 week each.</strong><br>
       Project duration: <strong>22 weeks</strong> (3-week reduction achieved)<br>
-      Extra crashing cost: Rs.1,000 + Rs.1,000 + Rs.1,000 = <strong>Rs.3,000</strong><br>
-      Total project cost: Rs.196,000 + Rs.3,000 = <strong>Rs.199,000</strong>
+      Extra crashing cost: $1,000 + $1,000 + $1,000 = <strong>$3,000</strong><br>
+      Total project cost: $196,000 + $3,000 = <strong>$199,000</strong>
     </div>
   </div>
 
@@ -888,7 +888,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   <div class="tab-panel" id="ex3">
     <div class="card">
       <h3>Problem Statement</h3>
-      <p>A company wants to crash its project but can only spend an <strong>additional amount not exceeding Rs.2,000</strong>. Suggest the best crashing scheme — i.e., crash as much as possible within the budget.</p>
+      <p>A company wants to crash its project but can only spend an <strong>additional amount not exceeding $2,000</strong>. Suggest the best crashing scheme — i.e., crash as much as possible within the budget.</p>
     </div>
 
     <div class="two-col">
@@ -897,7 +897,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
         <div style="overflow-x:auto">
         <table class="data-table">
           <thead>
-            <tr><th>Activity</th><th>Pred.</th><th>NT (wks)</th><th>CT (wks)</th><th>NC (Rs.)</th><th>CC (Rs.)</th><th>Slope</th></tr>
+            <tr><th>Activity</th><th>Pred.</th><th>NT (wks)</th><th>CT (wks)</th><th>NC ($)</th><th>CC ($)</th><th>Slope</th></tr>
           </thead>
           <tbody>
             <tr><td>A</td><td>—</td><td>7</td><td>6</td><td>15,000</td><td>18,000</td><td>3,000</td></tr>
@@ -921,7 +921,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
         <div class="callout red" style="margin-top:.75rem">
           Critical activities: <strong>A, B, D, E</strong><br>
           Non-critical: C (has 1 week of float)<br>
-          Budget limit: Rs.2,000
+          Budget limit: $2,000
         </div>
       </div>
     </div>
@@ -937,31 +937,31 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
       <div class="crash-entry">
         <div class="crash-entry-header">
           <span class="crash-tag">CRASH 1</span>
-          <span class="crash-entry-title">Crash Activity E by 1 week — cheapest option (Rs.500)</span>
+          <span class="crash-entry-title">Crash Activity E by 1 week — cheapest option ($500)</span>
         </div>
         <div class="crash-entry-body">
           <p>Slopes on critical path (A,B,D,E): A=3,000 · B=1,000 · D=1,000 · E=500.<br>
-          Minimum = <strong>Rs.500 → crash E</strong> by 1 week (6→5 weeks).</p>
-          <div class="crash-entry-math">Extra cost = Rs.500 × 1 week = Rs.500 &nbsp; | &nbsp; Budget remaining: Rs.2,000 − Rs.500 = Rs.1,500</div>
+          Minimum = <strong>$500 → crash E</strong> by 1 week (6→5 weeks).</p>
+          <div class="crash-entry-math">Extra cost = $500 × 1 week = $500 &nbsp; | &nbsp; Budget remaining: $2,000 − $500 = $1,500</div>
           <p>Path I: 7+12+11+<strong>5</strong> = <strong>35 weeks</strong> &nbsp;|&nbsp; Path II: 7+22+<strong>5</strong> = <strong>34 weeks</strong><br>
           Path I still critical. E is now at crash limit — cannot be reduced further.</p>
         </div>
         <div class="crash-entry-result">
           <div class="r">Duration <span>35 weeks</span></div>
-          <div class="r">Budget used <span>Rs.500</span></div>
-          <div class="r">Budget left <span>Rs.1,500</span></div>
+          <div class="r">Budget used <span>$500</span></div>
+          <div class="r">Budget left <span>$1,500</span></div>
         </div>
       </div>
 
       <div class="crash-entry">
         <div class="crash-entry-header">
           <span class="crash-tag">CRASH 2</span>
-          <span class="crash-entry-title">Crash Activity B by 1 week — next cheapest (Rs.1,000)</span>
+          <span class="crash-entry-title">Crash Activity B by 1 week — next cheapest ($1,000)</span>
         </div>
         <div class="crash-entry-body">
           <p>E is exhausted. Remaining on critical path: A(3,000), B(1,000), D(1,000).<br>
-          Tie between B and D at Rs.1,000 → select <strong>B</strong>. Crash B by 1 week (12→11 weeks).</p>
-          <div class="crash-entry-math">Extra cost = Rs.1,000 × 1 week = Rs.1,000 &nbsp; | &nbsp; Budget remaining: Rs.1,500 − Rs.1,000 = Rs.500</div>
+          Tie between B and D at $1,000 → select <strong>B</strong>. Crash B by 1 week (12→11 weeks).</p>
+          <div class="crash-entry-math">Extra cost = $1,000 × 1 week = $1,000 &nbsp; | &nbsp; Budget remaining: $1,500 − $1,000 = $500</div>
           <p>Path I: 7+<strong>11</strong>+11+5 = <strong>34 weeks</strong> &nbsp;|&nbsp; Path II: 7+22+5 = <strong>34 weeks</strong></p>
           <div class="callout gold" style="margin-top:.5rem;font-size:.88rem">
             ⚠️ <strong>Both paths are now 34 weeks — BOTH are critical!</strong> Crashing only Path I activities no longer helps unless we also address Path II (A, C, E). Since E is exhausted, we'd need to crash C or A on Path II.
@@ -969,30 +969,30 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
         </div>
         <div class="crash-entry-result">
           <div class="r">Duration <span>34 weeks</span></div>
-          <div class="r">Budget used <span>Rs.1,500</span></div>
-          <div class="r">Budget left <span>Rs.500</span></div>
+          <div class="r">Budget used <span>$1,500</span></div>
+          <div class="r">Budget left <span>$500</span></div>
         </div>
       </div>
 
       <div class="crash-entry">
         <div class="crash-entry-header">
           <span class="crash-tag">CRASH 3 — BUDGET LIMIT</span>
-          <span class="crash-entry-title">Both paths critical: crash Activity C by 1 week (Rs.500 remaining)</span>
+          <span class="crash-entry-title">Both paths critical: crash Activity C by 1 week ($500 remaining)</span>
         </div>
         <div class="crash-entry-body">
           <p>Both paths critical. Options from each path:</p>
           <ul style="margin:.4rem 0 .5rem 1.2rem;color:var(--text2)">
-            <li>Path I activities remaining: A(3,000), D(1,000) — too expensive for Rs.500 budget</li>
+            <li>Path I activities remaining: A(3,000), D(1,000) — too expensive for $500 budget</li>
             <li>Path II activities: A(3,000), C(<strong>500</strong>), E(exhausted) — C fits exactly!</li>
           </ul>
           <p><strong>However:</strong> Crashing C (which is only on Path II) reduces Path II from 34 → 33 weeks, while Path I stays at 34 weeks. So Path I is still controlling the duration.</p>
-          <div class="crash-entry-math">Extra cost = Rs.500 × 1 week = Rs.500 &nbsp; | &nbsp; Total extra spent = Rs.2,000 → BUDGET REACHED — STOP</div>
+          <div class="crash-entry-math">Extra cost = $500 × 1 week = $500 &nbsp; | &nbsp; Total extra spent = $2,000 → BUDGET REACHED — STOP</div>
           <p>Path I: 34 weeks (still critical) &nbsp;|&nbsp; Path II: 7+<strong>21</strong>+5 = <strong>33 weeks</strong><br>
           Project duration = 34 weeks (controlled by Path I).</p>
         </div>
         <div class="crash-entry-result">
           <div class="r">Duration <span>33 weeks (Path I = 34, but note below)</span></div>
-          <div class="r">Total Extra <span>Rs.2,000 (budget exhausted)</span></div>
+          <div class="r">Total Extra <span>$2,000 (budget exhausted)</span></div>
         </div>
       </div>
     </div>
@@ -1000,13 +1000,13 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
     <div class="callout green">
       ✅ <strong>Crash E, B, and C by 1 week each.</strong><br>
       Project time after crashing: <strong>33 weeks</strong><br>
-      Extra amount used: Rs.500 + Rs.1,000 + Rs.500 = <strong>Rs.2,000 (full budget used)</strong><br>
-      Total project cost: Rs.56,500 + Rs.2,000 = <strong>Rs.58,500</strong>
+      Extra amount used: $500 + $1,000 + $500 = <strong>$2,000 (full budget used)</strong><br>
+      Total project cost: $56,500 + $2,000 = <strong>$58,500</strong>
     </div>
 
     <div class="why-box" style="margin-top:.75rem">
       <span class="why-label">WHY CRASH C LAST IF IT ONLY REDUCES PATH II?</span>
-      Once both paths are critical at 34 weeks, any activity we crash on either path gives us future flexibility. Crashing C (Path II only) brings Path II to 33 weeks, meaning we now have 1 week of float on Path II — this won't reduce overall duration now but is the best use of the remaining Rs.500 since crashing any Path I activity costs Rs.1,000 or more (exceeding budget).
+      Once both paths are critical at 34 weeks, any activity we crash on either path gives us future flexibility. Crashing C (Path II only) brings Path II to 33 weeks, meaning we now have 1 week of float on Path II — this won't reduce overall duration now but is the best use of the remaining $500 since crashing any Path I activity costs $1,000 or more (exceeding budget).
     </div>
   </div>
 </div>
