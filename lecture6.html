@@ -50,8 +50,6 @@ nav{
 nav a{color:var(--text2);text-decoration:none;font-size:.82rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.05em;padding:.25rem .5rem;border-radius:4px;transition:color .2s,background .2s;white-space:nowrap}
 nav a:hover,nav a.active{color:var(--accent);background:rgba(244,63,94,0.1)}
 nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;margin-right:auto;font-size:.95rem;padding:0;background:none;}
-
-/* ── HERO ── */
 .hero{
   padding:5rem 2rem 3.5rem;
   max-width:1100px;margin:0 auto;
@@ -79,8 +77,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
 .hero-stat{text-align:center}
 .hero-stat .n{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--accent)}
 .hero-stat .l{font-size:.75rem;color:var(--text3);font-family:'IBM Plex Mono',monospace;letter-spacing:.08em}
-
-/* ── LAYOUT ── */
 .section{max-width:1100px;margin:0 auto;padding:2rem 2rem 3rem}
 .sec-title{
   font-family:'Syne',sans-serif;font-size:1.55rem;font-weight:700;
@@ -88,23 +84,23 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   display:flex;align-items:center;gap:.75rem;
 }
 .sec-title::before{content:'';display:block;width:4px;height:1.4em;background:var(--accent);border-radius:2px}
-
-/* ── CARDS ── */
 .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1.25rem;}
 .card h3{font-family:'Syne',sans-serif;color:var(--accent3);margin-bottom:.7rem;font-size:1.05rem}
 .card p{color:var(--text2);font-size:.95rem;line-height:1.75}
 .card p+p{margin-top:.6rem}
-
 .def-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1rem;margin-bottom:2rem}
 .def-card{
   background:var(--card);border:1px solid var(--border);
   border-radius:10px;padding:1.4rem;border-top:3px solid var(--accent);
 }
-.def-card .term{font-family:'Syne',sans-serif;font-weight:700;color:var(--accent3);margin-bottom:.5rem;font-size:.95rem}
+.def-card .term{
+  font-family:'Syne',sans-serif;font-weight:700;color:var(--accent3);
+  margin-bottom:.5rem;font-size:.95rem;
+  display:flex;align-items:center;gap:.5rem;
+}
+.def-card .term svg{flex-shrink:0;opacity:.9}
 .def-card p{color:var(--text2);font-size:.9rem;line-height:1.65}
 .def-card p+p{margin-top:.5rem}
-
-/* ── FORMULA ── */
 .formula-box{
   background:rgba(244,63,94,0.08);border:1px solid rgba(244,63,94,0.3);
   border-radius:10px;padding:1.25rem 1.5rem;
@@ -113,20 +109,17 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
 }
 .formula-box .label{color:var(--text3);font-size:.8rem;display:block;margin-bottom:.3rem;font-family:'IBM Plex Sans',sans-serif}
 .formula-box .note{color:var(--text2);font-size:.82rem;font-family:'IBM Plex Sans',sans-serif;display:block;margin-top:.6rem;line-height:1.5}
-
-/* ── CALLOUT BOXES ── */
 .callout{
   border-radius:10px;padding:1.1rem 1.4rem;
   margin:.75rem 0;font-size:.93rem;line-height:1.7;
+  display:flex;gap:.6rem;align-items:flex-start;
 }
+.callout .ci{flex-shrink:0;margin-top:.15rem;opacity:.9}
 .callout.gold{border:1px solid var(--gold);background:rgba(240,180,41,0.06);color:var(--gold)}
 .callout.green{border:1px solid var(--green);background:rgba(57,217,123,0.07);color:var(--green)}
 .callout.blue{border:1px solid var(--blue);background:rgba(56,189,248,0.06);color:var(--blue)}
 .callout.red{border:1px solid rgba(244,63,94,0.4);background:rgba(244,63,94,0.07);color:var(--accent3)}
 .callout strong{font-weight:600}
-.callout .icon{font-size:1.05rem;margin-right:.4rem}
-
-/* ── WHY BOX ── */
 .why-box{
   background:rgba(168,85,247,0.07);
   border:1px solid rgba(168,85,247,0.25);
@@ -135,8 +128,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   margin:.6rem 0;font-size:.9rem;color:#c4b5fd;line-height:1.65;
 }
 .why-box .why-label{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.12em;color:var(--purple);display:block;margin-bottom:.3rem}
-
-/* ── STEPS ── */
 .step-list{display:flex;flex-direction:column;gap:1rem;margin:1rem 0}
 .step{display:flex;gap:1rem;align-items:flex-start}
 .step-num{
@@ -152,8 +143,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   border-radius:8px;padding:.85rem 1rem;margin-top:.5rem;
   font-size:.88rem;color:var(--text2);line-height:1.65;
 }
-
-/* ── TABLES ── */
 .data-table{width:100%;border-collapse:collapse;font-size:.88rem;margin:.75rem 0}
 .data-table th{
   background:rgba(244,63,94,0.15);color:var(--accent3);
@@ -165,9 +154,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
 .data-table tr:hover td{background:rgba(244,63,94,0.04)}
 .data-table .highlight td{color:var(--gold);font-weight:600;background:rgba(240,180,41,0.05)}
 .data-table .total-row td{color:var(--text);font-weight:600;background:rgba(244,63,94,0.1);border-top:1px solid var(--border)}
-.data-table .note-row td{color:var(--text3);font-size:.8rem;font-style:italic;border-bottom:none}
-
-/* ── TABS ── */
 .tab-bar{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
 .tab-btn{
   font-family:'IBM Plex Mono',monospace;font-size:.8rem;
@@ -178,16 +164,20 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
 .tab-btn.active,.tab-btn:hover{background:rgba(244,63,94,0.15);border-color:var(--accent);color:var(--accent3)}
 .tab-panel{display:none}
 .tab-panel.active{display:block}
-
-/* ── NETWORK / DIAGRAM WRAPPERS ── */
 .network-wrap{
   background:var(--bg2);border:1px solid var(--border);
   border-radius:12px;padding:1rem;overflow-x:auto;margin-bottom:1.25rem;
 }
 .network-wrap p.caption{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--text3);letter-spacing:.1em;margin-bottom:.75rem;text-align:center}
 .network-wrap svg{display:block;margin:0 auto;width:100%;height:auto}
-
-/* ── CRASH LOG ── */
+/* Step network inside crash entries */
+.step-net{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:8px;padding:.75rem .75rem .5rem;
+  margin:.85rem 0 .5rem;overflow-x:auto;
+}
+.step-net p.caption{font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--text3);letter-spacing:.1em;margin-bottom:.5rem;text-align:center}
+.step-net svg{display:block;margin:0 auto;width:100%;height:auto}
 .crash-log{display:flex;flex-direction:column;gap:.75rem;margin:1.25rem 0}
 .crash-entry{
   background:var(--bg2);border:1px solid var(--border);
@@ -218,8 +208,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
 }
 .crash-entry-result .r{color:var(--text3)}
 .crash-entry-result .r span{color:var(--gold);font-family:'IBM Plex Mono',monospace;margin-left:.3rem}
-
-/* ── COST TRACE TABLE ── */
 .cost-trace{
   background:var(--bg2);border:1px solid var(--border);
   border-radius:10px;overflow:hidden;margin:1rem 0;
@@ -236,8 +224,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
 }
 .cost-trace tr:last-child td{border-bottom:none}
 .cost-trace .current td{background:rgba(57,217,123,0.07);color:var(--green);font-weight:600}
-
-/* ── CALC ── */
 .calc-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-top:1rem;}
 .calc-title{font-family:'Syne',sans-serif;font-size:1rem;color:var(--accent3);margin-bottom:1rem}
 .calc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin-bottom:1rem}
@@ -263,28 +249,18 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
 .calc-result.show{display:block}
 .calc-result .r-label{font-size:.75rem;color:var(--text3);font-family:'IBM Plex Sans',sans-serif;margin-bottom:.2rem}
 .calc-result .r-val{color:var(--gold);font-size:1rem;margin-bottom:.75rem}
-
-/* ── TWO-COL ── */
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
-
-/* ── BADGE ROW ── */
 .badge-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
 .badge{font-family:'IBM Plex Mono',monospace;font-size:.72rem;padding:.25rem .65rem;border-radius:4px;border:1px solid var(--border);color:var(--text3);}
 .badge.hot{border-color:rgba(244,63,94,0.4);color:var(--accent3);background:rgba(244,63,94,0.07)}
-
-/* ── KEY CONCEPT ── */
 .concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem;margin-bottom:1.5rem}
 .concept-card{
   background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem;
 }
-.concept-card .icon{font-size:1.5rem;margin-bottom:.6rem;display:block}
+.concept-card .cicon{margin-bottom:.7rem;color:var(--accent3);}
 .concept-card h4{font-family:'Syne',sans-serif;font-weight:700;color:var(--text);font-size:.9rem;margin-bottom:.4rem}
 .concept-card p{color:var(--text2);font-size:.85rem;line-height:1.6}
-
-/* ── DIVIDER ── */
 .divider{border:none;border-top:1px solid var(--border);margin:2rem 0}
-
-/* ── FOOT ── */
 .foot-nav{
   max-width:1100px;margin:2rem auto 0;padding:1.5rem 2rem 3rem;
   display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
@@ -296,8 +272,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   padding:.4rem .9rem;border:1px solid var(--border);border-radius:6px;transition:all .2s;
 }
 .foot-link:hover{color:var(--accent);border-color:var(--accent)}
-
-/* ── RESPONSIVE ── */
 @media(max-width:640px){
   .section{padding:1.5rem 1rem 2rem}
   .hero{padding:2.5rem 1rem 2rem;grid-template-columns:1fr}
@@ -316,10 +290,106 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   nav a:not(.brand){font-size:.78rem;padding:.6rem .55rem;white-space:nowrap;flex-shrink:0}
   .foot-nav{flex-direction:column;text-align:center;padding:1.25rem 1rem 2rem}
   .foot-link{display:block;text-align:center}
+  .crash-entry-body{padding:.75rem .85rem}
+  .crash-entry-math{font-size:.8rem;padding:.5rem .75rem}
 }
 </style>
 </head>
 <body>
+
+<!-- ── SVG ICON SPRITE ── -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- trend-down -->
+    <symbol id="ico-trend-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="22,17 13.5,8.5 8.5,13.5 2,7"/>
+      <polyline points="16,17 22,17 22,11"/>
+    </symbol>
+    <!-- trend-up -->
+    <symbol id="ico-trend-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/>
+      <polyline points="16,7 22,7 22,13"/>
+    </symbol>
+    <!-- balance / scale -->
+    <symbol id="ico-scale" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="2" x2="12" y2="22"/>
+      <path d="M3 22h18"/>
+      <path d="M6 10l3-7 3 7"/>
+      <path d="M12 10l3-7 3 7"/>
+      <path d="M5 10h8"/>
+      <path d="M11 10h8"/>
+    </symbol>
+    <!-- lightbulb -->
+    <symbol id="ico-lightbulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="9" y1="18" x2="15" y2="18"/>
+      <line x1="10" y1="22" x2="14" y2="22"/>
+      <path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17H8v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"/>
+    </symbol>
+    <!-- ruler -->
+    <symbol id="ico-ruler" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 21l18-18-3-3L0 18l3 3z"/>
+      <line x1="15" y1="6" x2="18" y2="9"/>
+      <line x1="12" y1="9" x2="14" y2="11"/>
+      <line x1="9" y1="12" x2="11" y2="14"/>
+      <line x1="6" y1="15" x2="8" y2="17"/>
+    </symbol>
+    <!-- warning triangle -->
+    <symbol id="ico-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+      <line x1="12" y1="9" x2="12" y2="13"/>
+      <line x1="12" y1="17" x2="12.01" y2="17"/>
+    </symbol>
+    <!-- check circle -->
+    <symbol id="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+      <polyline points="22 4 12 14.01 9 11.01"/>
+    </symbol>
+    <!-- target/crosshair -->
+    <symbol id="ico-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round">
+      <circle cx="12" cy="12" r="10"/>
+      <circle cx="12" cy="12" r="6"/>
+      <circle cx="12" cy="12" r="2"/>
+      <line x1="12" y1="2" x2="12" y2="4"/>
+      <line x1="12" y1="20" x2="12" y2="22"/>
+      <line x1="2" y1="12" x2="4" y2="12"/>
+      <line x1="20" y1="12" x2="22" y2="12"/>
+    </symbol>
+    <!-- bar chart -->
+    <symbol id="ico-barchart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="20" x2="18" y2="10"/>
+      <line x1="12" y1="20" x2="12" y2="4"/>
+      <line x1="6" y1="20" x2="6" y2="14"/>
+      <line x1="2" y1="20" x2="22" y2="20"/>
+    </symbol>
+    <!-- refresh/cycle -->
+    <symbol id="ico-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="23 4 23 10 17 10"/>
+      <polyline points="1 20 1 14 7 14"/>
+      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+    </symbol>
+    <!-- slash circle / no -->
+    <symbol id="ico-no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+    </symbol>
+    <!-- fork-path -->
+    <symbol id="ico-fork" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="6" cy="18" r="2"/>
+      <circle cx="18" cy="6" r="2"/>
+      <circle cx="18" cy="18" r="2"/>
+      <path d="M6 16V5"/>
+      <path d="M6 5l12 2"/>
+      <path d="M6 5l12 12"/>
+    </symbol>
+    <!-- coins / cost -->
+    <symbol id="ico-coins" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="8" cy="8" r="6"/>
+      <path d="M18.09 10.37A6 6 0 1 1 10.34 18"/>
+      <path d="M7 6h1v4"/>
+      <line x1="16.71" y1="13.88" x2="17" y2="14"/>
+    </symbol>
+  </defs>
+</svg>
 
 <nav>
   <a href="index.html" class="brand">OR Course</a>
@@ -332,7 +402,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   <a href="lecture6.html" class="active">L6</a>
 </nav>
 
-<!-- ══════════════════════════════════════════════ HERO -->
+<!-- HERO -->
 <div class="hero">
   <div>
     <div class="lec-badge">LECTURE 06</div>
@@ -353,7 +423,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════ SECTION 1: PROJECT COST -->
+<!-- SECTION 1: PROJECT COST -->
 <div class="section">
   <div class="sec-title">Understanding Project Cost</div>
 
@@ -363,57 +433,53 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
     <p>The surprising part: <strong>making a project take <em>less</em> time doesn't always save money</strong> — sometimes it costs more. And making it take <em>more</em> time also costs more. There is a sweet spot in the middle — called the <strong>optimum schedule</strong> — where total cost is lowest.</p>
   </div>
 
-  <!-- Cost types -->
   <div class="def-grid">
     <div class="def-card">
-      <div class="term">📉 Direct Cost</div>
+      <div class="term">
+        <svg width="18" height="18"><use href="#ico-trend-down"/></svg>
+        Direct Cost
+      </div>
       <p>The cost of materials, equipment, and labour used to perform each individual activity.</p>
-      <p><strong style="color:var(--green)">↓ Decreases as project duration increases.</strong> Why? With more time, you can use fewer workers doing normal hours instead of expensive overtime, and avoid renting extra equipment.</p>
+      <p><strong style="color:var(--green)">Decreases as project duration increases.</strong> With more time, you can use fewer workers doing normal hours instead of expensive overtime, and avoid renting extra equipment.</p>
       <p style="margin-top:.5rem;color:var(--text3);font-size:.85rem">Example: Finishing a wall in 2 days costs more (overtime) than finishing it in 4 days at normal pace.</p>
     </div>
     <div class="def-card">
-      <div class="term">📈 Indirect Cost</div>
+      <div class="term">
+        <svg width="18" height="18"><use href="#ico-trend-up"/></svg>
+        Indirect Cost
+      </div>
       <p>Overhead costs not linked to any specific activity — things like site rent, management salaries, utilities, insurance, and administrative overhead. These are sub-divided into <em>fixed</em> and <em>variable</em> indirect costs.</p>
-      <p><strong style="color:var(--accent)">↑ Increases as project duration increases.</strong> Why? The longer the project runs, the more overhead accumulates — you pay rent, salaries, and utilities every single day.</p>
-      <p style="margin-top:.5rem;color:var(--text3);font-size:.85rem">Example: A site office costs $ 500/day regardless of how much work is done.</p>
+      <p><strong style="color:var(--accent)">Increases as project duration increases.</strong> The longer the project runs, the more overhead accumulates — you pay rent, salaries, and utilities every single day.</p>
+      <p style="margin-top:.5rem;color:var(--text3);font-size:.85rem">Example: A site office costs $500/day regardless of how much work is done.</p>
     </div>
     <div class="def-card" style="border-top-color:var(--gold)">
-      <div class="term" style="color:var(--gold)">⚖️ Total Cost = Direct + Indirect</div>
+      <div class="term" style="color:var(--gold)">
+        <svg width="18" height="18" style="color:var(--gold)"><use href="#ico-scale"/></svg>
+        Total Cost = Direct + Indirect
+      </div>
       <p>Since direct cost decreases with time and indirect cost increases with time, their sum forms a <strong>U-shaped curve</strong>. The bottom of this U is the <strong>optimum project duration</strong> — the point where total cost is minimised.</p>
       <p style="margin-top:.5rem;color:var(--text3);font-size:.85rem">Our goal in project crashing is to find and work towards this optimum point intelligently.</p>
     </div>
   </div>
 
-  <!-- Cost curve -->
   <div class="network-wrap">
     <p class="caption">// TIME–COST TRADE-OFF CURVE — why there's an optimum in the middle</p>
-    <svg viewBox="0 0 480 265" xmlns="http://www.w3.org/2000/svg" style="max-width:480px;width:100%">
+    <svg viewBox="0 0 480 265" xmlns="http://www.w3.org/2000/svg" style="max-width:480px">
       <defs>
         <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
           <path d="M0,0 L0,6 L8,3 z" fill="#4e7090"/>
         </marker>
       </defs>
-
-      <!-- Axes -->
       <line x1="60" y1="220" x2="430" y2="220" stroke="#4e7090" stroke-width="1.5" marker-end="url(#arr)"/>
       <line x1="60" y1="220" x2="60" y2="20"  stroke="#4e7090" stroke-width="1.5" marker-end="url(#arr)"/>
       <text x="245" y="248" text-anchor="middle" fill="#4e7090" font-size="11" font-family="IBM Plex Mono,monospace">Project duration →</text>
       <text x="22" y="120" fill="#4e7090" font-size="11" font-family="IBM Plex Mono,monospace" transform="rotate(-90,22,120)" text-anchor="middle">Total cost →</text>
-
-      <!-- Direct cost: starts MIDDLE of chart (well below total cost), curves down to near bottom -->
       <path d="M80,110 Q190,170 400,210" stroke="#f43f5e" stroke-width="2" fill="none"/>
       <text x="360" y="213" fill="#f43f5e" font-size="11" font-family="IBM Plex Mono,monospace">Direct cost</text>
-
-      <!-- Indirect cost: straight line, starts LOW (non-zero), rises to middle-right -->
-      <!-- Intersects direct cost at approximately (209, 163) -->
       <line x1="80" y1="195" x2="400" y2="115" stroke="#00c8ff" stroke-width="2"/>
       <text x="347" y="113" fill="#00c8ff" font-size="11" font-family="IBM Plex Mono,monospace">Indirect cost</text>
-
-      <!-- Total cost: clear U-shape at top — min at x=209, well above intersection y=163 -->
       <path d="M80,40 C138,72 198,84 209,85 C220,84 295,70 400,44" stroke="#f0b429" stroke-width="2.5" fill="none"/>
       <text x="342" y="40" fill="#f0b429" font-size="11" font-family="IBM Plex Mono,monospace">Total cost</text>
-
-      <!-- Dashed line from Total Cost minimum down through intersection to x-axis -->
       <line x1="209" y1="85" x2="209" y2="220" stroke="#39d97b" stroke-width="1" stroke-dasharray="4,3"/>
       <circle cx="209" cy="85" r="5" fill="#39d97b"/>
       <text x="216" y="81" fill="#39d97b" font-size="10" font-family="IBM Plex Mono,monospace">Min Cost</text>
@@ -421,11 +487,12 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   </div>
 
   <div class="callout blue">
-    <span class="icon">💡</span> <strong>Key insight:</strong> We don't want to crash a project as much as physically possible — we want to find the duration where total cost is <em>minimised</em>. Crashing too much drives direct costs way up while indirect savings become negligible.
+    <svg class="ci" width="16" height="16"><use href="#ico-lightbulb"/></svg>
+    <span><strong>Key insight:</strong> We don't want to crash a project as much as physically possible — we want to find the duration where total cost is <em>minimised</em>. Crashing too much drives direct costs way up while indirect savings become negligible.</span>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════ SECTION 2: PROJECT CRASHING -->
+<!-- SECTION 2: PROJECT CRASHING -->
 <div class="section" style="padding-top:0">
   <div class="sec-title">What is Project Crashing?</div>
 
@@ -440,7 +507,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
     Think of it this way: if your project takes 30 days because of the critical path, finishing a non-critical activity in 2 days instead of 5 days changes nothing about the project end date — it simply adds slack to that activity. You've paid more for zero benefit.
   </div>
 
-  <!-- Cost slope -->
   <div class="sec-title" style="margin-top:2rem;font-size:1.25rem">The Cost Slope Formula</div>
 
   <div class="card">
@@ -462,12 +528,12 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   </div>
 
   <div class="callout gold">
-    <span class="icon">📐</span> <strong>Example:</strong> If a task normally takes 10 days at $5,000, but can be done in 7 days at $8,000 —<br>
+    <svg class="ci" width="16" height="16" style="color:var(--gold)"><use href="#ico-ruler"/></svg>
+    <span><strong>Example:</strong> If a task normally takes 10 days at $5,000, but can be done in 7 days at $8,000 —<br>
     Cost Slope = (8,000 − 5,000) ÷ (10 − 7) = <strong>$1,000 per day saved</strong>.<br>
-    This means every day you crash this activity costs $1,000 extra.
+    Every day you crash this activity costs $1,000 extra.</span>
   </div>
 
-  <!-- Steps -->
   <div class="sec-title" style="margin-top:2.5rem;font-size:1.25rem">The 9 Steps of Project Crashing</div>
 
   <div class="step-list">
@@ -531,7 +597,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════ SECTION 3: CALCULATOR -->
+<!-- SECTION 3: CALCULATOR -->
 <div class="section" style="padding-top:0">
   <div class="sec-title">Cost Slope Calculator</div>
   <div class="calc-wrap">
@@ -555,58 +621,65 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════ SECTION 4: EXAMPLES -->
+<!-- SECTION 4: WORKED EXAMPLES -->
 <div class="section" style="padding-top:0">
   <div class="sec-title">Worked Examples</div>
 
   <div class="tab-bar" id="ex-tabs">
     <button class="tab-btn active" onclick="switchEx('ex1',this)">Example 1 — Crash to 110 days</button>
     <button class="tab-btn" onclick="switchEx('ex2',this)">Example 2 — Reduce by 3 weeks</button>
-    <button class="tab-btn" onclick="switchEx('ex3',this)">Example 3 — Budget ≤ $ 2,000</button>
+    <button class="tab-btn" onclick="switchEx('ex3',this)">Example 3 — Budget ≤ $2,000</button>
   </div>
 
-  <!-- ─── EXAMPLE 1 ─── -->
+  <!-- ═══ EXAMPLE 1 ═══ -->
   <div class="tab-panel active" id="ex1">
     <div class="card">
       <h3>Problem Statement</h3>
       <p>A project has 6 activities (A–F) with the normal schedule shown below. The owner needs the project completed in <strong>110 days</strong> (instead of the normal 140 days). Find the minimum possible cost to achieve this.</p>
     </div>
 
-    <!-- Network -->
+    <!-- Initial network -->
     <div class="network-wrap">
-      <p class="caption">// PROJECT NETWORK — Normal Schedule (140 days)</p>
-      <svg viewBox="0 0 620 210" xmlns="http://www.w3.org/2000/svg">
+      <p class="caption">// PROJECT NETWORK — Normal Schedule · 140 days · Critical path: B–C–D–E</p>
+      <svg viewBox="0 0 610 205" xmlns="http://www.w3.org/2000/svg" style="max-width:610px">
         <defs>
-          <marker id="a1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#4e7090"/></marker>
-          <marker id="a1r" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f43f5e"/></marker>
+          <marker id="ex1-arr-r" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f43f5e"/></marker>
+          <marker id="ex1-arr-d" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#3d5a7a"/></marker>
         </defs>
-        <!-- Nodes -->
-        <circle cx="60" cy="105" r="22" fill="none" stroke="#f43f5e" stroke-width="2"/><text x="60" y="110" text-anchor="middle" fill="#fb7185" font-size="14" font-weight="bold" font-family="IBM Plex Mono,monospace">1</text>
-        <circle cx="220" cy="105" r="22" fill="none" stroke="#f43f5e" stroke-width="2"/><text x="220" y="110" text-anchor="middle" fill="#fb7185" font-size="14" font-weight="bold" font-family="IBM Plex Mono,monospace">2</text>
-        <circle cx="360" cy="105" r="22" fill="none" stroke="#f43f5e" stroke-width="2"/><text x="360" y="110" text-anchor="middle" fill="#fb7185" font-size="14" font-weight="bold" font-family="IBM Plex Mono,monospace">3</text>
-        <circle cx="480" cy="105" r="22" fill="none" stroke="#f43f5e" stroke-width="2"/><text x="480" y="110" text-anchor="middle" fill="#fb7185" font-size="14" font-weight="bold" font-family="IBM Plex Mono,monospace">4</text>
-        <circle cx="580" cy="105" r="22" fill="none" stroke="#f43f5e" stroke-width="2"/><text x="580" y="110" text-anchor="middle" fill="#fb7185" font-size="14" font-weight="bold" font-family="IBM Plex Mono,monospace">5</text>
-        <!-- Activity A: 1→5 arc over top -->
-        <path d="M78,88 Q310,15 562,88" stroke="#4e7090" stroke-width="1.5" fill="none" marker-end="url(#a1)"/>
-        <text x="310" y="20" text-anchor="middle" fill="#94a3b8" font-size="11" font-family="IBM Plex Mono,monospace">A = 120 days</text>
-        <!-- B: 1→2 -->
-        <line x1="82" y1="105" x2="198" y2="105" stroke="#f43f5e" stroke-width="2" marker-end="url(#a1r)"/>
-        <text x="140" y="97" text-anchor="middle" fill="#fb7185" font-size="11" font-family="IBM Plex Mono,monospace">B = 20</text>
-        <!-- C: 2→3 -->
-        <line x1="242" y1="105" x2="338" y2="105" stroke="#f43f5e" stroke-width="2" marker-end="url(#a1r)"/>
-        <text x="290" y="97" text-anchor="middle" fill="#fb7185" font-size="11" font-family="IBM Plex Mono,monospace">C = 40</text>
-        <!-- D: 3→4 -->
-        <line x1="382" y1="105" x2="458" y2="105" stroke="#f43f5e" stroke-width="2" marker-end="url(#a1r)"/>
-        <text x="420" y="97" text-anchor="middle" fill="#fb7185" font-size="11" font-family="IBM Plex Mono,monospace">D = 30</text>
-        <!-- E: 4→5 -->
-        <line x1="502" y1="105" x2="558" y2="105" stroke="#f43f5e" stroke-width="2" marker-end="url(#a1r)"/>
-        <text x="530" y="97" text-anchor="middle" fill="#fb7185" font-size="11" font-family="IBM Plex Mono,monospace">E = 50</text>
-        <!-- F: 2→4 arc under -->
-        <path d="M230,124 Q355,180 468,124" stroke="#4e7090" stroke-width="1.5" fill="none" marker-end="url(#a1)"/>
-        <text x="349" y="180" text-anchor="middle" fill="#94a3b8" font-size="11" font-family="IBM Plex Mono,monospace">F = 60 days</text>
-        <!-- Legend -->
-        <line x1="80" y1="200" x2="100" y2="200" stroke="#f43f5e" stroke-width="2"/><text x="105" y="204" fill="#f43f5e" font-size="10" font-family="IBM Plex Mono,monospace">Critical path (B–C–D–E = 140 days)</text>
-        <line x1="80" y1="214" x2="100" y2="214" stroke="#4e7090" stroke-width="1.5"/><text x="105" y="218" fill="#94a3b8" font-size="10" font-family="IBM Plex Mono,monospace">Non-critical (A=120, B–F–E=130)</text>
+        <!-- nodes -->
+        <circle cx="55" cy="100" r="20" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+        <text x="55" y="105" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">1</text>
+        <circle cx="175" cy="100" r="20" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+        <text x="175" y="105" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">2</text>
+        <circle cx="300" cy="100" r="20" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+        <text x="300" y="105" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">3</text>
+        <circle cx="420" cy="100" r="20" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+        <text x="420" y="105" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">4</text>
+        <circle cx="540" cy="100" r="20" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+        <text x="540" y="105" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">5</text>
+        <!-- A: 1→5 over top (non-critical) -->
+        <path d="M68,85 Q295,18 527,85" stroke="#3d5a7a" stroke-width="1.5" fill="none" marker-end="url(#ex1-arr-d)"/>
+        <text x="295" y="14" text-anchor="middle" fill="#3d5a7a" font-size="10.5" font-family="IBM Plex Mono,monospace">A = 120</text>
+        <!-- B: 1→2 critical -->
+        <line x1="75" y1="100" x2="155" y2="100" stroke="#f43f5e" stroke-width="2" marker-end="url(#ex1-arr-r)"/>
+        <text x="115" y="91" text-anchor="middle" fill="#fb7185" font-size="10.5" font-family="IBM Plex Mono,monospace">B = 20</text>
+        <!-- C: 2→3 critical -->
+        <line x1="195" y1="100" x2="280" y2="100" stroke="#f43f5e" stroke-width="2" marker-end="url(#ex1-arr-r)"/>
+        <text x="237" y="91" text-anchor="middle" fill="#fb7185" font-size="10.5" font-family="IBM Plex Mono,monospace">C = 40</text>
+        <!-- D: 3→4 critical -->
+        <line x1="320" y1="100" x2="400" y2="100" stroke="#f43f5e" stroke-width="2" marker-end="url(#ex1-arr-r)"/>
+        <text x="360" y="91" text-anchor="middle" fill="#fb7185" font-size="10.5" font-family="IBM Plex Mono,monospace">D = 30</text>
+        <!-- E: 4→5 critical -->
+        <line x1="440" y1="100" x2="520" y2="100" stroke="#f43f5e" stroke-width="2" marker-end="url(#ex1-arr-r)"/>
+        <text x="480" y="91" text-anchor="middle" fill="#fb7185" font-size="10.5" font-family="IBM Plex Mono,monospace">E = 50</text>
+        <!-- F: 2→4 arc under (non-critical) -->
+        <path d="M186,117 Q300,168 408,117" stroke="#3d5a7a" stroke-width="1.5" fill="none" marker-end="url(#ex1-arr-d)"/>
+        <text x="297" y="174" text-anchor="middle" fill="#3d5a7a" font-size="10.5" font-family="IBM Plex Mono,monospace">F = 60</text>
+        <!-- legend -->
+        <line x1="70" y1="195" x2="90" y2="195" stroke="#f43f5e" stroke-width="2"/>
+        <text x="94" y="199" fill="#f43f5e" font-size="9" font-family="IBM Plex Mono,monospace">Critical: B–C–D–E = 140d</text>
+        <line x1="295" y1="195" x2="315" y2="195" stroke="#3d5a7a" stroke-width="1.5"/>
+        <text x="319" y="199" fill="#3d5a7a" font-size="9" font-family="IBM Plex Mono,monospace">Non-critical: A = 120d, B–F–E = 130d</text>
       </svg>
     </div>
 
@@ -618,14 +691,8 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
       <table class="data-table">
         <thead>
           <tr>
-            <th>Activity</th>
-            <th>Normal<br>Duration</th>
-            <th>Crash<br>Duration</th>
-            <th>Can Save<br>(ND−CD)</th>
-            <th>Normal<br>Cost ($)</th>
-            <th>Crash<br>Cost ($)</th>
-            <th>Extra Cost<br>(CC−NC)</th>
-            <th>Cost Slope<br>($/day)</th>
+            <th>Activity</th><th>Normal<br>Duration</th><th>Crash<br>Duration</th><th>Can Save<br>(ND−CD)</th>
+            <th>Normal<br>Cost ($)</th><th>Crash<br>Cost ($)</th><th>Extra Cost<br>(CC−NC)</th><th>Cost Slope<br>($/day)</th>
           </tr>
         </thead>
         <tbody>
@@ -645,7 +712,6 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
       </div>
     </div>
 
-    <!-- Crash log -->
     <div class="sec-title" style="font-size:1.15rem;margin-top:1.5rem">Step-by-Step Crashing Log</div>
 
     <div class="crash-log">
@@ -660,9 +726,54 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
           <p><strong>Why D?</strong> It's on the critical path AND has the lowest cost slope ($60/day).</p>
           <p><strong>How much?</strong> D can be reduced from 30 → 20 days (maximum of 10 days).</p>
           <div class="crash-entry-math">Extra cost = $60/day × 10 days = $600<br>New direct cost = $48,300 + $600 = $48,900</div>
-          <p><strong>What happens after?</strong> The critical path B–C–D–E is now 20+40+20+50 = <strong>130 days</strong>. But now B–F–E = 20+60+50 = <strong>130 days too!</strong> We now have <em>two</em> critical paths.</p>
+          <p><strong>After crashing:</strong> Critical path B–C–D–E is now 20+40+20+50 = <strong>130 days</strong>. But now B–F–E = 20+60+50 = <strong>130 days too.</strong> Two critical paths now exist.</p>
+          <!-- Step network: D crashed to 20, two critical paths -->
+          <div class="step-net">
+            <p class="caption">// AFTER CRASH 1 — D reduced 30→20 · Two critical paths at 130 days</p>
+            <svg viewBox="0 0 610 190" xmlns="http://www.w3.org/2000/svg" style="max-width:590px">
+              <defs>
+                <marker id="c1r" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f43f5e"/></marker>
+                <marker id="c1d" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#3d5a7a"/></marker>
+                <marker id="c1g" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f0b429"/></marker>
+              </defs>
+              <!-- nodes: all critical -->
+              <circle cx="55" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="55" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">1</text>
+              <circle cx="175" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="175" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">2</text>
+              <circle cx="300" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="300" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">3</text>
+              <circle cx="420" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="420" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">4</text>
+              <circle cx="540" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="540" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">5</text>
+              <!-- A: non-critical -->
+              <path d="M68,83 Q295,18 527,83" stroke="#3d5a7a" stroke-width="1.5" fill="none" marker-end="url(#c1d)"/>
+              <text x="295" y="14" text-anchor="middle" fill="#3d5a7a" font-size="10" font-family="IBM Plex Mono,monospace">A = 120</text>
+              <!-- B: critical -->
+              <line x1="74" y1="97" x2="156" y2="97" stroke="#f43f5e" stroke-width="2" marker-end="url(#c1r)"/>
+              <text x="115" y="88" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">B = 20</text>
+              <!-- C: critical -->
+              <line x1="194" y1="97" x2="281" y2="97" stroke="#f43f5e" stroke-width="2" marker-end="url(#c1r)"/>
+              <text x="237" y="88" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">C = 40</text>
+              <!-- D: critical + just crashed (gold) -->
+              <line x1="319" y1="97" x2="401" y2="97" stroke="#f0b429" stroke-width="2.5" marker-end="url(#c1g)"/>
+              <text x="360" y="86" text-anchor="middle" fill="#f0b429" font-size="10" font-family="IBM Plex Mono,monospace" font-weight="600">D = 20 ★</text>
+              <text x="360" y="97" text-anchor="middle" fill="#64748b" font-size="8.5" font-family="IBM Plex Mono,monospace">(was 30)</text>
+              <!-- E: critical -->
+              <line x1="439" y1="97" x2="521" y2="97" stroke="#f43f5e" stroke-width="2" marker-end="url(#c1r)"/>
+              <text x="480" y="88" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">E = 50</text>
+              <!-- F: critical (B-F-E path) -->
+              <path d="M186,114 Q300,162 408,114" stroke="#f43f5e" stroke-width="2" fill="none" marker-end="url(#c1r)"/>
+              <text x="297" y="168" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">F = 60</text>
+              <!-- labels -->
+              <text x="55" y="185" text-anchor="middle" fill="#f0b429" font-size="9" font-family="IBM Plex Mono,monospace">★ = just crashed</text>
+              <text x="360" y="185" text-anchor="middle" fill="#fb7185" font-size="9" font-family="IBM Plex Mono,monospace">Two critical paths: B–C–D–E and B–F–E</text>
+            </svg>
+          </div>
           <div class="callout gold" style="margin-top:.5rem;font-size:.88rem">
-            ⚠️ <strong>Two critical paths: B–C–D–E and B–F–E (both 130 days).</strong> From here, crashing a single activity alone might not shorten the project unless it appears on BOTH paths (like B, which is common to both).
+            <svg class="ci" width="14" height="14" style="color:var(--gold)"><use href="#ico-warning"/></svg>
+            <span><strong>Two critical paths: B–C–D–E and B–F–E (both 130 days).</strong> From here, crashing a single activity alone might not shorten the project unless it appears on BOTH paths (like B or E).</span>
           </div>
         </div>
         <div class="crash-entry-result">
@@ -682,7 +793,48 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
           <p><strong>Why E?</strong> Activity E appears on <em>both</em> critical paths (B–C–D–E and B–F–E), so crashing E reduces both paths simultaneously. Among shared activities (B and E), E has the lower slope ($120 vs $200 for B).</p>
           <p><strong>How much?</strong> E can go from 50 → 40 days (10 days max).</p>
           <div class="crash-entry-math">Extra cost = $120/day × 10 days = $1,200<br>New direct cost = $48,900 + $1,200 = $50,100</div>
-          <p><strong>After crashing:</strong> Both paths are now 120 days. Activity A (1→5 directly) is also 120 days. So now we have <em>three</em> critical paths: A alone, B–C–D–E, and B–F–E — all at 120 days.</p>
+          <p><strong>After crashing:</strong> Both paths are now 120 days. Activity A (1→5 directly) is also 120 days. Now we have <em>three</em> critical paths: A, B–C–D–E, and B–F–E — all at 120 days.</p>
+          <!-- Step network: E crashed to 40, three critical paths -->
+          <div class="step-net">
+            <p class="caption">// AFTER CRASH 2 — E reduced 50→40 · Three critical paths at 120 days</p>
+            <svg viewBox="0 0 610 190" xmlns="http://www.w3.org/2000/svg" style="max-width:590px">
+              <defs>
+                <marker id="c2r" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f43f5e"/></marker>
+                <marker id="c2g" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f0b429"/></marker>
+              </defs>
+              <!-- all nodes critical -->
+              <circle cx="55" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="55" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">1</text>
+              <circle cx="175" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="175" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">2</text>
+              <circle cx="300" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="300" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">3</text>
+              <circle cx="420" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="420" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">4</text>
+              <circle cx="540" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="540" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">5</text>
+              <!-- A: now critical too -->
+              <path d="M68,83 Q295,18 527,83" stroke="#f43f5e" stroke-width="2" fill="none" marker-end="url(#c2r)"/>
+              <text x="295" y="13" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">A = 120</text>
+              <!-- B -->
+              <line x1="74" y1="97" x2="156" y2="97" stroke="#f43f5e" stroke-width="2" marker-end="url(#c2r)"/>
+              <text x="115" y="88" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">B = 20</text>
+              <!-- C -->
+              <line x1="194" y1="97" x2="281" y2="97" stroke="#f43f5e" stroke-width="2" marker-end="url(#c2r)"/>
+              <text x="237" y="88" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">C = 40</text>
+              <!-- D (prev crashed) -->
+              <line x1="319" y1="97" x2="401" y2="97" stroke="#f43f5e" stroke-width="2" marker-end="url(#c2r)"/>
+              <text x="360" y="88" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">D = 20</text>
+              <!-- E: just crashed (gold) -->
+              <line x1="439" y1="97" x2="521" y2="97" stroke="#f0b429" stroke-width="2.5" marker-end="url(#c2g)"/>
+              <text x="480" y="86" text-anchor="middle" fill="#f0b429" font-size="10" font-family="IBM Plex Mono,monospace" font-weight="600">E = 40 ★</text>
+              <text x="480" y="97" text-anchor="middle" fill="#64748b" font-size="8.5" font-family="IBM Plex Mono,monospace">(was 50)</text>
+              <!-- F -->
+              <path d="M186,114 Q300,162 408,114" stroke="#f43f5e" stroke-width="2" fill="none" marker-end="url(#c2r)"/>
+              <text x="297" y="168" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">F = 60</text>
+              <text x="297" y="183" text-anchor="middle" fill="#fb7185" font-size="9" font-family="IBM Plex Mono,monospace">Three critical paths: A | B–C–D–E | B–F–E</text>
+            </svg>
+          </div>
         </div>
         <div class="crash-entry-result">
           <div class="r">Duration <span>120 days</span></div>
@@ -695,23 +847,62 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
       <div class="crash-entry">
         <div class="crash-entry-header">
           <span class="crash-tag">CRASH 3</span>
-          <span class="crash-entry-title">Three critical paths — must crash combinations (120 → 115 days)</span>
+          <span class="crash-entry-title">Three critical paths — crash A + B simultaneously (120 → 115 days)</span>
         </div>
         <div class="crash-entry-body">
-          <p><strong>The problem:</strong> Three critical paths now exist (A; B–C–D–E; B–F–E). To reduce project duration by 1 day, we must reduce ALL THREE by 1 day simultaneously. No single activity covers all three paths (B covers two but not A).</p>
-          <p><strong>So we pair A with activities that cover the B-paths:</strong></p>
-          <div style="margin:.5rem 0 0.5rem;overflow-x:auto">
+          <p><strong>The problem:</strong> Three critical paths exist (A; B–C–D–E; B–F–E). To reduce project duration by 1 day, we must reduce ALL THREE by 1 day simultaneously.</p>
+          <p><strong>Evaluate combinations to cover all three paths:</strong></p>
+          <div style="margin:.5rem 0;overflow-x:auto">
           <table class="data-table" style="margin:0">
             <thead><tr><th>Combination</th><th>Covers all 3 paths?</th><th>Combined Slope</th></tr></thead>
             <tbody>
-              <tr class="highlight"><td><strong>A ($100) + B ($200)</strong></td><td>✓ A covers path-A; B covers B–C–D–E and B–F–E</td><td><strong>$300/day ← CHEAPEST</strong></td></tr>
-              <tr><td>A ($100) + C ($600) + F ($300)</td><td>✓ A covers path-A; C covers B–C–D–E; F covers B–F–E</td><td>$1,000/day</td></tr>
+              <tr class="highlight"><td><strong>A ($100) + B ($200)</strong></td><td>A covers path-A; B covers both B-paths</td><td><strong>$300/day ← CHEAPEST</strong></td></tr>
+              <tr><td>A ($100) + C ($600) + F ($300)</td><td>A covers path-A; C covers B–C–D–E; F covers B–F–E</td><td>$1,000/day</td></tr>
             </tbody>
           </table>
           </div>
           <p style="margin-top:.5rem"><strong>Choose A + B at $300/day.</strong> B can only be crashed by 5 days (20 → 15), so we crash 5 days.</p>
           <div class="crash-entry-math">Extra cost = $300/day × 5 days = $1,500<br>New direct cost = $50,100 + $1,500 = $51,600</div>
-          <p><strong>After crashing:</strong> B has reached its crash limit — it cannot be reduced further.</p>
+          <!-- Step network after Crash 3 -->
+          <div class="step-net">
+            <p class="caption">// AFTER CRASH 3 — A: 120→115 · B: 20→15 · Three critical paths at 115 days</p>
+            <svg viewBox="0 0 610 190" xmlns="http://www.w3.org/2000/svg" style="max-width:590px">
+              <defs>
+                <marker id="c3r" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f43f5e"/></marker>
+                <marker id="c3g" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f0b429"/></marker>
+              </defs>
+              <circle cx="55" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="55" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">1</text>
+              <circle cx="175" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="175" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">2</text>
+              <circle cx="300" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="300" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">3</text>
+              <circle cx="420" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="420" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">4</text>
+              <circle cx="540" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="540" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">5</text>
+              <!-- A: crashed (gold) -->
+              <path d="M68,83 Q295,16 527,83" stroke="#f0b429" stroke-width="2.5" fill="none" marker-end="url(#c3g)"/>
+              <text x="245" y="11" text-anchor="middle" fill="#f0b429" font-size="10" font-family="IBM Plex Mono,monospace" font-weight="600">A = 115 ★ (was 120)</text>
+              <!-- B: crashed (gold), FULLY CRASHED note -->
+              <line x1="74" y1="97" x2="156" y2="97" stroke="#f0b429" stroke-width="2.5" marker-end="url(#c3g)"/>
+              <text x="115" y="86" text-anchor="middle" fill="#f0b429" font-size="10" font-family="IBM Plex Mono,monospace" font-weight="600">B=15★</text>
+              <text x="115" y="97" text-anchor="middle" fill="#64748b" font-size="8" font-family="IBM Plex Mono,monospace">MAX</text>
+              <!-- C -->
+              <line x1="194" y1="97" x2="281" y2="97" stroke="#f43f5e" stroke-width="2" marker-end="url(#c3r)"/>
+              <text x="237" y="88" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">C = 40</text>
+              <!-- D -->
+              <line x1="319" y1="97" x2="401" y2="97" stroke="#f43f5e" stroke-width="2" marker-end="url(#c3r)"/>
+              <text x="360" y="88" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">D = 20</text>
+              <!-- E -->
+              <line x1="439" y1="97" x2="521" y2="97" stroke="#f43f5e" stroke-width="2" marker-end="url(#c3r)"/>
+              <text x="480" y="88" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">E = 40</text>
+              <!-- F -->
+              <path d="M186,114 Q300,162 408,114" stroke="#f43f5e" stroke-width="2" fill="none" marker-end="url(#c3r)"/>
+              <text x="297" y="168" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">F = 60</text>
+              <text x="297" y="183" text-anchor="middle" fill="#64748b" font-size="9" font-family="IBM Plex Mono,monospace">B exhausted — cannot crash further</text>
+            </svg>
+          </div>
         </div>
         <div class="crash-entry-result">
           <div class="r">Duration <span>115 days</span></div>
@@ -724,17 +915,57 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
       <div class="crash-entry">
         <div class="crash-entry-header">
           <span class="crash-tag">CRASH 4</span>
-          <span class="crash-entry-title">Final crash to 110 days — Crash A + C + F simultaneously</span>
+          <span class="crash-entry-title">Final crash to 110 days — crash A + C + F simultaneously</span>
         </div>
         <div class="crash-entry-body">
-          <p><strong>B is exhausted</strong> — we can't use it anymore. Now to cover all three critical paths, we need:</p>
+          <p><strong>B is exhausted</strong> — we can't use it anymore. To cover all three critical paths we now need A + C + F:</p>
           <ul style="margin:.4rem 0 .4rem 1.2rem;color:var(--text2)">
-            <li>A to cover path A</li>
-            <li>C to cover B–C–D–E (B is at crash limit)</li>
-            <li>F to cover B–F–E (B is at crash limit)</li>
+            <li>A covers the solo path A</li>
+            <li>C covers B–C–D–E (B is at crash limit)</li>
+            <li>F covers B–F–E (B is at crash limit)</li>
           </ul>
-          <p>Combined slope = A($100) + C($600) + F($300) = <strong>$1,000/day</strong>. We need 5 more days of reduction (115→110).</p>
+          <p>Combined slope = A($100) + C($600) + F($300) = <strong>$1,000/day</strong>. We need 5 more days (115→110).</p>
           <div class="crash-entry-math">Extra cost = $1,000/day × 5 days = $5,000<br>New direct cost = $51,600 + $5,000 = $56,600</div>
+          <!-- Final network -->
+          <div class="step-net">
+            <p class="caption">// FINAL — A: 110 · B: 15 · C: 35 · D: 20 · E: 40 · F: 55 · Duration: 110 days</p>
+            <svg viewBox="0 0 610 190" xmlns="http://www.w3.org/2000/svg" style="max-width:590px">
+              <defs>
+                <marker id="c4r" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f43f5e"/></marker>
+                <marker id="c4g" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f0b429"/></marker>
+              </defs>
+              <circle cx="55" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="55" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">1</text>
+              <circle cx="175" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="175" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">2</text>
+              <circle cx="300" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="300" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">3</text>
+              <circle cx="420" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="420" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">4</text>
+              <circle cx="540" cy="97" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="540" y="102" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">5</text>
+              <!-- A: crashed further (gold) -->
+              <path d="M68,83 Q295,16 527,83" stroke="#f0b429" stroke-width="2.5" fill="none" marker-end="url(#c4g)"/>
+              <text x="245" y="12" text-anchor="middle" fill="#f0b429" font-size="10" font-family="IBM Plex Mono,monospace" font-weight="600">A = 110 ★ (was 115)</text>
+              <!-- B -->
+              <line x1="74" y1="97" x2="156" y2="97" stroke="#f43f5e" stroke-width="2" marker-end="url(#c4r)"/>
+              <text x="115" y="88" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">B = 15</text>
+              <!-- C: crashed (gold) -->
+              <line x1="194" y1="97" x2="281" y2="97" stroke="#f0b429" stroke-width="2.5" marker-end="url(#c4g)"/>
+              <text x="237" y="86" text-anchor="middle" fill="#f0b429" font-size="10" font-family="IBM Plex Mono,monospace" font-weight="600">C=35★</text>
+              <text x="237" y="97" text-anchor="middle" fill="#64748b" font-size="8" font-family="IBM Plex Mono,monospace">(was 40)</text>
+              <!-- D -->
+              <line x1="319" y1="97" x2="401" y2="97" stroke="#f43f5e" stroke-width="2" marker-end="url(#c4r)"/>
+              <text x="360" y="88" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">D = 20</text>
+              <!-- E -->
+              <line x1="439" y1="97" x2="521" y2="97" stroke="#f43f5e" stroke-width="2" marker-end="url(#c4r)"/>
+              <text x="480" y="88" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">E = 40</text>
+              <!-- F: crashed (gold) -->
+              <path d="M186,114 Q300,162 408,114" stroke="#f0b429" stroke-width="2.5" fill="none" marker-end="url(#c4g)"/>
+              <text x="245" y="160" text-anchor="middle" fill="#f0b429" font-size="10" font-family="IBM Plex Mono,monospace" font-weight="600">F = 55 ★ (was 60)</text>
+              <text x="420" y="183" text-anchor="middle" fill="#39d97b" font-size="9" font-family="IBM Plex Mono,monospace">TARGET REACHED: 110 days</text>
+            </svg>
+          </div>
         </div>
         <div class="crash-entry-result">
           <div class="r">Duration <span>110 days ✓</span></div>
@@ -744,11 +975,11 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
     </div>
 
     <div class="callout green" style="margin-top:1rem">
-      ✅ <strong>Answer: The minimum possible cost to complete the project in 110 days is $56,600.</strong><br>
-      Activities crashed: D (−10 days) → E (−10 days) → A &amp; B together (−5 days each) → A, C &amp; F together (−5 days each).
+      <svg class="ci" width="16" height="16" style="color:var(--green)"><use href="#ico-check"/></svg>
+      <span><strong>Answer: The minimum possible cost to complete the project in 110 days is $56,600.</strong><br>
+      Activities crashed: D (−10 days) → E (−10 days) → A &amp; B together (−5 days each) → A, C &amp; F together (−5 days each).</span>
     </div>
 
-    <!-- Summary table -->
     <div class="card" style="margin-top:1.25rem">
       <h3>Cost Progression Summary</h3>
       <div class="cost-trace">
@@ -766,7 +997,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
     </div>
   </div>
 
-  <!-- ─── EXAMPLE 2 ─── -->
+  <!-- ═══ EXAMPLE 2 ═══ -->
   <div class="tab-panel" id="ex2">
     <div class="card">
       <h3>Problem Statement</h3>
@@ -779,7 +1010,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
         <div style="overflow-x:auto">
         <table class="data-table">
           <thead>
-            <tr><th>Activity</th><th>Pred.</th><th>Normal<br>Time (wks)</th><th>Crash<br>Time (wks)</th><th>Normal<br>Cost ($)</th><th>Crash<br>Cost ($)</th><th>Slope<br>($/wk)</th></tr>
+            <tr><th>Act.</th><th>Pred.</th><th>NT (wks)</th><th>CT (wks)</th><th>NC ($)</th><th>CC ($)</th><th>Slope ($/wk)</th></tr>
           </thead>
           <tbody>
             <tr><td>A</td><td>—</td><td>4</td><td>3</td><td>8,000</td><td>9,000</td><td>1,000</td></tr>
@@ -799,16 +1030,75 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
         <div class="card">
           <h3>Two Network Paths</h3>
           <p style="font-size:.88rem;color:var(--text2);margin-bottom:.5rem"><strong>Path I (non-critical):</strong></p>
-          <div class="formula-box" style="font-size:.85rem;line-height:1.9;margin:0 0 .75rem">A → B → D → F → [end]<br>4 + 5 + 6 + 5 = <strong>20 weeks</strong></div>
+          <div class="formula-box" style="font-size:.85rem;line-height:1.9;margin:0 0 .75rem">A → B → D → F → end<br>4 + 5 + 6 + 5 = <strong>20 weeks</strong></div>
           <p style="font-size:.88rem;color:var(--text2);margin-bottom:.5rem"><strong style="color:var(--accent3)">Path II (critical — longest):</strong></p>
-          <div class="formula-box" style="font-size:.85rem;line-height:1.9;margin:0">A → C → E → G → H<br>4 + 4 + 6 + 7 + 4 = <strong>25 weeks</strong></div>
+          <div class="formula-box" style="font-size:.85rem;line-height:1.9;margin:0">A → C → E → G → H → end<br>4 + 4 + 6 + 7 + 4 = <strong>25 weeks</strong></div>
         </div>
         <div class="callout red" style="margin-top:.75rem">
-          Critical activities: <strong>A, C, E, G, H</strong><br>
-          Non-critical: B, D, F<br>
-          Target: reduce from 25 to 22 weeks (save 3 weeks)
+          <svg class="ci" width="14" height="14"><use href="#ico-warning"/></svg>
+          <span>Critical activities: <strong>A, C, E, G, H</strong><br>Non-critical: B, D, F<br>Target: reduce from 25 to 22 weeks (save 3 weeks)</span>
         </div>
       </div>
+    </div>
+
+    <!-- Example 2 Initial Network -->
+    <div class="network-wrap">
+      <p class="caption">// PROJECT NETWORK — Normal Schedule · 25 weeks · Critical path: A–C–E–G–H (Path II)</p>
+      <svg viewBox="0 0 685 185" xmlns="http://www.w3.org/2000/svg" style="max-width:685px">
+        <defs>
+          <marker id="e2r" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f43f5e"/></marker>
+          <marker id="e2d" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#3d5a7a"/></marker>
+        </defs>
+        <!-- Nodes: 1=start, 2=after A, 3=upper-after-C, 4=lower-after-B, 5=upper-after-E, 6=lower-after-D, 7=upper-after-G, 8=end -->
+        <circle cx="40" cy="90" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+        <text x="40" y="95" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">1</text>
+        <circle cx="148" cy="90" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+        <text x="148" y="95" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">2</text>
+        <!-- upper path nodes (critical) -->
+        <circle cx="272" cy="42" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+        <text x="272" y="47" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">3</text>
+        <circle cx="408" cy="42" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+        <text x="408" y="47" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">5</text>
+        <circle cx="530" cy="42" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+        <text x="530" y="47" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">7</text>
+        <!-- lower path nodes (non-critical) -->
+        <circle cx="272" cy="140" r="17" fill="rgba(61,90,122,0.12)" stroke="#3d5a7a" stroke-width="1.5"/>
+        <text x="272" y="145" text-anchor="middle" fill="#6b8fa8" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">4</text>
+        <circle cx="408" cy="140" r="17" fill="rgba(61,90,122,0.12)" stroke="#3d5a7a" stroke-width="1.5"/>
+        <text x="408" y="145" text-anchor="middle" fill="#6b8fa8" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">6</text>
+        <!-- end node -->
+        <circle cx="638" cy="90" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+        <text x="638" y="95" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">8</text>
+        <!-- A: 1→2 critical -->
+        <line x1="57" y1="90" x2="131" y2="90" stroke="#f43f5e" stroke-width="2" marker-end="url(#e2r)"/>
+        <text x="94" y="82" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">A=4</text>
+        <!-- C: 2→3 upper critical -->
+        <line x1="157" y1="79" x2="259" y2="52" stroke="#f43f5e" stroke-width="2" marker-end="url(#e2r)"/>
+        <text x="196" y="57" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">C=4</text>
+        <!-- B: 2→4 lower non-critical -->
+        <line x1="157" y1="101" x2="259" y2="128" stroke="#3d5a7a" stroke-width="1.5" marker-end="url(#e2d)"/>
+        <text x="196" y="127" text-anchor="middle" fill="#3d5a7a" font-size="10" font-family="IBM Plex Mono,monospace">B=5</text>
+        <!-- E: 3→5 upper critical -->
+        <line x1="289" y1="42" x2="391" y2="42" stroke="#f43f5e" stroke-width="2" marker-end="url(#e2r)"/>
+        <text x="340" y="33" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">E=6</text>
+        <!-- D: 4→6 lower non-critical -->
+        <line x1="289" y1="140" x2="391" y2="140" stroke="#3d5a7a" stroke-width="1.5" marker-end="url(#e2d)"/>
+        <text x="340" y="133" text-anchor="middle" fill="#3d5a7a" font-size="10" font-family="IBM Plex Mono,monospace">D=6</text>
+        <!-- G: 5→7 upper critical -->
+        <line x1="425" y1="42" x2="513" y2="42" stroke="#f43f5e" stroke-width="2" marker-end="url(#e2r)"/>
+        <text x="469" y="33" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">G=7</text>
+        <!-- H: 7→8 critical -->
+        <line x1="546" y1="53" x2="626" y2="78" stroke="#f43f5e" stroke-width="2" marker-end="url(#e2r)"/>
+        <text x="598" y="57" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">H=4</text>
+        <!-- F: 6→8 non-critical -->
+        <line x1="424" y1="130" x2="626" y2="101" stroke="#3d5a7a" stroke-width="1.5" marker-end="url(#e2d)"/>
+        <text x="520" y="126" text-anchor="middle" fill="#3d5a7a" font-size="10" font-family="IBM Plex Mono,monospace">F=5</text>
+        <!-- legend -->
+        <line x1="40" y1="174" x2="60" y2="174" stroke="#f43f5e" stroke-width="2"/>
+        <text x="64" y="178" fill="#f43f5e" font-size="9" font-family="IBM Plex Mono,monospace">Critical path (Path II: A–C–E–G–H = 25 wks)</text>
+        <line x1="350" y1="174" x2="370" y2="174" stroke="#3d5a7a" stroke-width="1.5"/>
+        <text x="374" y="178" fill="#3d5a7a" font-size="9" font-family="IBM Plex Mono,monospace">Non-critical (Path I: A–B–D–F = 20 wks)</text>
+      </svg>
     </div>
 
     <div class="sec-title" style="font-size:1.15rem;margin-top:1rem">Crashing Log</div>
@@ -820,11 +1110,63 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
           <span class="crash-entry-title">Crash Activity A by 1 week (25 → 24 weeks)</span>
         </div>
         <div class="crash-entry-body">
-          <p>Slopes on critical path: A=1,000 · C=1,000 · E=1,000 · G=6,000 · H=3,000.<br>
-          Minimum = $1,000 (three-way tie: A, C, E). Break tie arbitrarily → select <strong>A</strong>.</p>
-          <p>A can be reduced by 1 week maximum (4→3 weeks).</p>
+          <p>Slopes on critical path (A,C,E,G,H): A=1,000 · C=1,000 · E=1,000 · G=6,000 · H=3,000.<br>
+          Minimum = $1,000 — three-way tie (A, C, E). Break tie arbitrarily → select <strong>A</strong>.</p>
+          <p>A can be reduced by 1 week only (4 → 3 weeks, now at crash limit).</p>
           <div class="crash-entry-math">Extra cost = $1,000 × 1 week = $1,000</div>
           <p>Path I: 3+5+6+5 = <strong>19 wks</strong> &nbsp;|&nbsp; Path II: 3+4+6+7+4 = <strong>24 wks</strong> → Path II still critical.</p>
+          <!-- Step network: A=3 -->
+          <div class="step-net">
+            <p class="caption">// AFTER CRASH 1 — A: 4→3 · Path II = 24 wks (critical) · Path I = 19 wks</p>
+            <svg viewBox="0 0 685 185" xmlns="http://www.w3.org/2000/svg" style="max-width:685px">
+              <defs>
+                <marker id="e2c1r" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f43f5e"/></marker>
+                <marker id="e2c1d" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#3d5a7a"/></marker>
+                <marker id="e2c1g" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f0b429"/></marker>
+              </defs>
+              <circle cx="40" cy="90" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="40" y="95" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">1</text>
+              <circle cx="148" cy="90" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="148" y="95" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">2</text>
+              <circle cx="272" cy="42" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="272" y="47" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">3</text>
+              <circle cx="408" cy="42" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="408" y="47" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">5</text>
+              <circle cx="530" cy="42" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="530" y="47" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">7</text>
+              <circle cx="272" cy="140" r="17" fill="rgba(61,90,122,0.12)" stroke="#3d5a7a" stroke-width="1.5"/>
+              <text x="272" y="145" text-anchor="middle" fill="#6b8fa8" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">4</text>
+              <circle cx="408" cy="140" r="17" fill="rgba(61,90,122,0.12)" stroke="#3d5a7a" stroke-width="1.5"/>
+              <text x="408" y="145" text-anchor="middle" fill="#6b8fa8" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">6</text>
+              <circle cx="638" cy="90" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="638" y="95" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">8</text>
+              <!-- A: crashed (gold), at max -->
+              <line x1="57" y1="90" x2="131" y2="90" stroke="#f0b429" stroke-width="2.5" marker-end="url(#e2c1g)"/>
+              <text x="94" y="80" text-anchor="middle" fill="#f0b429" font-size="10" font-family="IBM Plex Mono,monospace" font-weight="600">A=3★MAX</text>
+              <!-- C -->
+              <line x1="157" y1="79" x2="259" y2="52" stroke="#f43f5e" stroke-width="2" marker-end="url(#e2c1r)"/>
+              <text x="196" y="57" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">C=4</text>
+              <!-- B -->
+              <line x1="157" y1="101" x2="259" y2="128" stroke="#3d5a7a" stroke-width="1.5" marker-end="url(#e2c1d)"/>
+              <text x="196" y="127" text-anchor="middle" fill="#3d5a7a" font-size="10" font-family="IBM Plex Mono,monospace">B=5</text>
+              <!-- E -->
+              <line x1="289" y1="42" x2="391" y2="42" stroke="#f43f5e" stroke-width="2" marker-end="url(#e2c1r)"/>
+              <text x="340" y="33" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">E=6</text>
+              <!-- D -->
+              <line x1="289" y1="140" x2="391" y2="140" stroke="#3d5a7a" stroke-width="1.5" marker-end="url(#e2c1d)"/>
+              <text x="340" y="133" text-anchor="middle" fill="#3d5a7a" font-size="10" font-family="IBM Plex Mono,monospace">D=6</text>
+              <!-- G -->
+              <line x1="425" y1="42" x2="513" y2="42" stroke="#f43f5e" stroke-width="2" marker-end="url(#e2c1r)"/>
+              <text x="469" y="33" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">G=7</text>
+              <!-- H -->
+              <line x1="546" y1="53" x2="626" y2="78" stroke="#f43f5e" stroke-width="2" marker-end="url(#e2c1r)"/>
+              <text x="598" y="57" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">H=4</text>
+              <!-- F -->
+              <line x1="424" y1="130" x2="626" y2="101" stroke="#3d5a7a" stroke-width="1.5" marker-end="url(#e2c1d)"/>
+              <text x="520" y="126" text-anchor="middle" fill="#3d5a7a" font-size="10" font-family="IBM Plex Mono,monospace">F=5</text>
+              <text x="340" y="174" text-anchor="middle" fill="#64748b" font-size="9" font-family="IBM Plex Mono,monospace">Path II = 24 wks · Path I = 19 wks</text>
+            </svg>
+          </div>
         </div>
         <div class="crash-entry-result">
           <div class="r">Duration <span>24 weeks</span></div>
@@ -839,11 +1181,63 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
           <span class="crash-entry-title">Crash Activity C by 1 week (24 → 23 weeks)</span>
         </div>
         <div class="crash-entry-body">
-          <p>A is exhausted — cannot be crashed further. Remaining candidates on critical path: C, E, G, H.<br>
-          Minimum slope = $1,000 (tie between C and E). Select <strong>C</strong> arbitrarily.</p>
-          <p>C can be reduced by 1 week (4→3 weeks).</p>
+          <p>A is exhausted. Remaining candidates on critical path: C, E, G, H.<br>
+          Minimum slope = $1,000 — tie between C and E. Select <strong>C</strong> arbitrarily.</p>
+          <p>C can be reduced by 1 week (4 → 3 weeks, now at crash limit).</p>
           <div class="crash-entry-math">Extra cost = $1,000 × 1 week = $1,000</div>
-          <p>Path II: 3+3+6+7+4 = <strong>23 wks</strong> → still only Path II is critical.</p>
+          <p>Path II: 3+3+6+7+4 = <strong>23 wks</strong> — still only Path II is critical.</p>
+          <!-- Step network: A=3, C=3 -->
+          <div class="step-net">
+            <p class="caption">// AFTER CRASH 2 — C: 4→3 · Path II = 23 wks (critical) · Path I = 19 wks</p>
+            <svg viewBox="0 0 685 185" xmlns="http://www.w3.org/2000/svg" style="max-width:685px">
+              <defs>
+                <marker id="e2c2r" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f43f5e"/></marker>
+                <marker id="e2c2d" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#3d5a7a"/></marker>
+                <marker id="e2c2g" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f0b429"/></marker>
+              </defs>
+              <circle cx="40" cy="90" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="40" y="95" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">1</text>
+              <circle cx="148" cy="90" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="148" y="95" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">2</text>
+              <circle cx="272" cy="42" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="272" y="47" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">3</text>
+              <circle cx="408" cy="42" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="408" y="47" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">5</text>
+              <circle cx="530" cy="42" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="530" y="47" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">7</text>
+              <circle cx="272" cy="140" r="17" fill="rgba(61,90,122,0.12)" stroke="#3d5a7a" stroke-width="1.5"/>
+              <text x="272" y="145" text-anchor="middle" fill="#6b8fa8" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">4</text>
+              <circle cx="408" cy="140" r="17" fill="rgba(61,90,122,0.12)" stroke="#3d5a7a" stroke-width="1.5"/>
+              <text x="408" y="145" text-anchor="middle" fill="#6b8fa8" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">6</text>
+              <circle cx="638" cy="90" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="638" y="95" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">8</text>
+              <!-- A: previously crashed -->
+              <line x1="57" y1="90" x2="131" y2="90" stroke="#f43f5e" stroke-width="2" marker-end="url(#e2c2r)"/>
+              <text x="94" y="80" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">A=3</text>
+              <!-- C: just crashed (gold) -->
+              <line x1="157" y1="79" x2="259" y2="52" stroke="#f0b429" stroke-width="2.5" marker-end="url(#e2c2g)"/>
+              <text x="196" y="54" text-anchor="middle" fill="#f0b429" font-size="10" font-family="IBM Plex Mono,monospace" font-weight="600">C=3★MAX</text>
+              <!-- B -->
+              <line x1="157" y1="101" x2="259" y2="128" stroke="#3d5a7a" stroke-width="1.5" marker-end="url(#e2c2d)"/>
+              <text x="196" y="127" text-anchor="middle" fill="#3d5a7a" font-size="10" font-family="IBM Plex Mono,monospace">B=5</text>
+              <!-- E -->
+              <line x1="289" y1="42" x2="391" y2="42" stroke="#f43f5e" stroke-width="2" marker-end="url(#e2c2r)"/>
+              <text x="340" y="33" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">E=6</text>
+              <!-- D -->
+              <line x1="289" y1="140" x2="391" y2="140" stroke="#3d5a7a" stroke-width="1.5" marker-end="url(#e2c2d)"/>
+              <text x="340" y="133" text-anchor="middle" fill="#3d5a7a" font-size="10" font-family="IBM Plex Mono,monospace">D=6</text>
+              <!-- G -->
+              <line x1="425" y1="42" x2="513" y2="42" stroke="#f43f5e" stroke-width="2" marker-end="url(#e2c2r)"/>
+              <text x="469" y="33" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">G=7</text>
+              <!-- H -->
+              <line x1="546" y1="53" x2="626" y2="78" stroke="#f43f5e" stroke-width="2" marker-end="url(#e2c2r)"/>
+              <text x="598" y="57" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">H=4</text>
+              <!-- F -->
+              <line x1="424" y1="130" x2="626" y2="101" stroke="#3d5a7a" stroke-width="1.5" marker-end="url(#e2c2d)"/>
+              <text x="520" y="126" text-anchor="middle" fill="#3d5a7a" font-size="10" font-family="IBM Plex Mono,monospace">F=5</text>
+              <text x="340" y="174" text-anchor="middle" fill="#64748b" font-size="9" font-family="IBM Plex Mono,monospace">Path II = 23 wks · Path I = 19 wks</text>
+            </svg>
+          </div>
         </div>
         <div class="crash-entry-result">
           <div class="r">Duration <span>23 weeks</span></div>
@@ -855,12 +1249,64 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
       <div class="crash-entry">
         <div class="crash-entry-header">
           <span class="crash-tag">CRASH 3 — FINAL</span>
-          <span class="crash-entry-title">Crash Activity E by 1 week (23 → 22 weeks) ✓ STOP</span>
+          <span class="crash-entry-title">Crash Activity E by 1 week (23 → 22 weeks) — goal reached</span>
         </div>
         <div class="crash-entry-body">
           <p>A and C are exhausted. Remaining: E, G, H. Minimum slope = $1,000 → crash <strong>E</strong> by 1 week.</p>
           <div class="crash-entry-math">Extra cost = $1,000 × 1 week = $1,000</div>
-          <p>Path II: 3+3+5+7+4 = <strong>22 weeks</strong> → reduced by 3 weeks from original 25. <strong>Goal achieved — stop here.</strong></p>
+          <p>Path II: 3+3+<strong>5</strong>+7+4 = <strong>22 weeks</strong> → reduced by 3 weeks from original 25. <strong>Goal achieved — stop here.</strong></p>
+          <!-- Final network: A=3, C=3, E=5 -->
+          <div class="step-net">
+            <p class="caption">// FINAL — A=3 · C=3 · E=5 · Duration: 22 weeks (3-week reduction achieved)</p>
+            <svg viewBox="0 0 685 185" xmlns="http://www.w3.org/2000/svg" style="max-width:685px">
+              <defs>
+                <marker id="e2c3r" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f43f5e"/></marker>
+                <marker id="e2c3d" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#3d5a7a"/></marker>
+                <marker id="e2c3g" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f0b429"/></marker>
+              </defs>
+              <circle cx="40" cy="90" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="40" y="95" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">1</text>
+              <circle cx="148" cy="90" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="148" y="95" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">2</text>
+              <circle cx="272" cy="42" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="272" y="47" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">3</text>
+              <circle cx="408" cy="42" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="408" y="47" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">5</text>
+              <circle cx="530" cy="42" r="17" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="530" y="47" text-anchor="middle" fill="#fb7185" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">7</text>
+              <circle cx="272" cy="140" r="17" fill="rgba(61,90,122,0.12)" stroke="#3d5a7a" stroke-width="1.5"/>
+              <text x="272" y="145" text-anchor="middle" fill="#6b8fa8" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">4</text>
+              <circle cx="408" cy="140" r="17" fill="rgba(61,90,122,0.12)" stroke="#3d5a7a" stroke-width="1.5"/>
+              <text x="408" y="145" text-anchor="middle" fill="#6b8fa8" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">6</text>
+              <circle cx="638" cy="90" r="17" fill="rgba(57,217,123,0.15)" stroke="#39d97b" stroke-width="1.8"/>
+              <text x="638" y="95" text-anchor="middle" fill="#39d97b" font-size="12" font-family="IBM Plex Mono,monospace" font-weight="600">8</text>
+              <!-- A: prev crashed -->
+              <line x1="57" y1="90" x2="131" y2="90" stroke="#f43f5e" stroke-width="2" marker-end="url(#e2c3r)"/>
+              <text x="94" y="80" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">A=3</text>
+              <!-- C: prev crashed -->
+              <line x1="157" y1="79" x2="259" y2="52" stroke="#f43f5e" stroke-width="2" marker-end="url(#e2c3r)"/>
+              <text x="196" y="54" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">C=3</text>
+              <!-- B -->
+              <line x1="157" y1="101" x2="259" y2="128" stroke="#3d5a7a" stroke-width="1.5" marker-end="url(#e2c3d)"/>
+              <text x="196" y="127" text-anchor="middle" fill="#3d5a7a" font-size="10" font-family="IBM Plex Mono,monospace">B=5</text>
+              <!-- E: just crashed (gold) -->
+              <line x1="289" y1="42" x2="391" y2="42" stroke="#f0b429" stroke-width="2.5" marker-end="url(#e2c3g)"/>
+              <text x="340" y="31" text-anchor="middle" fill="#f0b429" font-size="10" font-family="IBM Plex Mono,monospace" font-weight="600">E=5 ★ (was 6)</text>
+              <!-- D -->
+              <line x1="289" y1="140" x2="391" y2="140" stroke="#3d5a7a" stroke-width="1.5" marker-end="url(#e2c3d)"/>
+              <text x="340" y="133" text-anchor="middle" fill="#3d5a7a" font-size="10" font-family="IBM Plex Mono,monospace">D=6</text>
+              <!-- G -->
+              <line x1="425" y1="42" x2="513" y2="42" stroke="#f43f5e" stroke-width="2" marker-end="url(#e2c3r)"/>
+              <text x="469" y="33" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">G=7</text>
+              <!-- H -->
+              <line x1="546" y1="53" x2="626" y2="78" stroke="#f43f5e" stroke-width="2" marker-end="url(#e2c3r)"/>
+              <text x="598" y="57" text-anchor="middle" fill="#fb7185" font-size="10" font-family="IBM Plex Mono,monospace">H=4</text>
+              <!-- F -->
+              <line x1="424" y1="130" x2="626" y2="101" stroke="#3d5a7a" stroke-width="1.5" marker-end="url(#e2c3d)"/>
+              <text x="520" y="126" text-anchor="middle" fill="#3d5a7a" font-size="10" font-family="IBM Plex Mono,monospace">F=5</text>
+              <text x="340" y="174" text-anchor="middle" fill="#39d97b" font-size="9" font-family="IBM Plex Mono,monospace">TARGET REACHED: 22 weeks (3-week reduction)</text>
+            </svg>
+          </div>
         </div>
         <div class="crash-entry-result">
           <div class="r">Duration <span>22 weeks ✓</span></div>
@@ -870,18 +1316,19 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
     </div>
 
     <div class="callout green">
-      ✅ <strong>Crash A, C, and E by 1 week each.</strong><br>
+      <svg class="ci" width="16" height="16" style="color:var(--green)"><use href="#ico-check"/></svg>
+      <span><strong>Crash A, C, and E by 1 week each.</strong><br>
       Project duration: <strong>22 weeks</strong> (3-week reduction achieved)<br>
       Extra crashing cost: $1,000 + $1,000 + $1,000 = <strong>$3,000</strong><br>
-      Total project cost: $196,000 + $3,000 = <strong>$199,000</strong>
+      Total project cost: $196,000 + $3,000 = <strong>$199,000</strong></span>
     </div>
   </div>
 
-  <!-- ─── EXAMPLE 3 ─── -->
+  <!-- ═══ EXAMPLE 3 ═══ -->
   <div class="tab-panel" id="ex3">
     <div class="card">
       <h3>Problem Statement</h3>
-      <p>A company wants to crash its project but can only spend an <strong>additional amount not exceeding $2,000</strong>. Suggest the best crashing scheme — i.e., crash as much as possible within the budget.</p>
+      <p>A company wants to crash its project but can only spend an <strong>additional amount not exceeding $2,000</strong>. Suggest the best crashing scheme — crash as much as possible within the budget.</p>
     </div>
 
     <div class="two-col">
@@ -890,7 +1337,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
         <div style="overflow-x:auto">
         <table class="data-table">
           <thead>
-            <tr><th>Activity</th><th>Pred.</th><th>NT (wks)</th><th>CT (wks)</th><th>NC ($)</th><th>CC ($)</th><th>Slope</th></tr>
+            <tr><th>Act.</th><th>Pred.</th><th>NT (wks)</th><th>CT (wks)</th><th>NC ($)</th><th>CC ($)</th><th>Slope</th></tr>
           </thead>
           <tbody>
             <tr><td>A</td><td>—</td><td>7</td><td>6</td><td>15,000</td><td>18,000</td><td>3,000</td></tr>
@@ -912,16 +1359,61 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
           <div class="formula-box" style="font-size:.85rem;line-height:1.9;margin:0">A → C → E<br>7 + 22 + 6 = <strong>35 weeks</strong></div>
         </div>
         <div class="callout red" style="margin-top:.75rem">
-          Critical activities: <strong>A, B, D, E</strong><br>
-          Non-critical: C (has 1 week of float)<br>
-          Budget limit: $2,000
+          <svg class="ci" width="14" height="14"><use href="#ico-warning"/></svg>
+          <span>Critical activities: <strong>A, B, D, E</strong><br>Non-critical: C (has 1 week float)<br>Budget limit: <strong>$2,000</strong></span>
         </div>
       </div>
     </div>
 
     <div class="why-box">
       <span class="why-label">IMPORTANT NOTE ON PATH II</span>
-      Path II is only 1 week shorter than Path I. That means if we crash Path I by 2 weeks, Path II will become critical too (both at 34 weeks). We must watch for this!
+      Path II is only 1 week shorter than Path I. If we crash Path I by 2 weeks, Path II becomes critical too (both at 34 weeks). We must watch for this.
+    </div>
+
+    <!-- Example 3 Initial Network -->
+    <div class="network-wrap">
+      <p class="caption">// PROJECT NETWORK — Normal Schedule · 36 weeks · Critical path: A–B–D–E (Path I)</p>
+      <svg viewBox="0 0 530 170" xmlns="http://www.w3.org/2000/svg" style="max-width:530px">
+        <defs>
+          <marker id="e3r" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f43f5e"/></marker>
+          <marker id="e3d" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#3d5a7a"/></marker>
+        </defs>
+        <!-- N1: start -->
+        <circle cx="45" cy="85" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+        <text x="45" y="90" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">1</text>
+        <!-- N2: after A -->
+        <circle cx="160" cy="85" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+        <text x="160" y="90" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">2</text>
+        <!-- N3: top - after B -->
+        <circle cx="295" cy="38" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+        <text x="295" y="43" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">3</text>
+        <!-- N4: merge point - after D and C -->
+        <circle cx="405" cy="85" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+        <text x="405" y="90" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">4</text>
+        <!-- N5: end -->
+        <circle cx="490" cy="85" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+        <text x="490" y="90" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">5</text>
+        <!-- A: N1→N2 critical -->
+        <line x1="64" y1="85" x2="141" y2="85" stroke="#f43f5e" stroke-width="2" marker-end="url(#e3r)"/>
+        <text x="102" y="76" text-anchor="middle" fill="#fb7185" font-size="10.5" font-family="IBM Plex Mono,monospace">A=7</text>
+        <!-- B: N2→N3 critical (up-diagonal) -->
+        <line x1="170" y1="72" x2="280" y2="50" stroke="#f43f5e" stroke-width="2" marker-end="url(#e3r)"/>
+        <text x="216" y="51" text-anchor="middle" fill="#fb7185" font-size="10.5" font-family="IBM Plex Mono,monospace">B=12</text>
+        <!-- D: N3→N4 critical (down-diagonal) -->
+        <line x1="311" y1="50" x2="392" y2="74" stroke="#f43f5e" stroke-width="2" marker-end="url(#e3r)"/>
+        <text x="360" y="51" text-anchor="middle" fill="#fb7185" font-size="10.5" font-family="IBM Plex Mono,monospace">D=11</text>
+        <!-- C: N2→N4 non-critical (horizontal arc under) -->
+        <path d="M170,100 Q280,148 392,100" stroke="#3d5a7a" stroke-width="1.5" fill="none" marker-end="url(#e3d)"/>
+        <text x="278" y="153" text-anchor="middle" fill="#3d5a7a" font-size="10.5" font-family="IBM Plex Mono,monospace">C=22</text>
+        <!-- E: N4→N5 critical -->
+        <line x1="424" y1="85" x2="471" y2="85" stroke="#f43f5e" stroke-width="2" marker-end="url(#e3r)"/>
+        <text x="447" y="76" text-anchor="middle" fill="#fb7185" font-size="10.5" font-family="IBM Plex Mono,monospace">E=6</text>
+        <!-- legend -->
+        <line x1="45" y1="160" x2="65" y2="160" stroke="#f43f5e" stroke-width="2"/>
+        <text x="69" y="164" fill="#f43f5e" font-size="9" font-family="IBM Plex Mono,monospace">Critical: A–B–D–E = 36 wks</text>
+        <line x1="250" y1="160" x2="270" y2="160" stroke="#3d5a7a" stroke-width="1.5"/>
+        <text x="274" y="164" fill="#3d5a7a" font-size="9" font-family="IBM Plex Mono,monospace">Non-critical: A–C–E = 35 wks</text>
+      </svg>
     </div>
 
     <div class="sec-title" style="font-size:1.15rem;margin-top:1rem">Crashing Log (Budget-Constrained)</div>
@@ -930,14 +1422,47 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
       <div class="crash-entry">
         <div class="crash-entry-header">
           <span class="crash-tag">CRASH 1</span>
-          <span class="crash-entry-title">Crash Activity E by 1 week — cheapest option ($500)</span>
+          <span class="crash-entry-title">Crash Activity E by 1 week — cheapest option at $500</span>
         </div>
         <div class="crash-entry-body">
           <p>Slopes on critical path (A,B,D,E): A=3,000 · B=1,000 · D=1,000 · E=500.<br>
-          Minimum = <strong>$500 → crash E</strong> by 1 week (6→5 weeks).</p>
-          <div class="crash-entry-math">Extra cost = $500 × 1 week = $500 &nbsp; | &nbsp; Budget remaining: $2,000 − $500 = $1,500</div>
-          <p>Path I: 7+12+11+<strong>5</strong> = <strong>35 weeks</strong> &nbsp;|&nbsp; Path II: 7+22+<strong>5</strong> = <strong>34 weeks</strong><br>
-          Path I still critical. E is now at crash limit — cannot be reduced further.</p>
+          Minimum = <strong>$500 → crash E</strong> by 1 week (6 → 5 weeks, now at crash limit).</p>
+          <div class="crash-entry-math">Extra cost = $500 × 1 week = $500 &nbsp;|&nbsp; Budget remaining: $2,000 − $500 = $1,500</div>
+          <p>Path I: 7+12+11+<strong>5</strong> = <strong>35 wks</strong> &nbsp;|&nbsp; Path II: 7+22+<strong>5</strong> = <strong>34 wks</strong><br>
+          Path I still critical. E is now at crash limit.</p>
+          <!-- Step network: E=5 -->
+          <div class="step-net">
+            <p class="caption">// AFTER CRASH 1 — E: 6→5 · Path I = 35 wks (critical) · Path II = 34 wks</p>
+            <svg viewBox="0 0 530 170" xmlns="http://www.w3.org/2000/svg" style="max-width:530px">
+              <defs>
+                <marker id="e3c1r" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f43f5e"/></marker>
+                <marker id="e3c1d" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#3d5a7a"/></marker>
+                <marker id="e3c1g" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f0b429"/></marker>
+              </defs>
+              <circle cx="45" cy="85" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="45" y="90" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">1</text>
+              <circle cx="160" cy="85" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="160" y="90" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">2</text>
+              <circle cx="295" cy="38" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="295" y="43" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">3</text>
+              <circle cx="405" cy="85" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="405" y="90" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">4</text>
+              <circle cx="490" cy="85" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="490" y="90" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">5</text>
+              <line x1="64" y1="85" x2="141" y2="85" stroke="#f43f5e" stroke-width="2" marker-end="url(#e3c1r)"/>
+              <text x="102" y="76" text-anchor="middle" fill="#fb7185" font-size="10.5" font-family="IBM Plex Mono,monospace">A=7</text>
+              <line x1="170" y1="72" x2="280" y2="50" stroke="#f43f5e" stroke-width="2" marker-end="url(#e3c1r)"/>
+              <text x="216" y="51" text-anchor="middle" fill="#fb7185" font-size="10.5" font-family="IBM Plex Mono,monospace">B=12</text>
+              <line x1="311" y1="50" x2="392" y2="74" stroke="#f43f5e" stroke-width="2" marker-end="url(#e3c1r)"/>
+              <text x="360" y="51" text-anchor="middle" fill="#fb7185" font-size="10.5" font-family="IBM Plex Mono,monospace">D=11</text>
+              <path d="M170,100 Q280,148 392,100" stroke="#3d5a7a" stroke-width="1.5" fill="none" marker-end="url(#e3c1d)"/>
+              <text x="278" y="153" text-anchor="middle" fill="#3d5a7a" font-size="10.5" font-family="IBM Plex Mono,monospace">C=22</text>
+              <!-- E: crashed (gold) -->
+              <line x1="424" y1="85" x2="471" y2="85" stroke="#f0b429" stroke-width="2.5" marker-end="url(#e3c1g)"/>
+              <text x="447" y="74" text-anchor="middle" fill="#f0b429" font-size="10" font-family="IBM Plex Mono,monospace" font-weight="600">E=5★MAX</text>
+              <text x="270" y="165" text-anchor="middle" fill="#64748b" font-size="9" font-family="IBM Plex Mono,monospace">Path I = 35 wks · Path II = 34 wks · Budget left: $1,500</text>
+            </svg>
+          </div>
         </div>
         <div class="crash-entry-result">
           <div class="r">Duration <span>35 weeks</span></div>
@@ -949,15 +1474,52 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
       <div class="crash-entry">
         <div class="crash-entry-header">
           <span class="crash-tag">CRASH 2</span>
-          <span class="crash-entry-title">Crash Activity B by 1 week — next cheapest ($1,000)</span>
+          <span class="crash-entry-title">Crash Activity B by 1 week — next cheapest at $1,000</span>
         </div>
         <div class="crash-entry-body">
           <p>E is exhausted. Remaining on critical path: A(3,000), B(1,000), D(1,000).<br>
-          Tie between B and D at $1,000 → select <strong>B</strong>. Crash B by 1 week (12→11 weeks).</p>
-          <div class="crash-entry-math">Extra cost = $1,000 × 1 week = $1,000 &nbsp; | &nbsp; Budget remaining: $1,500 − $1,000 = $500</div>
-          <p>Path I: 7+<strong>11</strong>+11+5 = <strong>34 weeks</strong> &nbsp;|&nbsp; Path II: 7+22+5 = <strong>34 weeks</strong></p>
+          Tie between B and D at $1,000 → select <strong>B</strong>. Crash B by 1 week (12 → 11 weeks).</p>
+          <div class="crash-entry-math">Extra cost = $1,000 × 1 week = $1,000 &nbsp;|&nbsp; Budget remaining: $1,500 − $1,000 = $500</div>
+          <p>Path I: 7+<strong>11</strong>+11+5 = <strong>34 wks</strong> &nbsp;|&nbsp; Path II: 7+22+5 = <strong>34 wks</strong></p>
           <div class="callout gold" style="margin-top:.5rem;font-size:.88rem">
-            ⚠️ <strong>Both paths are now 34 weeks — BOTH are critical!</strong> Crashing only Path I activities no longer helps unless we also address Path II (A, C, E). Since E is exhausted, we'd need to crash C or A on Path II.
+            <svg class="ci" width="14" height="14" style="color:var(--gold)"><use href="#ico-warning"/></svg>
+            <span><strong>Both paths are now 34 weeks — BOTH are critical!</strong> Crashing only Path I activities no longer helps without also addressing Path II.</span>
+          </div>
+          <!-- Step network: B=11, E=5, both critical -->
+          <div class="step-net">
+            <p class="caption">// AFTER CRASH 2 — B: 12→11 · Both Path I and Path II = 34 wks (both critical)</p>
+            <svg viewBox="0 0 530 170" xmlns="http://www.w3.org/2000/svg" style="max-width:530px">
+              <defs>
+                <marker id="e3c2r" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f43f5e"/></marker>
+                <marker id="e3c2g" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f0b429"/></marker>
+              </defs>
+              <circle cx="45" cy="85" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="45" y="90" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">1</text>
+              <circle cx="160" cy="85" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="160" y="90" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">2</text>
+              <circle cx="295" cy="38" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="295" y="43" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">3</text>
+              <circle cx="405" cy="85" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="405" y="90" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">4</text>
+              <circle cx="490" cy="85" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="490" y="90" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">5</text>
+              <!-- A: critical -->
+              <line x1="64" y1="85" x2="141" y2="85" stroke="#f43f5e" stroke-width="2" marker-end="url(#e3c2r)"/>
+              <text x="102" y="76" text-anchor="middle" fill="#fb7185" font-size="10.5" font-family="IBM Plex Mono,monospace">A=7</text>
+              <!-- B: crashed (gold) -->
+              <line x1="170" y1="72" x2="280" y2="50" stroke="#f0b429" stroke-width="2.5" marker-end="url(#e3c2g)"/>
+              <text x="210" y="49" text-anchor="middle" fill="#f0b429" font-size="10" font-family="IBM Plex Mono,monospace" font-weight="600">B=11 ★</text>
+              <!-- D: critical -->
+              <line x1="311" y1="50" x2="392" y2="74" stroke="#f43f5e" stroke-width="2" marker-end="url(#e3c2r)"/>
+              <text x="360" y="51" text-anchor="middle" fill="#fb7185" font-size="10.5" font-family="IBM Plex Mono,monospace">D=11</text>
+              <!-- C: now critical too -->
+              <path d="M170,100 Q280,148 392,100" stroke="#f43f5e" stroke-width="2" fill="none" marker-end="url(#e3c2r)"/>
+              <text x="278" y="153" text-anchor="middle" fill="#fb7185" font-size="10.5" font-family="IBM Plex Mono,monospace">C=22</text>
+              <!-- E: critical (prev crashed) -->
+              <line x1="424" y1="85" x2="471" y2="85" stroke="#f43f5e" stroke-width="2" marker-end="url(#e3c2r)"/>
+              <text x="447" y="76" text-anchor="middle" fill="#fb7185" font-size="10.5" font-family="IBM Plex Mono,monospace">E=5</text>
+              <text x="270" y="165" text-anchor="middle" fill="#f0b429" font-size="9" font-family="IBM Plex Mono,monospace">Both paths critical at 34 wks · Budget left: $500</text>
+            </svg>
           </div>
         </div>
         <div class="crash-entry-result">
@@ -975,67 +1537,104 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
         <div class="crash-entry-body">
           <p>Both paths critical. Options from each path:</p>
           <ul style="margin:.4rem 0 .5rem 1.2rem;color:var(--text2)">
-            <li>Path I activities remaining: A(3,000), D(1,000) — too expensive for $500 budget</li>
+            <li>Path I activities remaining: A(3,000), D(1,000) — both exceed $500 budget</li>
             <li>Path II activities: A(3,000), C(<strong>500</strong>), E(exhausted) — C fits exactly!</li>
           </ul>
-          <p><strong>However:</strong> Crashing C (which is only on Path II) reduces Path II from 34 → 33 weeks, while Path I stays at 34 weeks. So Path I is still controlling the duration.</p>
-          <div class="crash-entry-math">Extra cost = $500 × 1 week = $500 &nbsp; | &nbsp; Total extra spent = $2,000 → BUDGET REACHED — STOP</div>
-          <p>Path I: 34 weeks (still critical) &nbsp;|&nbsp; Path II: 7+<strong>21</strong>+5 = <strong>33 weeks</strong><br>
-          Project duration = 34 weeks (controlled by Path I).</p>
+          <p>Crashing C (only on Path II) reduces Path II from 34 → 33 weeks, while Path I stays at 34 weeks. Path I still controls the duration, but C gives the best value for remaining budget.</p>
+          <div class="crash-entry-math">Extra cost = $500 × 1 week = $500 &nbsp;|&nbsp; Total extra spent = $2,000 → BUDGET REACHED — STOP</div>
+          <p>Path I: 34 wks (still critical) &nbsp;|&nbsp; Path II: 7+<strong>21</strong>+5 = <strong>33 wks</strong></p>
+          <!-- Final network: B=11, E=5, C=21 -->
+          <div class="step-net">
+            <p class="caption">// FINAL — B=11 · E=5 · C=21 · Path I = 34 wks · Path II = 33 wks · Budget exhausted</p>
+            <svg viewBox="0 0 530 170" xmlns="http://www.w3.org/2000/svg" style="max-width:530px">
+              <defs>
+                <marker id="e3c3r" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f43f5e"/></marker>
+                <marker id="e3c3d" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#3d5a7a"/></marker>
+                <marker id="e3c3g" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f0b429"/></marker>
+              </defs>
+              <circle cx="45" cy="85" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="45" y="90" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">1</text>
+              <circle cx="160" cy="85" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="160" y="90" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">2</text>
+              <circle cx="295" cy="38" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="295" y="43" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">3</text>
+              <circle cx="405" cy="85" r="19" fill="rgba(244,63,94,0.12)" stroke="#f43f5e" stroke-width="1.8"/>
+              <text x="405" y="90" text-anchor="middle" fill="#fb7185" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">4</text>
+              <circle cx="490" cy="85" r="19" fill="rgba(57,217,123,0.15)" stroke="#39d97b" stroke-width="1.8"/>
+              <text x="490" y="90" text-anchor="middle" fill="#39d97b" font-size="13" font-family="IBM Plex Mono,monospace" font-weight="600">5</text>
+              <!-- A: critical -->
+              <line x1="64" y1="85" x2="141" y2="85" stroke="#f43f5e" stroke-width="2" marker-end="url(#e3c3r)"/>
+              <text x="102" y="76" text-anchor="middle" fill="#fb7185" font-size="10.5" font-family="IBM Plex Mono,monospace">A=7</text>
+              <!-- B: prev crashed -->
+              <line x1="170" y1="72" x2="280" y2="50" stroke="#f43f5e" stroke-width="2" marker-end="url(#e3c3r)"/>
+              <text x="216" y="51" text-anchor="middle" fill="#fb7185" font-size="10.5" font-family="IBM Plex Mono,monospace">B=11</text>
+              <!-- D: critical -->
+              <line x1="311" y1="50" x2="392" y2="74" stroke="#f43f5e" stroke-width="2" marker-end="url(#e3c3r)"/>
+              <text x="360" y="51" text-anchor="middle" fill="#fb7185" font-size="10.5" font-family="IBM Plex Mono,monospace">D=11</text>
+              <!-- C: just crashed (gold) -->
+              <path d="M170,100 Q280,148 392,100" stroke="#f0b429" stroke-width="2.5" fill="none" marker-end="url(#e3c3g)"/>
+              <text x="230" y="150" text-anchor="middle" fill="#f0b429" font-size="10" font-family="IBM Plex Mono,monospace" font-weight="600">C=21 ★ (was 22)</text>
+              <!-- E: prev crashed -->
+              <line x1="424" y1="85" x2="471" y2="85" stroke="#f43f5e" stroke-width="2" marker-end="url(#e3c3r)"/>
+              <text x="447" y="76" text-anchor="middle" fill="#fb7185" font-size="10.5" font-family="IBM Plex Mono,monospace">E=5</text>
+              <text x="265" y="165" text-anchor="middle" fill="#39d97b" font-size="9" font-family="IBM Plex Mono,monospace">Budget exhausted — Path I = 34 wks (critical), Path II = 33 wks</text>
+            </svg>
+          </div>
         </div>
         <div class="crash-entry-result">
-          <div class="r">Duration <span>33 weeks (Path I = 34, but note below)</span></div>
+          <div class="r">Duration <span>33 weeks</span></div>
           <div class="r">Total Extra <span>$2,000 (budget exhausted)</span></div>
         </div>
       </div>
     </div>
 
     <div class="callout green">
-      ✅ <strong>Crash E, B, and C by 1 week each.</strong><br>
+      <svg class="ci" width="16" height="16" style="color:var(--green)"><use href="#ico-check"/></svg>
+      <span><strong>Crash E, B, and C by 1 week each.</strong><br>
       Project time after crashing: <strong>33 weeks</strong><br>
       Extra amount used: $500 + $1,000 + $500 = <strong>$2,000 (full budget used)</strong><br>
-      Total project cost: $56,500 + $2,000 = <strong>$58,500</strong>
+      Total project cost: $56,500 + $2,000 = <strong>$58,500</strong></span>
     </div>
 
     <div class="why-box" style="margin-top:.75rem">
       <span class="why-label">WHY CRASH C LAST IF IT ONLY REDUCES PATH II?</span>
-      Once both paths are critical at 34 weeks, any activity we crash on either path gives us future flexibility. Crashing C (Path II only) brings Path II to 33 weeks, meaning we now have 1 week of float on Path II — this won't reduce overall duration now but is the best use of the remaining $500 since crashing any Path I activity costs $1,000 or more (exceeding budget).
+      Once both paths are critical at 34 weeks, any activity we crash on either path gives us future flexibility. Crashing C (Path II only) brings Path II to 33 weeks, creating 1 week of float — this won't reduce overall duration now but is the best use of the remaining $500, since crashing any Path I activity costs $1,000+ (exceeding budget).
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════ SECTION 5: KEY TAKEAWAYS -->
+<!-- SECTION 5: KEY TAKEAWAYS -->
 <div class="section" style="padding-top:0">
   <div class="sec-title">Key Takeaways</div>
 
   <div class="concept-grid">
     <div class="concept-card">
-      <span class="icon">🎯</span>
+      <div class="cicon"><svg width="26" height="26"><use href="#ico-target"/></svg></div>
       <h4>Only crash critical activities</h4>
-      <p>Only activities on the critical path control project duration. Crashing a non-critical activity wastes money — it just adds more slack/float to a path that already has spare time.</p>
+      <p>Only activities on the critical path control project duration. Crashing a non-critical activity wastes money — it just adds more slack to a path that already has spare time.</p>
     </div>
     <div class="concept-card">
-      <span class="icon">📊</span>
+      <div class="cicon"><svg width="26" height="26"><use href="#ico-barchart"/></svg></div>
       <h4>Always pick lowest slope first</h4>
       <p>Among all crashable critical activities, always select the one with the lowest cost slope — that's how you get the maximum time reduction for the minimum extra spending.</p>
     </div>
     <div class="concept-card">
-      <span class="icon">⚠️</span>
+      <div class="cicon"><svg width="26" height="26"><use href="#ico-fork"/></svg></div>
       <h4>New critical paths emerge</h4>
       <p>As you shorten the critical path, other paths catch up. Once multiple critical paths exist, you must crash one activity on EACH simultaneously — or the project duration won't actually decrease.</p>
     </div>
     <div class="concept-card">
-      <span class="icon">⚖️</span>
+      <div class="cicon"><svg width="26" height="26"><use href="#ico-scale"/></svg></div>
       <h4>Optimum = minimum total cost</h4>
       <p>Track total cost (direct + indirect) at each duration. The minimum point on your cost table is the optimum schedule. Crashing beyond this point makes the project more expensive overall.</p>
     </div>
     <div class="concept-card">
-      <span class="icon">🔁</span>
+      <div class="cicon"><svg width="26" height="26"><use href="#ico-refresh"/></svg></div>
       <h4>Crashing is iterative</h4>
       <p>You crash one step at a time, re-checking the critical path after each step. Never assume the critical path stays the same — it changes as activities are compressed.</p>
     </div>
     <div class="concept-card">
-      <span class="icon">🚫</span>
+      <div class="cicon"><svg width="26" height="26"><use href="#ico-no"/></svg></div>
       <h4>Crash duration is a hard limit</h4>
       <p>No activity can go below its crash duration — no matter how much money you spend. The crash duration represents the physical limit (e.g., concrete must cure for a minimum time).</p>
     </div>
