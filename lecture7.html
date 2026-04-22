@@ -696,7 +696,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
     <!-- Resolution -->
     <div class="card">
       <h3>Step 4 — Level the Schedule Using Float</h3>
-      <p style="color:var(--text2);font-size:.93rem;margin-bottom:.75rem">Activity C has <strong>TF = 4 days</strong> of float. Activity B is critical (TF = 0). The contractor shifts Activity C forward by 2 days (using 2 days of its float), so it begins on day 7 instead of day 5.</p>
+      <p style="color:var(--text2);font-size:.93rem;margin-bottom:.75rem">Activity C has <strong>TF = 4 days</strong> of float. Activity B is critical (TF = 0). The contractor shifts Activity C forward by 2 days (using 2 days of its float), so it begins on day 8 instead of day 6.</p>
       <div class="gantt-wrap">
         <table class="gantt-table">
           <thead>
@@ -721,9 +721,9 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
             <tr>
               <td class="act-label">C (3 workers) ← shifted</td>
               <td></td><td></td><td></td><td></td><td></td>
-              <td class="bar-float-used"></td><td class="bar-shifted">3</td><td class="bar-shifted">3</td><td class="bar-shifted">3</td>
+              <td class="bar-float-used"></td><td class="bar-float-used"></td><td class="bar-shifted">3</td><td class="bar-shifted">3</td><td class="bar-shifted">3</td>
               <td class="bar-float"></td><td class="bar-float"></td>
-              <td></td><td></td><td></td>
+              <td></td><td></td>
             </tr>
             <tr>
               <td class="act-label">D (3 workers)</td>
@@ -739,7 +739,7 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
             <tr class="res-row">
               <td class="res-label">Total laborers</td>
               <td class="res-ok">6</td><td class="res-ok">6</td><td class="res-ok">6</td><td class="res-ok">6</td><td class="res-ok">6</td>
-              <td class="res-ok">4</td><td class="res-ok">7</td>
+              <td class="res-ok">4</td><td class="res-ok">4</td>
               <td class="res-ok">6</td><td class="res-ok">6</td><td class="res-ok">6</td><td class="res-ok">3</td><td class="res-ok">3</td>
               <td class="res-ok">2</td><td class="res-ok">2</td>
             </tr>
@@ -873,6 +873,79 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
       <h3>Initial Resource Profile (CPM Schedule, Early Start)</h3>
       <p style="color:var(--text2);font-size:.92rem;margin-bottom:.75rem">From the bar chart, the daily compressor usage is: 6 6 6 | 1 1 | 7 7 7 7 | 5 | 8 8 | 4 4 4 4 4 4 4 | 6</p>
       <p style="color:var(--text2);font-size:.92rem">Resource conflicts occur on: <span class="conflict-day">Day 6</span> <span class="conflict-day">Day 7</span> <span class="conflict-day">Day 8</span> <span class="conflict-day">Day 9</span> <span class="conflict-day">Day 11</span> <span class="conflict-day">Day 12</span> — all exceed the limit of 6 compressors.</p>
+      <div class="gantt-wrap" style="margin-top:.75rem">
+        <table class="gantt-table">
+          <thead>
+            <tr>
+              <th class="act-label">Activity / Resource</th>
+              <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th>
+              <th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="act-label">A — 6 comp. (crit.)</td>
+              <td class="bar-crit">6</td><td class="bar-crit">6</td><td class="bar-crit">6</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td class="act-label">B — 1 comp. (crit.)</td>
+              <td></td><td></td><td></td>
+              <td class="bar-crit">1</td><td class="bar-crit">1</td>
+              <td></td><td></td><td></td><td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td class="act-label">C — 5 comp. (crit.)</td>
+              <td></td><td></td><td></td><td></td><td></td>
+              <td class="bar-crit">5</td><td class="bar-crit">5</td><td class="bar-crit">5</td><td class="bar-crit">5</td><td class="bar-crit">5</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td class="act-label">D — 2 comp. (TF=8)</td>
+              <td></td><td></td><td></td><td></td><td></td>
+              <td class="bar-noncrit">2</td><td class="bar-noncrit">2</td><td class="bar-noncrit">2</td><td class="bar-noncrit">2</td>
+              <td class="bar-float"></td><td class="bar-float"></td><td class="bar-float"></td><td class="bar-float"></td><td class="bar-float"></td><td class="bar-float"></td><td class="bar-float"></td><td class="bar-float"></td>
+              <td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td class="act-label">E — 4 comp. (crit.)</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="act-label">F — 4 comp. (TF=7)</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td class="bar-noncrit">4</td><td class="bar-noncrit">4</td>
+              <td class="bar-float"></td><td class="bar-float"></td><td class="bar-float"></td><td class="bar-float"></td><td class="bar-float"></td><td class="bar-float"></td><td class="bar-float"></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="act-label">G — 6 comp. (crit.)</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td class="bar-crit">6</td>
+            </tr>
+            <tr class="res-row">
+              <td class="res-label">Total compressors</td>
+              <td class="res-ok">6</td><td class="res-ok">6</td><td class="res-ok">6</td>
+              <td class="res-ok">1</td><td class="res-ok">1</td>
+              <td class="res-over">7</td><td class="res-over">7</td><td class="res-over">7</td><td class="res-over">7</td>
+              <td class="res-ok">5</td>
+              <td class="res-over">8</td><td class="res-over">8</td>
+              <td class="res-ok">4</td><td class="res-ok">4</td><td class="res-ok">4</td><td class="res-ok">4</td><td class="res-ok">4</td><td class="res-ok">4</td><td class="res-ok">4</td>
+              <td class="res-ok">6</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="legend" style="margin-top:.5rem">
+        <div class="legend-item"><div class="legend-swatch" style="background:rgba(16,185,129,0.55)"></div>Critical activity</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:rgba(56,189,248,0.35)"></div>Non-critical (Early Start)</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:rgba(56,189,248,0.12);border:1px dashed rgba(56,189,248,0.3)"></div>Float window</div>
+      </div>
     </div>
 
     <!-- Resource Leveling -->
@@ -915,6 +988,80 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
         <svg class="ci" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 9v4m0 4h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
         <div><strong>Trade-off:</strong> Resource leveling eliminated all conflicts but extended the project by <strong>2 days</strong> (20 → 22 days) and changed the critical path. Activity F became critical.</div>
       </div>
+
+      <div class="gantt-wrap" style="margin-top:.75rem">
+        <table class="gantt-table">
+          <thead>
+            <tr>
+              <th class="act-label">Activity / Resource</th>
+              <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th>
+              <th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="act-label">A — 6 comp.</td>
+              <td class="bar-crit">6</td><td class="bar-crit">6</td><td class="bar-crit">6</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td class="act-label">B — 1 comp.</td>
+              <td></td><td></td><td></td>
+              <td class="bar-crit">1</td><td class="bar-crit">1</td>
+              <td></td><td></td><td></td><td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td class="act-label">C — 5 comp.</td>
+              <td></td><td></td><td></td><td></td><td></td>
+              <td class="bar-crit">5</td><td class="bar-crit">5</td><td class="bar-crit">5</td><td class="bar-crit">5</td><td class="bar-crit">5</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td class="act-label">D — 2 comp. ← shifted</td>
+              <td></td><td></td><td></td><td></td><td></td>
+              <td class="bar-float-used"></td><td class="bar-float-used"></td><td class="bar-float-used"></td><td class="bar-float-used"></td><td class="bar-float-used"></td>
+              <td class="bar-shifted">2</td><td class="bar-shifted">2</td><td class="bar-shifted">2</td><td class="bar-shifted">2</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td class="act-label">E — 4 comp.</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td>
+              <td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td class="act-label">F — 4 comp. ← shifted</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td class="bar-float-used"></td><td class="bar-float-used"></td><td class="bar-float-used"></td><td class="bar-float-used"></td><td class="bar-float-used"></td><td class="bar-float-used"></td><td class="bar-float-used"></td><td class="bar-float-used"></td><td class="bar-float-used"></td>
+              <td class="bar-shifted">4</td><td class="bar-shifted">4</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="act-label">G — 6 comp.</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td class="bar-crit">6</td>
+            </tr>
+            <tr class="res-row">
+              <td class="res-label">Total compressors</td>
+              <td class="res-ok">6</td><td class="res-ok">6</td><td class="res-ok">6</td>
+              <td class="res-ok">1</td><td class="res-ok">1</td>
+              <td class="res-ok">5</td><td class="res-ok">5</td><td class="res-ok">5</td><td class="res-ok">5</td><td class="res-ok">5</td>
+              <td class="res-ok">6</td><td class="res-ok">6</td><td class="res-ok">6</td><td class="res-ok">6</td>
+              <td class="res-ok">4</td><td class="res-ok">4</td><td class="res-ok">4</td><td class="res-ok">4</td><td class="res-ok">4</td>
+              <td class="res-ok">4</td><td class="res-ok">4</td>
+              <td class="res-ok">6</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="legend" style="margin-top:.5rem">
+        <div class="legend-item"><div class="legend-swatch" style="background:rgba(16,185,129,0.55)"></div>Critical activity</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:rgba(168,85,247,0.35)"></div>Shifted activity (beyond original position)</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:transparent;border:1px dashed rgba(16,185,129,0.25)"></div>Consumed float</div>
+      </div>
     </div>
 
     <!-- Resource Smoothing -->
@@ -949,6 +1096,83 @@ nav .brand{color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;mar
       <div class="callout blue" style="margin-top:.75rem">
         <svg class="ci" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/></svg>
         <div><strong>Result:</strong> Project duration stays at <strong>20 days</strong>. Critical path unchanged. Most conflicts on Days 6–9 are resolved, but Days 15–16 still exceed the limit (8 compressors needed). Resource smoothing cannot fully resolve all conflicts here.</div>
+      </div>
+
+      <div class="gantt-wrap" style="margin-top:.75rem">
+        <table class="gantt-table">
+          <thead>
+            <tr>
+              <th class="act-label">Activity / Resource</th>
+              <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th>
+              <th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="act-label">A — 6 comp.</td>
+              <td class="bar-crit">6</td><td class="bar-crit">6</td><td class="bar-crit">6</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td class="act-label">B — 1 comp.</td>
+              <td></td><td></td><td></td>
+              <td class="bar-crit">1</td><td class="bar-crit">1</td>
+              <td></td><td></td><td></td><td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td class="act-label">C — 5 comp.</td>
+              <td></td><td></td><td></td><td></td><td></td>
+              <td class="bar-crit">5</td><td class="bar-crit">5</td><td class="bar-crit">5</td><td class="bar-crit">5</td><td class="bar-crit">5</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td class="act-label">D — 2 comp. ← shifted</td>
+              <td></td><td></td><td></td><td></td><td></td>
+              <td class="bar-float-used"></td><td class="bar-float-used"></td><td class="bar-float-used"></td><td class="bar-float-used"></td><td class="bar-float-used"></td>
+              <td class="bar-shifted">2</td><td class="bar-shifted">2</td><td class="bar-shifted">2</td><td class="bar-shifted">2</td>
+              <td class="bar-float"></td><td class="bar-float"></td><td class="bar-float"></td>
+              <td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td class="act-label">E — 4 comp.</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td><td class="bar-crit">4</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="act-label">F — 4 comp. ← shifted</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td class="bar-float-used"></td><td class="bar-float-used"></td><td class="bar-float-used"></td><td class="bar-float-used"></td>
+              <td class="bar-shifted">4</td><td class="bar-shifted">4</td>
+              <td class="bar-float"></td><td class="bar-float"></td><td class="bar-float"></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="act-label">G — 6 comp.</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td class="bar-crit">6</td>
+            </tr>
+            <tr class="res-row">
+              <td class="res-label">Total compressors</td>
+              <td class="res-ok">6</td><td class="res-ok">6</td><td class="res-ok">6</td>
+              <td class="res-ok">1</td><td class="res-ok">1</td>
+              <td class="res-ok">5</td><td class="res-ok">5</td><td class="res-ok">5</td><td class="res-ok">5</td><td class="res-ok">5</td>
+              <td class="res-ok">6</td><td class="res-ok">6</td><td class="res-ok">6</td><td class="res-ok">6</td>
+              <td class="res-over">8</td><td class="res-over">8</td>
+              <td class="res-ok">4</td><td class="res-ok">4</td><td class="res-ok">4</td>
+              <td class="res-ok">6</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="legend" style="margin-top:.5rem">
+        <div class="legend-item"><div class="legend-swatch" style="background:rgba(16,185,129,0.55)"></div>Critical activity</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:rgba(168,85,247,0.35)"></div>Shifted activity</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:rgba(56,189,248,0.12);border:1px dashed rgba(56,189,248,0.3)"></div>Remaining float</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:transparent;border:1px dashed rgba(16,185,129,0.25)"></div>Consumed float</div>
       </div>
     </div>
 
